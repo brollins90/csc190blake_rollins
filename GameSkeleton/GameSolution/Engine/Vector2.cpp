@@ -2,6 +2,8 @@
 #include <math.h>
 #include "Engine.h"
 #include "Vector2.h"
+#include "Vector2D.h"
+using Engine::Vector2;
 using Engine::Vector2;
 
 Vector2::Vector2(float x, float y)

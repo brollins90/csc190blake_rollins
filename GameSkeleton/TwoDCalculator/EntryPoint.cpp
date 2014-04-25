@@ -1,27 +1,34 @@
 #include "RenderUI.h"
 #include "Engine.h"
-#include "Vector2.h"
+#include "Vector2D.h"
 using std::cout;
 using std::endl;
 //using Engine::Vector2;
 
-Engine::Vector2 basicLeft(0,1), basicRight(2,3), basicResult(4,5);
-//Vector2 left, right, results;
+Engine::Vector2D basicLeft(0,0), basicRight(0,0), basicResult(0,0);
 
 void myBasicVectorEquationCallback(const BasicVectorEquationInfo& data)
 {
-	basicLeft.x = data.x1;
-	basicRight.x = data.x2;
-	basicLeft.y = data.y1;
-	basicRight.y = data.y2;
-	basicResult.x = data.scalar1;
-	basicResult.y = data.scalar2;
-	cout << "lx: " << basicLeft.x << endl;
-	cout << "ly: " << basicLeft.y << endl;
-	cout << "rx: " << basicRight.x << endl;
-	cout << "ry: " << basicRight.y << endl;
-	cout << "resx: " << basicResult.x << endl;
-	cout << "resy: " << basicResult.y << endl;
+	basicLeft.x = (data.scalar1 * data.x1);
+	basicRight.x = (data.scalar2 * data.x2);
+	basicLeft.y = (data.scalar1 * data.y1);
+	basicRight.y = (data.scalar2 * data.y2);
+	if (data.add)
+	{
+		basicResult.x = (basicLeft + basicRight).x;
+		basicResult.y = (basicLeft + basicRight).y;
+	}
+	else
+	{
+		basicResult.x = (basicLeft - basicRight).x;
+		basicResult.y = (basicLeft - basicRight).y;
+	}
+	//cout << "lx: " << basicLeft.x << endl;
+	//cout << "ly: " << basicLeft.y << endl;
+	//cout << "rx: " << basicRight.x << endl;
+	//cout << "ry: " << basicRight.y << endl;
+	//cout << "resx: " << basicResult.x << endl;
+	//cout << "resy: " << basicResult.y << endl;
 }
 
 int main(int argc, char* argv[])
