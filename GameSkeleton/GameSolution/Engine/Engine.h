@@ -2,6 +2,7 @@
 #define _ENGINE_H_
 
 #include "ExportHeader.h"
+#include <iostream>
 
 namespace Engine
 {
@@ -10,6 +11,8 @@ namespace Engine
 	ENGINE_SHARED void Init();
 
 	ENGINE_SHARED bool sampleFunctionThatReturnsTrue();
+
+	struct ENGINE_SHARED Vector2;
 }
 
 #endif // _ENGINE_H_
