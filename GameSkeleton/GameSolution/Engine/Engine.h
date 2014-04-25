@@ -3,6 +3,7 @@
 
 #include "ExportHeader.h"
 #include <iostream>
+#include "Vector2D.h"
 
 namespace Engine
 {
@@ -12,7 +13,7 @@ namespace Engine
 
 	ENGINE_SHARED bool sampleFunctionThatReturnsTrue();
 
-	struct ENGINE_SHARED Vector2;
+//	struct ENGINE_SHARED Vector2;
 
 	struct ENGINE_SHARED Vector2D;
 }
