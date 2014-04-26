@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TwoDCalculator", "TwoDCalculator.vcxproj", "{737EA5C0-9C02-4315-AD3F-81B2C907A8DA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1A4FE7E9-979F-484B-98C4-B439581F8157} = {1A4FE7E9-979F-484B-98C4-B439581F8157}

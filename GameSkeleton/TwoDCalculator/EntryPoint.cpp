@@ -5,40 +5,35 @@ using std::cout;
 using std::endl;
 //using Engine::Vector2;
 
-Engine::Vector2D basicLeft, basicRight, basicResult;
+Engine::Vector2D leftVector, rightVector, resultVector;
 
 void myBasicVectorEquationCallback(const BasicVectorEquationInfo& data)
 {
-	basicLeft.x = (data.scalar1 * data.x1);
-	basicRight.x = (data.scalar2 * data.x2);
-	basicLeft.y = (data.scalar1 * data.y1);
-	basicRight.y = (data.scalar2 * data.y2);
+	leftVector.x = (data.scalar1 * data.x1);
+	rightVector.x = (data.scalar2 * data.x2);
+	leftVector.y = (data.scalar1 * data.y1);
+	rightVector.y = (data.scalar2 * data.y2);
 	if (data.add)
 	{
-		basicResult.x = (basicLeft + basicRight).x;
-		basicResult.y = (basicLeft + basicRight).y;
+		resultVector.x = (leftVector + rightVector).x;
+		resultVector.y = (leftVector + rightVector).y;
 	}
 	else
 	{
-		basicResult.x = (basicLeft - basicRight).x;
-		basicResult.y = (basicLeft - basicRight).y;
+		resultVector.x = (leftVector - rightVector).x;
+		resultVector.y = (leftVector - rightVector).y;
 	}
-	//cout << "lx: " << basicLeft.x << endl;
-	//cout << "ly: " << basicLeft.y << endl;
-	//cout << "rx: " << basicRight.x << endl;
-	//cout << "ry: " << basicRight.y << endl;
-	//cout << "resx: " << basicResult.x << endl;
-	//cout << "resy: " << basicResult.y << endl;
 }
 
-Engine::Vector2D perpOrig, perpNormal, perpCW, perpCCW;
+Engine::Vector2D orignalVector, normalVector, cwPerpendicularVector, ccwPerpendicularVector;
 
 void myPerpendicularDataCallback(const PerpendicularData& data)
 {
-	perpOrig = Engine::Vector2D(data.x,data.y);
-	perpNormal = perpOrig.Normalize();
-	perpCW = perpOrig.PerpCW();
-	perpCCW = perpOrig.PerpCCW();
+	orignalVector.x = data.x;
+	orignalVector.y = data.y;
+	normalVector = orignalVector.Normalize();
+	cwPerpendicularVector = orignalVector.PerpCW();
+	ccwPerpendicularVector = orignalVector.PerpCCW();
 
 }
 
@@ -54,19 +49,23 @@ void myLineEquationDataCallback(const LineEquationData& data)
 	leP = data.p_x;
 }
 
-Engine::Vector2D dot1, dot2, dotProj, dotRej;
+Engine::Vector2D vector1, vector2, projectionVector, rejectionVector;
 
 void myDotProductDataCallback(const DotProductData& data)
 {
-	// TODO
-	data.projectOntoLeftVector;
-	dot1.x = data.v1i;
-	dot1.y = data.v1j;
-	dot2.x = data.v2i;
-	dot2.y = data.v2j;
+	vector1.x = data.v1i;
+	vector1.y = data.v1j;
+	vector2.x = data.v2i;
+	vector2.y = data.v2j;
+	
+	Engine::Vector2D& left = (data.projectOntoLeftVector) ? vector1 : vector2;
+	Engine::Vector2D& right = (data.projectOntoLeftVector) ? vector2 : vector1;
+
+	projectionVector = (left.Normalize() * ((left.DotProduct(right)) / left.Length()));
+	rejectionVector = right - projectionVector;
 }
 
-Engine::Vector2D lerpA, lerpB, lerpAPart, lerpBPart, lerpRes, lerpMinB;
+Engine::Vector2D aVector, bVector, aMinusBVector, aVectorLerpPortion, bVectorLerpPortion, lerpResultVector;
 
 void myLerpDataCallback(const LerpData& data)
 {
@@ -87,37 +86,37 @@ int main(int argc, char* argv[])
 
 	// Vector Basics
 	renderUI.setBasicVectorEquationData(myBasicVectorEquationCallback,
-		(float*)&basicLeft,
-		(float*)&basicRight,
-		(float*)&basicResult);
+		(float*)&leftVector,
+		(float*)&rightVector,
+		(float*)&resultVector);
 
 	// Perpendiculars
-	renderUI.setPerpendicularData((float*)&perpOrig,
-		(float*)&perpNormal,
-		(float*)&perpCW,
-		(float*)&perpCCW,
+	renderUI.setPerpendicularData((float*)&orignalVector,
+		(float*)&normalVector,
+		(float*)&cwPerpendicularVector,
+		(float*)&ccwPerpendicularVector,
 		myPerpendicularDataCallback);
 
-	// Line Equation
-	renderUI.setLineEquationData((float*)&leP,
-		(float*)&leN,
-		(float*)&leD,
-		myLineEquationDataCallback);
+	//// Line Equation
+	//renderUI.setLineEquationData((float*)&leP,
+	//	(float*)&leN,
+	//	(float*)&leD,
+	//	myLineEquationDataCallback);
 
 	// Dot Product
-	renderUI.setDotProductData((float*)&dot1,
-		(float*)&dot2,
-		(float*)&dotProj,
-		(float*)&dotRej,
+	renderUI.setDotProductData((float*)&vector1,
+		(float*)&vector2,
+		(float*)&projectionVector,
+		(float*)&rejectionVector,
 		myDotProductDataCallback);
 
 	// LERP
-	renderUI.setLerpData((float*)&lerpA,
-		(float*)&lerpB,
-		(float*)&lerpMinB,
-		(float*)&lerpAPart,
-		(float*)&lerpBPart,
-		(float*)&lerpRes,
+	renderUI.setLerpData((float*)&aVector,
+		(float*)&bVector,
+		(float*)&aMinusBVector,
+		(float*)&aVectorLerpPortion,
+		(float*)&bVectorLerpPortion,
+		(float*)&lerpResultVector,
 		myLerpDataCallback);
 
 	if( ! renderUI.initialize(argc, argv))
