@@ -37,16 +37,15 @@ void myPerpendicularDataCallback(const PerpendicularData& data)
 
 }
 
-Engine::Vector2D leN;
-float leP, leD;
+Engine::Vector2D leP, leN, leD;
 
 void myLineEquationDataCallback(const LineEquationData& data)
 {
 	// TODO
-	leD = data.d;
+	leD.x = data.d;
 	leN.x = data.n_i;
 	leN.y = data.n_j;
-	leP = data.p_x;
+	leP.x = data.p_x;
 }
 
 Engine::Vector2D vector1, vector2, projectionVector, rejectionVector;
