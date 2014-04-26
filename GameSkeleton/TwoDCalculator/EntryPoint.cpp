@@ -35,9 +35,10 @@ Engine::Vector2D perpOrig, perpNormal, perpCW, perpCCW;
 
 void myPerpendicularDataCallback(const PerpendicularData& data)
 {
-	// TODO
-	perpOrig.x = data.x;
-	perpOrig.y = data.y;
+	perpOrig = Engine::Vector2D(data.x,data.y);
+	perpNormal = perpOrig.Normalize();
+	perpCW = perpOrig.PerpCW();
+	perpCCW = perpOrig.PerpCCW();
 
 }
 

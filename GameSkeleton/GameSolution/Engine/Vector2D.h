@@ -71,6 +71,30 @@ namespace Engine
 		{
 			return Vector2D(this->x / other, this->y / other);
 		}
+
+		// CrossProduct
+		float CrossProduct(const Vector2D& a, const Vector2D& b)
+		{
+			return ((a.x * b.y) + (a.y * b.x));
+		}
+
+		// DotProduct
+		float DotProduct(const Vector2D& a, const Vector2D& b)
+		{
+			return ((a.x * a.y) + (b.x * b.y));
+		}
+
+		// Length() 
+		inline double Length()
+		{
+			return sqrt(pow(this->x, 2.0) + pow(this->y, 2.0));
+		}
+		
+		// float LengthSquared()
+		inline double LengthSquared()
+		{
+			return pow(this->x, 2.0) + pow(this->y, 2.0);
+		}
 		
 		// LERP
 		/*inline float LERP(const Vector2D& left, const Vector2D& right, const float& scaler)
@@ -78,28 +102,30 @@ namespace Engine
 			return ((1.0F - scaler) * left + (scaler * right));
 		}*/
 
-		// Length() 
-		double Length()
-		{
-			return sqrt(pow(this->x, 2.0) + pow(this->y, 2.0));
-		}
+		//// Negate()
+		//inline Vector2D Negate()
+		//{
+		//	return Vector2D((-1 * (this->x)),(-1 * (this->y)));
+		//}
 		
-		// float LengthSquared()
-		double LengthSquared()
+		// Normalized()
+		inline Vector2D Normalize()
 		{
-			return pow(this->x, 2.0) + pow(this->y, 2.0);
+			float ratio = static_cast<float>((1.0F / this->Length()));
+			return Vector2D((ratio * this->x),(ratio * this->y));
 		}
 
-		// Normalized()
 		// PerpCW
-		// PerpCCW
-		// Dot
-		// DotProduct
-		float DotProduct(const Vector2D& a, const Vector2D& b)
+		inline Vector2D PerpCW()
 		{
-			return ((a.x * a.y) + (b.x * b.y));
+			return Vector2D(this->y, (-1) * this->x);
 		}
-		// Cross
+			
+		// PerpCCW
+		inline Vector2D PerpCCW()
+		{
+			return Vector2D((-1) * this->y, this->x);
+		}
 	};
 }
 #endif
