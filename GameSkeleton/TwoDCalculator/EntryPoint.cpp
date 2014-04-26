@@ -69,12 +69,14 @@ Engine::Vector2D aVector, bVector, aMinusBVector, aVectorLerpPortion, bVectorLer
 
 void myLerpDataCallback(const LerpData& data)
 {
-	// TODO
-	data.a_i;
-	data.a_j;
-	data.beta;
-	data.b_i;
-	data.b_j;
+	aVector.x = data.a_i;
+	aVector.y = data.a_j;
+	bVector.x = data.b_i;
+	bVector.y = data.b_j;
+	aMinusBVector = bVector - aVector;
+	aVectorLerpPortion = aVector * (1.0F - data.beta);
+	bVectorLerpPortion = bVector * data.beta;
+	lerpResultVector = aVectorLerpPortion + bVectorLerpPortion;
 }
 
 
@@ -97,11 +99,11 @@ int main(int argc, char* argv[])
 		(float*)&ccwPerpendicularVector,
 		myPerpendicularDataCallback);
 
-	//// Line Equation
-	//renderUI.setLineEquationData((float*)&leP,
-	//	(float*)&leN,
-	//	(float*)&leD,
-	//	myLineEquationDataCallback);
+	// Line Equation
+	renderUI.setLineEquationData((float*)&leP,
+		(float*)&leN,
+		(float*)&leD,
+		myLineEquationDataCallback);
 
 	// Dot Product
 	renderUI.setDotProductData((float*)&vector1,

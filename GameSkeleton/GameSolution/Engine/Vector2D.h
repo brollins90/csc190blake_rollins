@@ -57,7 +57,14 @@ namespace Engine
 
 		inline Vector2D operator / (const Vector2D& other)
 		{
-			return Vector2D(this->x / other.x, this->y / other.y);
+			if (other.x != 0 && other.y != 0)
+			{
+				return Vector2D(this->x / other.x, this->y / other.y);
+			}
+			else
+			{
+				return Vector2D(0,0);
+			}
 		}
 		
 		// float * Vector2
@@ -69,7 +76,14 @@ namespace Engine
 		// Vector2 / float
 		inline Vector2D operator / (const float& other)
 		{
-			return Vector2D(this->x / other, this->y / other);
+			if (other != 0)
+			{
+				return Vector2D(this->x / other, this->y / other);
+			}
+			else
+			{
+				return Vector2D(0,0);
+			}
 		}
 
 		// CrossProduct
@@ -96,11 +110,17 @@ namespace Engine
 			return (this->x * this->x + this->y * this->y);
 		}
 		
-		// LERP
-		/*inline float LERP(const Vector2D& left, const Vector2D& right, const float& scaler)
-		{
-			return ((1.0F - scaler) * left + (scaler * right));
-		}*/
+		//// LERP
+		//float LERP2(const Vector2D& start, const Vector2D& end, const float& percent)
+		//{
+		//	return (start + percent * (end - start));
+		//}
+
+		//inline float LERP(const Vector2D& left, const Vector2D& right, const float& scalar)
+		//{
+
+		//	return (left + scalar * (right - left));
+		//}
 
 		//// Negate()
 		//inline Vector2D Negate()
