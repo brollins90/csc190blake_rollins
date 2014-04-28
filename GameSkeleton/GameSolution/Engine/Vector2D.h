@@ -10,14 +10,12 @@ namespace Engine
 		float x, y;
 		Engine::Vector2D(float x = 0, float y = 0)
 		{
-
 			this->x = x;
 			this->y = y;
 		} 
 
 		std::ostream& operator<<(std::ostream& stream)
 		{
-
 			std::cout << "{" << this->x << "," << this->y << "}";
 			return stream;
 		} 
@@ -72,6 +70,16 @@ namespace Engine
 		{
 			return Vector2D(other * this->x, other * this->y);
 		}
+		
+		friend Vector2D operator * (const Vector2D& left, const float& right)
+		{
+			return Vector2D(right * left.x, right * left.y);
+		}
+		
+		friend Vector2D operator * (const float& left, const Vector2D& right)
+		{
+			return Vector2D(left * right.x, left * right.y);
+		}
 
 		// Vector2 / float
 		inline Vector2D operator / (const float& other)
@@ -109,24 +117,20 @@ namespace Engine
 		{
 			return (this->x * this->x + this->y * this->y);
 		}
-		
-		//// LERP
-		//float LERP2(const Vector2D& start, const Vector2D& end, const float& percent)
-		//{
-		//	return (start + percent * (end - start));
-		//}
 
-		//inline float LERP(const Vector2D& left, const Vector2D& right, const float& scalar)
-		//{
+		// LERP
+		static inline Vector2D LERP(const Vector2D& start, const Vector2D& end, const float& percent)
+		{
+			Vector2D aVectorLerpPortion = start * (1.0F - percent);
+			Vector2D bVectorLerpPortion = end * percent;
+			return aVectorLerpPortion + bVectorLerpPortion;
+		}
 
-		//	return (left + scalar * (right - left));
-		//}
-
-		//// Negate()
-		//inline Vector2D Negate()
-		//{
-		//	return Vector2D((-1 * (this->x)),(-1 * (this->y)));
-		//}
+		// Negate()
+		inline Vector2D Negate()
+		{
+			return Vector2D((-1 * (this->x)),(-1 * (this->y)));
+		}
 		
 		// Normalized()
 		inline Vector2D Normalize()

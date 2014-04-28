@@ -13,8 +13,6 @@ namespace Engine
 
 	ENGINE_SHARED bool sampleFunctionThatReturnsTrue();
 
-//	struct ENGINE_SHARED Vector2;
-
 	struct ENGINE_SHARED Vector2D;
 }
 

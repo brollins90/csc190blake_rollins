@@ -3,9 +3,9 @@
 #include "Vector2D.h"
 using std::cout;
 using std::endl;
-//using Engine::Vector2;
+using Engine::Vector2D;
 
-Engine::Vector2D leftVector, rightVector, resultVector;
+Vector2D leftVector, rightVector, resultVector;
 
 void myBasicVectorEquationCallback(const BasicVectorEquationInfo& data)
 {
@@ -25,7 +25,7 @@ void myBasicVectorEquationCallback(const BasicVectorEquationInfo& data)
 	}
 }
 
-Engine::Vector2D orignalVector, normalVector, cwPerpendicularVector, ccwPerpendicularVector;
+Vector2D orignalVector, normalVector, cwPerpendicularVector, ccwPerpendicularVector;
 
 void myPerpendicularDataCallback(const PerpendicularData& data)
 {
@@ -37,7 +37,7 @@ void myPerpendicularDataCallback(const PerpendicularData& data)
 
 }
 
-Engine::Vector2D leP, leN, leD;
+Vector2D leP, leN, leD;
 
 void myLineEquationDataCallback(const LineEquationData& data)
 {
@@ -48,7 +48,7 @@ void myLineEquationDataCallback(const LineEquationData& data)
 	leP.x = data.p_x;
 }
 
-Engine::Vector2D vector1, vector2, projectionVector, rejectionVector;
+Vector2D vector1, vector2, projectionVector, rejectionVector;
 
 void myDotProductDataCallback(const DotProductData& data)
 {
@@ -57,14 +57,14 @@ void myDotProductDataCallback(const DotProductData& data)
 	vector2.x = data.v2i;
 	vector2.y = data.v2j;
 	
-	Engine::Vector2D& left = (data.projectOntoLeftVector) ? vector1 : vector2;
-	Engine::Vector2D& right = (data.projectOntoLeftVector) ? vector2 : vector1;
+	Vector2D& left = (data.projectOntoLeftVector) ? vector1 : vector2;
+	Vector2D& right = (data.projectOntoLeftVector) ? vector2 : vector1;
 
 	projectionVector = (left.Normalize() * ((left.DotProduct(right)) / left.Length()));
 	rejectionVector = right - projectionVector;
 }
 
-Engine::Vector2D aVector, bVector, aMinusBVector, aVectorLerpPortion, bVectorLerpPortion, lerpResultVector;
+Vector2D aVector, bVector, aMinusBVector, aVectorLerpPortion, bVectorLerpPortion, lerpResultVector;
 
 void myLerpDataCallback(const LerpData& data)
 {
@@ -75,7 +75,7 @@ void myLerpDataCallback(const LerpData& data)
 	aMinusBVector = bVector - aVector;
 	aVectorLerpPortion = aVector * (1.0F - data.beta);
 	bVectorLerpPortion = bVector * data.beta;
-	lerpResultVector = aVectorLerpPortion + bVectorLerpPortion;
+	lerpResultVector = Engine::Vector2D::LERP(aVector,bVector,data.beta);
 }
 
 
