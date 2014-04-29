@@ -8,81 +8,32 @@ namespace Engine
 	{
 	public:
 		float x, y;
-		Engine::Vector2D(float x = 0, float y = 0)
-		{
-			this->x = x;
-			this->y = y;
-		} 
+		Engine::Vector2D(float x = 0, float y = 0) : x(x), y(y) {}
 
 		std::ostream& operator<<(std::ostream& stream)
 		{
 			std::cout << "{" << this->x << "," << this->y << "}";
 			return stream;
-		} 
-
-		// Conversion
-		float operator[] (int index)
-		{
-
-			if ( index == 0) 
-			{
-				return this->x;
-			}
-			else if ( index == 1)
-			{
-				return this->y;
-			}
-			else
-			{
-				return 0.0F;
-			}
-		} 
-
-		inline Vector2D operator + (const Vector2D& other)
-		{
-			return Vector2D(this->x + other.x, this->y + other.y);
 		}
 
-		inline Vector2D operator - (const Vector2D& other)
-		{
-			return Vector2D(this->x - other.x, this->y - other.y);
-		}
-
-		inline Vector2D operator * (const Vector2D& other)
-		{
-			return Vector2D(this->x * other.x, this->y * other.y);
-		}
-
-		inline Vector2D operator / (const Vector2D& other)
+		inline Vector2D operator+ (const Vector2D& other) {	return Vector2D(x + other.x, y + other.y); }
+		inline Vector2D operator- (const Vector2D& other) { return Vector2D(x - other.x, y - other.y); }
+		inline Vector2D operator* (const Vector2D& other) { return Vector2D(x * other.x, y * other.y); }
+		inline Vector2D operator* (const float& other) { return Vector2D(x * other, y * other); }		
+		friend inline Vector2D operator* (const Vector2D& lhs, const float& rhs) { return Vector2D(lhs.x * rhs, lhs.y * rhs); }		
+		friend inline Vector2D operator* (const float& lhs, const Vector2D& rhs) { return Vector2D(lhs * rhs.x, lhs * rhs.y); }
+		inline Vector2D operator/ (const Vector2D& other) 
 		{
 			if (other.x != 0 && other.y != 0)
 			{
-				return Vector2D(this->x / other.x, this->y / other.y);
+				return Vector2D(x / other.x, y / other.y);
 			}
 			else
 			{
 				return Vector2D(0,0);
 			}
 		}
-		
-		// float * Vector2
-		inline Vector2D operator * (const float& other)
-		{
-			return Vector2D(other * this->x, other * this->y);
-		}
-		
-		friend Vector2D operator * (const Vector2D& left, const float& right)
-		{
-			return Vector2D(right * left.x, right * left.y);
-		}
-		
-		friend Vector2D operator * (const float& left, const Vector2D& right)
-		{
-			return Vector2D(left * right.x, left * right.y);
-		}
-
-		// Vector2 / float
-		inline Vector2D operator / (const float& other)
+		inline Vector2D operator/ (const float& other)
 		{
 			if (other != 0)
 			{
@@ -93,31 +44,14 @@ namespace Engine
 				return Vector2D(0,0);
 			}
 		}
-
-		// CrossProduct
-		float CrossProduct(const Vector2D& other)
-		{
-			return ((this->x * other.y) - (this->y * other.x));
-		}
-
-		// DotProduct
-		float DotProduct(const Vector2D& other)
-		{
-			return ((this->x * other.x) + (this->y * other.y));
-		}
-
-		// Length() 
-		inline float Length()
-		{
-			return sqrt(this->x * this->x + this->y * this->y);
-		}
 		
-		// float LengthSquared()
-		inline float LengthSquared()
-		{
-			return (this->x * this->x + this->y * this->y);
-		}
+		inline float CrossProduct(const Vector2D& other) { return ((x * other.y) - (y * other.x)); }
 
+		inline float DotProduct(const Vector2D& other) { return ((x * other.x) + (y * other.y)); }
+		static inline float DotProduct(const Vector2D& lhs, const Vector2D& rhs) { return ((lhs.x * rhs.x) + (lhs.y * rhs.y)); }
+		
+		inline float Length() { return sqrt(x * x + y * y); }
+		inline float LengthSquared() { return (x * x + y * y); }
 		// LERP
 		static inline Vector2D LERP(const Vector2D& start, const Vector2D& end, const float& percent)
 		{
@@ -127,10 +61,7 @@ namespace Engine
 		}
 
 		// Negate()
-		inline Vector2D Negate()
-		{
-			return Vector2D((-1 * (this->x)),(-1 * (this->y)));
-		}
+		inline Vector2D Negate() { return Vector2D((-1 * (x)),(-1 * (y))); }
 		
 		// Normalized()
 		inline Vector2D Normalize()
@@ -146,17 +77,8 @@ namespace Engine
 			return vect;
 		}
 
-		// PerpCW
-		inline Vector2D PerpCW()
-		{
-			return Vector2D(this->y, (-1) * this->x);
-		}
-			
-		// PerpCCW
-		inline Vector2D PerpCCW()
-		{
-			return Vector2D((-1) * this->y, this->x);
-		}
+		inline Vector2D PerpCW() { return Vector2D(y, (-1) * x); }
+		inline Vector2D PerpCCW() { return Vector2D((-1) * y, x); }
 	};
 }
 #endif

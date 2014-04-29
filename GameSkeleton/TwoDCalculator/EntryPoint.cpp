@@ -13,16 +13,7 @@ void myBasicVectorEquationCallback(const BasicVectorEquationInfo& data)
 	rightVector.x = (data.scalar2 * data.x2);
 	leftVector.y = (data.scalar1 * data.y1);
 	rightVector.y = (data.scalar2 * data.y2);
-	if (data.add)
-	{
-		resultVector.x = (leftVector + rightVector).x;
-		resultVector.y = (leftVector + rightVector).y;
-	}
-	else
-	{
-		resultVector.x = (leftVector - rightVector).x;
-		resultVector.y = (leftVector - rightVector).y;
-	}
+	resultVector = (data.add) ? leftVector + rightVector : leftVector - rightVector;
 }
 
 Vector2D orignalVector, normalVector, cwPerpendicularVector, ccwPerpendicularVector;
@@ -34,7 +25,6 @@ void myPerpendicularDataCallback(const PerpendicularData& data)
 	normalVector = orignalVector.Normalize();
 	cwPerpendicularVector = orignalVector.PerpCW();
 	ccwPerpendicularVector = orignalVector.PerpCCW();
-
 }
 
 Vector2D leP, leN, leD;
@@ -75,7 +65,7 @@ void myLerpDataCallback(const LerpData& data)
 	aMinusBVector = bVector - aVector;
 	aVectorLerpPortion = aVector * (1.0F - data.beta);
 	bVectorLerpPortion = bVector * data.beta;
-	lerpResultVector = Engine::Vector2D::LERP(aVector,bVector,data.beta);
+	lerpResultVector = Vector2D::LERP(aVector,bVector,data.beta);
 }
 
 
