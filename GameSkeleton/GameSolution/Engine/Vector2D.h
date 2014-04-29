@@ -18,7 +18,7 @@ namespace Engine
 
 		inline Vector2D operator+ (const Vector2D& other) {	return Vector2D(x + other.x, y + other.y); }
 		inline Vector2D operator- (const Vector2D& other) { return Vector2D(x - other.x, y - other.y); }
-		inline Vector2D operator* (const Vector2D& other) { return Vector2D(x * other.x, y * other.y); }
+		//inline Vector2D operator* (const Vector2D& other) { return Vector2D(x * other.x, y * other.y); }
 		inline Vector2D operator* (const float& other) { return Vector2D(x * other, y * other); }		
 		friend inline Vector2D operator* (const Vector2D& lhs, const float& rhs) { return Vector2D(lhs.x * rhs, lhs.y * rhs); }		
 		friend inline Vector2D operator* (const float& lhs, const Vector2D& rhs) { return Vector2D(lhs * rhs.x, lhs * rhs.y); }
