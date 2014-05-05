@@ -1,11 +1,12 @@
 #include "Engine.h"
 #include "Core.h"
-#include "SpaceShip2.h"
+//#include "SpaceShip2.h"
 using Engine::Vector2D;
 using Core::Input;
 
 const static int SCREEN_WIDTH = 1024;
 const static int SCREEN_HEIGHT = 768;
+
 
 int numWallPoints = 5;
 Vector2D wallPoints[] =
@@ -16,6 +17,15 @@ Vector2D wallPoints[] =
 	Vector2D(0, (SCREEN_HEIGHT / 2)),
 	Vector2D((SCREEN_WIDTH / 2), 0)
 };
+
+enum MODE 
+{
+	WRAP = 1,
+	BOUNCE = 2,
+	WALLS = 3
+};
+
+MODE gameMode = WRAP;
 
 
 class Shape
@@ -94,7 +104,6 @@ public:
 	void update (float dt)
 	{
 		GameObject::update(dt);
-		int mode = 3;
 
 		if (Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 		{
@@ -114,7 +123,7 @@ public:
 		}
 		position = position + velocity * dt;
 		
-		if (mode == 1)
+		if (gameMode == WRAP)
 		{
 			if (position.x < 0)
 			{
@@ -133,7 +142,7 @@ public:
 				position.y = 0;
 			}
 		}
-		if (mode == 2)
+		if (gameMode == BOUNCE)
 		{
 			if (position.x < 0)
 			{
@@ -152,7 +161,7 @@ public:
 				velocity.y *= -1;
 			}
 		}
-		if (mode == 3)
+		if (gameMode == WALLS)
 		{
 			for (int i =0 ; i < numWallPoints; i++)
 			{
@@ -212,7 +221,15 @@ bool update(float dt)
 	}
 	if ( Input::IsPressed( '1' ) )
 	{
-
+		gameMode = WRAP;
+	}
+	if ( Input::IsPressed( '2' ) )
+	{
+		gameMode = BOUNCE;
+	}
+	if ( Input::IsPressed( '3' ) )
+	{
+		gameMode = WALLS;
 	}
 	return false;
 }
