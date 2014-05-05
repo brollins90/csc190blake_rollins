@@ -1,9 +1,9 @@
-#include "SpaceShip.h"
+#include "SpaceShip2.h"
 #include <sstream>
 
 using Engine::Vector2D;
 
-Vector2D shipPoints[] =
+Vector2D shipPoints2[] =
 {
 	Vector2D(+00.0f, -30.0f),
 	Vector2D(+10.0f, -22.0f),
@@ -21,8 +21,8 @@ Vector2D wallA(200, 0);
 Vector2D wallB(400, 400);
 
 
-SpaceShip::SpaceShip() { }
-SpaceShip::~SpaceShip() { }
+SpaceShip2::SpaceShip2() { }
+SpaceShip2::~SpaceShip2() { }
 
 void DrawValue(Core::Graphics& g, int x, int y, float num)
 {
@@ -31,16 +31,16 @@ void DrawValue(Core::Graphics& g, int x, int y, float num)
 	g.DrawString(x, y, ss.str().c_str());
 }
 
-void SpaceShip::draw(Core::Graphics& g)
+void SpaceShip2::draw(Core::Graphics& g)
 {
-	const unsigned int NUM_POINTS = sizeof(shipPoints) / sizeof(*shipPoints);
+	const unsigned int NUM_POINTS = sizeof(shipPoints2) / sizeof(*shipPoints2);
 	for (unsigned int i = 0; i< NUM_POINTS; i++) 
 	{
-		const Vector2D& p1 = position + shipPoints[i];
-		const Vector2D& p2 = position + shipPoints[(i + 1) % NUM_POINTS];
+		const Vector2D& p1 = position + shipPoints2[i];
+		const Vector2D& p2 = position + shipPoints2[(i + 1) % NUM_POINTS];
 		g.DrawLine(p1.x, p1.y, p2.x, p2.y);
 	}
-	g.DrawLine(wallA.x, wallA.y, wallB.x, wallB.y);
+//	g.DrawLine(wallA.x, wallA.y, wallB.x, wallB.y);
 	
 	DrawValue(g, 10, 5, position.x);
 	DrawValue(g, 10, 15, position.y);
@@ -52,9 +52,9 @@ void SpaceShip::draw(Core::Graphics& g)
 
 }
 
-void SpaceShip::update(float dt)
+void SpaceShip2::update(float dt)
 {
-	int mode = 3;
+	int mode = 1;
 
 	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
@@ -78,17 +78,17 @@ void SpaceShip::update(float dt)
 	{
 		if (position.x < 0)
 		{
-			position.x = 400;
+			position.x = 1024;
 		}
-		if (position.x > 400) 
+		if (position.x > 1024) 
 		{
 			position.x = 0;
 		}
 		if (position.y < 0)
 		{
-			position.y = 400;
+			position.y = 768;
 		}
-		if (position.y > 400) 
+		if (position.y > 768) 
 		{
 			position.y = 0;
 		}
@@ -99,7 +99,7 @@ void SpaceShip::update(float dt)
 		{
 			velocity.x *= -1;
 		}
-		if (position.x > 400)
+		if (position.x > 1024)
 		{
 			velocity.x *= -1;
 		}
@@ -107,7 +107,7 @@ void SpaceShip::update(float dt)
 		{
 			velocity.y *= -1;
 		}
-		if (position.y > 400)
+		if (position.y > 768)
 		{
 			velocity.y *= -1;
 		}
