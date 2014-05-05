@@ -87,9 +87,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpaceShip2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="SpaceShip2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

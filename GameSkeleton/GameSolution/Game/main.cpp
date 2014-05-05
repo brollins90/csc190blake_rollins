@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Core.h"
 #include <sstream>
+#include "Shape.h"
 
 //#include "SpaceShip2.h"
 using Engine::Vector2D;
@@ -65,36 +66,36 @@ void DrawValue(Core::Graphics& g, int x, int y, float num)
 	ss << num;
 	g.DrawString(x, y, ss.str().c_str());
 }
-
-class Shape
-{
-public:
-	int NUM_POINTS;
-	Vector2D* shapePoints;
-	Shape(int numPoints, Vector2D* inShapePoints)
-	{
-		NUM_POINTS = numPoints;
-		shapePoints = new Vector2D[NUM_POINTS];
-		
-		for (int i = 0; i < NUM_POINTS; i++)
-		{
-			shapePoints[i] = inShapePoints[i];
-		}
-	}
-	~Shape()
-	{
-		delete shapePoints;
-	}
-	void draw( Core::Graphics& g, Vector2D& pos )
-	{
-		for (int i = 0; i< NUM_POINTS; i++) 
-		{
-			const Vector2D& p1 = pos + shapePoints[i];
-			const Vector2D& p2 = pos + shapePoints[(i + 1) % NUM_POINTS];
-			g.DrawLine(p1.x, p1.y, p2.x, p2.y);
-		}
-	}
-};
+//
+//class Shape
+//{
+//public:
+//	int NUM_POINTS;
+//	Vector2D* shapePoints;
+//	Shape(int numPoints, Vector2D* inShapePoints)
+//	{
+//		NUM_POINTS = numPoints;
+//		shapePoints = new Vector2D[NUM_POINTS];
+//		
+//		for (int i = 0; i < NUM_POINTS; i++)
+//		{
+//			shapePoints[i] = inShapePoints[i];
+//		}
+//	}
+//	~Shape()
+//	{
+//		delete shapePoints;
+//	}
+//	void draw( Core::Graphics& g, Vector2D& pos )
+//	{
+//		for (int i = 0; i< NUM_POINTS; i++) 
+//		{
+//			const Vector2D& p1 = pos + shapePoints[i];
+//			const Vector2D& p2 = pos + shapePoints[(i + 1) % NUM_POINTS];
+//			g.DrawLine(p1.x, p1.y, p2.x, p2.y);
+//		}
+//	}
+//};
 
 
 class GameObject
