@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "WallMode.h"
 #include "SpaceShip.h"
+#include "Asteroid.h"
 
 //#include "SpaceShip2.h"
 using Engine::Vector2D;
@@ -66,40 +67,40 @@ void DrawValue(Core::Graphics& g, int x, int y, float num)
 	ss << num;
 	g.DrawString(x, y, ss.str().c_str());
 }
-
-class Asteroid : GameObject
-{
-private:
-	int NUM_PATH_POINTS;
-	int pointInPath;
-	Vector2D* pathPoints;
-public:
-	Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
-	{
-		pointInPath = 0;
-		NUM_PATH_POINTS = numPathPoints;
-		pathPoints = new Vector2D[NUM_PATH_POINTS];
-		
-		for (int i = 0; i < NUM_PATH_POINTS; i++)
-		{
-			pathPoints[i] = inPathPoints[i];
-		}
-
-	}
-	void draw (Core::Graphics& g)
-	{
-		GameObject::draw(g);
-	}
-	void update (float dt)
-	{
-		dt;
-//		GameObject::update(dt);
-		
-		position = pathPoints[(pointInPath++) % NUM_PATH_POINTS];
-		floatsToDebug[0] = position.x;
-		floatsToDebug[1] = position.y;
-	}
-};
+//
+//class Asteroid : GameObject
+//{
+//private:
+//	int NUM_PATH_POINTS;
+//	int pointInPath;
+//	Vector2D* pathPoints;
+//public:
+//	Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+//	{
+//		pointInPath = 0;
+//		NUM_PATH_POINTS = numPathPoints;
+//		pathPoints = new Vector2D[NUM_PATH_POINTS];
+//		
+//		for (int i = 0; i < NUM_PATH_POINTS; i++)
+//		{
+//			pathPoints[i] = inPathPoints[i];
+//		}
+//
+//	}
+//	void draw (Core::Graphics& g)
+//	{
+//		GameObject::draw(g);
+//	}
+//	void update (float dt)
+//	{
+//		dt;
+////		GameObject::update(dt);
+//		
+//		position = pathPoints[(pointInPath++) % NUM_PATH_POINTS];
+//		floatsToDebug[0] = position.x;
+//		floatsToDebug[1] = position.y;
+//	}
+//};
 
 
 
