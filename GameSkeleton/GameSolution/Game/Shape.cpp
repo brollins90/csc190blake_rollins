@@ -18,10 +18,20 @@ Shape::~Shape(void)
 
 void Shape::draw( Core::Graphics& g, Vector2D& pos)
 {
-	for (int i = 0; i< NUM_POINTS; i++) 
+	for (int i = 0; i < NUM_POINTS; i++) 
 	{
 		const Vector2D& p1 = pos + shapePoints[i];
 		const Vector2D& p2 = pos + shapePoints[(i + 1) % NUM_POINTS];
 		g.DrawLine(p1.x, p1.y, p2.x, p2.y);
 	}
+}
+
+int Shape::getNumPoints()
+{
+	return NUM_POINTS;
+}
+
+Vector2D& Shape::get(int index)
+{
+	return shapePoints[index];
 }

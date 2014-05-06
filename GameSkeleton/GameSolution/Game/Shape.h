@@ -15,6 +15,8 @@ public:
 	Shape(int numberOfPoints, Vector2D* inputPoints);
 	~Shape(void);
 	void draw( Core::Graphics& g, Vector2D& pos);
+	int getNumPoints();
+	Vector2D& get(int index);
 };
 
 #endif

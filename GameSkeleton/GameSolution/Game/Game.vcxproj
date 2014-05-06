@@ -86,15 +86,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DrawThing.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="SpaceShip2.cpp" />
+    <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DrawThing.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Shape.h" />
-    <ClInclude Include="SpaceShip2.h" />
+    <ClInclude Include="SpaceShip.h" />
+    <ClInclude Include="WallMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
