@@ -17,6 +17,7 @@ public:
 	void setWallMode(WallMode newMode);
 	void draw (Core::Graphics& g);
 	void update (float dt);
+	bool isOutOfBounds(Vector2D& pos);
 };
 
 #endif
