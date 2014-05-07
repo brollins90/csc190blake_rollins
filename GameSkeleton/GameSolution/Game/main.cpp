@@ -42,10 +42,17 @@ Vector2D shipPoints[] =
 
 Vector2D asteroidPoints[] =
 {
-	Vector2D(+00.0f, -05.0f),
-	Vector2D(+05.0f, +00.0f),
-	Vector2D(+00.0f, +05.0f),
-	Vector2D(-05.0f, +00.0f)
+	Vector2D(-33.0f, +00.0f),
+	Vector2D(-13.0f, -05.0f),
+	Vector2D(-10.0f, -16.0f),
+	Vector2D(+03.0f, -28.0f),
+	Vector2D(+30.0f, -14.0f),
+	Vector2D(+29.0f, +02.0f),
+	Vector2D(+34.0f, +15.0f),
+	Vector2D(+16.0f, +25.0f),
+	Vector2D(+03.0f, +28.0f),
+	Vector2D(-08.0f, +28.0f),
+	Vector2D(-27.0f, +17.0f)
 };
 
 Vector2D asteroidPathPoints[] =
@@ -75,7 +82,7 @@ extern DrawThing* myDrawThing = new DrawThing;
 
 SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),8, shipPoints);
 
-Asteroid myAsteroid(Vector2D(50,50), Vector2D(1,0), 4, asteroidPoints, 4, asteroidPathPoints);
+Asteroid myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)
 {
