@@ -1,6 +1,7 @@
 #include "SpaceShip.h"
 
 extern Shape* walls;
+extern DrawThing* myDrawThing;
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
@@ -85,17 +86,18 @@ void SpaceShip::update (float dt)
 			Vector2D wallVector = wallPointRight - wallPointLeft;
 			Vector2D wallnormal = wallVector.PerpCCW().Normalize();
 			float f1 = Vector2D::DotProduct(wallnormal,wallPointLeftToShip);
-			//floats[0] = f1;
 
 			if (f1 < 0) 
 			{
 				Vector2D bounceVector = wallnormal * Vector2D::DotProduct(velocity, wallnormal);
-//					floats[1] = red.x;
-//				floats[2] = red.y;
-
 				velocity = velocity + (bounceVector * -2);
 			}
 		}
 
 	}
+	myDrawThing->setFloat(1,position.x);
+	myDrawThing->setFloat(2,position.y);
+	myDrawThing->setFloat(3,velocity.x);
+	myDrawThing->setFloat(4,velocity.y);
+
 }

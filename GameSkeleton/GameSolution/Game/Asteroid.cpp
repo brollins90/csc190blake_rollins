@@ -23,17 +23,10 @@ void Asteroid::update (float dt)
 	Vector2D& curPathRight = pathShape->get((pointInPath + 1) % pathShape->getNumPoints());
 	Vector2D pathVector = curPathRight - curPathLeft;
 	float pathLength = pathVector.Length();
-	myDrawThing->setFloat(0, pathLength);
 	float oneTimeUnit = (velocity.x / pathLength);
-	myDrawThing->setFloat(1, oneTimeUnit);
 	curPercentage += oneTimeUnit;
 
-	myDrawThing->setFloat(2, curPercentage);
-
-	Vector2D newPoint = Vector2D::LERP(curPathLeft, curPathRight, curPercentage);
-	
-
-	position = newPoint;
+	position = Vector2D::LERP(curPathLeft, curPathRight, curPercentage);
 
 	if (curPercentage > 1)
 	{

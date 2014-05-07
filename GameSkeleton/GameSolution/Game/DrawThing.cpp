@@ -4,7 +4,7 @@
 DrawThing::DrawThing(void)
 {
 	strings = new std::string[10];
-	strings[0] = '0';
+	strings[0] = "WRAP";
 	strings[1] = '0';
 	strings[2] = '0';
 	strings[3] = '0';
@@ -21,30 +21,22 @@ DrawThing::~DrawThing(void)
 }
 void DrawThing::draw( Core::Graphics& g )
 {
+	g.DrawString(10, 5, "Press 1, 2, or 3 to change the wall type");
 	std::stringstream ss;
-	ss << "One: " << strings[0];
-	g.DrawString(10, 5, ss.str().c_str());
-	ss.str(std::string());
-	ss << "Two: " << strings[1];
+	ss << "Current wall type is : " << strings[0];
 	g.DrawString(10, 15, ss.str().c_str());
 	ss.str(std::string());
-	ss << "Three: " << strings[2];
+	ss << "Ship position: (" << strings[1] << "," << strings[2] << ")";
 	g.DrawString(10, 25, ss.str().c_str());
 	ss.str(std::string());
-	ss << "Four: " << strings[3];
+	ss << "Ship velocity: (" << strings[3] << "," << strings[4] << ")";
 	g.DrawString(10, 35, ss.str().c_str());
-	ss.str(std::string());
-	ss << "Five: " << strings[4];
-	g.DrawString(10, 45, ss.str().c_str());
-	ss.str(std::string());
-	ss << "Six: " << strings[5];
-	g.DrawString(10, 55, ss.str().c_str());
 	ss.str(std::string());
 
 }
-void DrawThing::setString(int index, char* string)
+void DrawThing::setString(int index, std::string string)
 {
-	strings[index] = *string;
+	strings[index] = string;
 }
 
 void DrawThing::setFloat(int index, float f)

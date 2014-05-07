@@ -8,14 +8,11 @@
 #include "SpaceShip.h"
 #include "Asteroid.h"
 
-//#include "SpaceShip2.h"
 using Engine::Vector2D;
 using Core::Input;
 
 const static int SCREEN_WIDTH = 1024;
 const static int SCREEN_HEIGHT = 768;
-
-float floatsToDebug[10] = {0.0f};
 
 int numWallPoints = 6;
 Vector2D wallPoints[] =
@@ -30,14 +27,21 @@ Vector2D wallPoints[] =
 
 Vector2D shipPoints[] =
 {
-	Vector2D(+00.0f, -30.0f),
-	Vector2D(+10.0f, -22.0f),
-	Vector2D(+10.0f, +00.0f),
-	Vector2D(+10.0f, +10.0f),
-	Vector2D(-10.0f, +10.0f),
-	Vector2D(-10.0f, +00.0f),
-	Vector2D(-10.0f, -22.0f),
-	Vector2D(+00.0f, -30.0f)
+	Vector2D(+00.00f, -28.50f),
+	Vector2D(+06.00f, +05.25f),
+	Vector2D(+08.25f, +05.25f),
+	Vector2D(+08.25f, +22.50f),
+	Vector2D(+08.25f, +21.00f),
+	Vector2D(+23.25f, +21.00f),
+	Vector2D(+08.25f, +12.00f),
+	Vector2D(+08.25f, +22.50f),
+	Vector2D(-08.25f, +22.50f),
+	Vector2D(-08.25f, +12.00f),
+	Vector2D(-23.25f, +21.00f),
+	Vector2D(-08.25f, +21.00f),
+	Vector2D(-08.25f, +22.50f),
+	Vector2D(-08.25f, +05.25f),
+	Vector2D(-06.00f, +05.25f)
 };
 
 Vector2D asteroidPoints[] =
@@ -66,22 +70,10 @@ Vector2D asteroidPathPoints[] =
 
 
 WallMode gameMode = WRAP;
-
-
-void DrawValue(Core::Graphics& g, int x, int y, float num)
-{
-	std::stringstream ss;
-	ss << num;
-	g.DrawString(x, y, ss.str().c_str());
-}
-
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
-
 extern Shape* walls = new Shape(5, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
-
-SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),8, shipPoints);
-
+SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints);
 Asteroid myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)
@@ -97,46 +89,32 @@ bool update(float dt)
 	if ( Input::IsPressed( '1' ) )
 	{
 		myShip.setWallMode(WRAP);
+		myDrawThing->setString(0, "WRAP");
 	}
 	if ( Input::IsPressed( '2' ) )
 	{
 		myShip.setWallMode(BOUNCE);
+		myDrawThing->setString(0, "BOUNCE");
 	}
 	if ( Input::IsPressed( '3' ) )
 	{
 		myShip.setWallMode(WALLS);
+		myDrawThing->setString(0, "WALLS");
 	}
 	return false;
 }
 
 void draw( Core::Graphics& g )
 {
-//	graphics.SetColor( RGB(255,255,255) );
-//	graphics.DrawString( SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT/2 - 20, "Hello World");
-//	graphics.DrawLine( 10, 10, 400, 300);
-
 	wallsObj.draw(g);
 	myShip.draw(g);
 	myAsteroid.draw(g);
 	myDrawThing->draw(g);
-	/*
-	DrawValue(g, 10, 5, floatsToDebug[0]);
-	DrawValue(g, 10, 15, floatsToDebug[1]);
-	DrawValue(g, 10, 25, floatsToDebug[2]);
-	DrawValue(g, 10, 35, floatsToDebug[3]);
-	DrawValue(g, 10, 45, floatsToDebug[4]);
-	DrawValue(g, 10, 55, floatsToDebug[5]);
-	DrawValue(g, 10, 65, floatsToDebug[6]);
-	DrawValue(g, 10, 75, floatsToDebug[7]);
-	DrawValue(g, 10, 85, floatsToDebug[8]);
-	DrawValue(g, 10, 95, floatsToDebug[9]);*/
 }
 
 void main()
 {
-	
-	//myShip.position = Engine::Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
-	Core::Init( "Game Demo", SCREEN_WIDTH, SCREEN_HEIGHT);
+	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn( update );
 	Core::RegisterDrawFn( draw );
 	Core::GameLoop();

@@ -14,7 +14,7 @@ public:
 	~DrawThing(void);
 	void draw( Core::Graphics& g );
 	void setFloat(int index, float f);
-	void setString(int index, char* string);
+	void setString(int index, std::string string);
 };
 
 #endif
