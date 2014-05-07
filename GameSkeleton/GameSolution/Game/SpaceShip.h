@@ -6,6 +6,7 @@
 #include "Shape.h"
 #include "WallMode.h"
 #include "GameObject.h"
+#include "DrawThing.h"
 
 
 class SpaceShip : GameObject

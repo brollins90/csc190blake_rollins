@@ -50,10 +50,10 @@ Vector2D asteroidPoints[] =
 
 Vector2D asteroidPathPoints[] =
 {
-	Vector2D(+50.0f, +20.0f),
-	Vector2D(+205.0f, +50.0f),
-	Vector2D(+75.0f, +05.0f),
-	Vector2D(+300.0f, +100.0f)
+	Vector2D(+224.0f, +100.0f),
+	Vector2D(+700.0f, +200.0f),
+	Vector2D(+600.0f, +300.0f),
+	Vector2D(+050.0f, +100.0f)
 };
 
 
@@ -67,54 +67,15 @@ void DrawValue(Core::Graphics& g, int x, int y, float num)
 	ss << num;
 	g.DrawString(x, y, ss.str().c_str());
 }
-//
-//class Asteroid : GameObject
-//{
-//private:
-//	int NUM_PATH_POINTS;
-//	int pointInPath;
-//	Vector2D* pathPoints;
-//public:
-//	Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
-//	{
-//		pointInPath = 0;
-//		NUM_PATH_POINTS = numPathPoints;
-//		pathPoints = new Vector2D[NUM_PATH_POINTS];
-//		
-//		for (int i = 0; i < NUM_PATH_POINTS; i++)
-//		{
-//			pathPoints[i] = inPathPoints[i];
-//		}
-//
-//	}
-//	void draw (Core::Graphics& g)
-//	{
-//		GameObject::draw(g);
-//	}
-//	void update (float dt)
-//	{
-//		dt;
-////		GameObject::update(dt);
-//		
-//		position = pathPoints[(pointInPath++) % NUM_PATH_POINTS];
-//		floatsToDebug[0] = position.x;
-//		floatsToDebug[1] = position.y;
-//	}
-//};
-
-
-
-
-
-
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 
 extern Shape* walls = new Shape(5, wallPoints);
+extern DrawThing* myDrawThing = new DrawThing;
 
 SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),8, shipPoints);
 
-Asteroid myAsteroid(Vector2D(50,50), Vector2D(0,0), 4, asteroidPoints, 4, asteroidPathPoints);
+Asteroid myAsteroid(Vector2D(50,50), Vector2D(1,0), 4, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)
 {
@@ -150,7 +111,8 @@ void draw( Core::Graphics& g )
 	wallsObj.draw(g);
 	myShip.draw(g);
 	myAsteroid.draw(g);
-	
+	myDrawThing->draw(g);
+	/*
 	DrawValue(g, 10, 5, floatsToDebug[0]);
 	DrawValue(g, 10, 15, floatsToDebug[1]);
 	DrawValue(g, 10, 25, floatsToDebug[2]);
@@ -160,7 +122,7 @@ void draw( Core::Graphics& g )
 	DrawValue(g, 10, 65, floatsToDebug[6]);
 	DrawValue(g, 10, 75, floatsToDebug[7]);
 	DrawValue(g, 10, 85, floatsToDebug[8]);
-	DrawValue(g, 10, 95, floatsToDebug[9]);
+	DrawValue(g, 10, 95, floatsToDebug[9]);*/
 }
 
 void main()

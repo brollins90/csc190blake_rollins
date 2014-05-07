@@ -6,6 +6,7 @@
 #include "Shape.h"
 #include "WallMode.h"
 #include "GameObject.h"
+#include "DrawThing.h"
 
 
 class Asteroid : GameObject
@@ -13,6 +14,7 @@ class Asteroid : GameObject
 private:
 	//int NUM_PATH_POINTS;
 	int pointInPath;
+	float curPercentage;
 	//Vector2D* pathPoints;
 	Shape* pathShape;
 public:
