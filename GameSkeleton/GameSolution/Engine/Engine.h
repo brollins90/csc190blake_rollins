@@ -4,6 +4,8 @@
 #include "ExportHeader.h"
 #include <iostream>
 #include "Vector2D.h"
+#include "Matrix2D.h"
+#include "Matrix3D.h"
 
 namespace Engine
 {
@@ -12,8 +14,10 @@ namespace Engine
 	ENGINE_SHARED void Init();
 
 	ENGINE_SHARED bool sampleFunctionThatReturnsTrue();
-
+	
 	struct ENGINE_SHARED Vector2D;
+	struct ENGINE_SHARED Matrix2D;
+	struct ENGINE_SHARED Matrix3D;
 }
 
 #endif // _ENGINE_H_

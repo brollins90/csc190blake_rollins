@@ -4,6 +4,7 @@
 using std::cout;
 using std::endl;
 using Engine::Vector2D;
+using Engine::Matrix2D;
 
 Vector2D leftVector, rightVector, resultVector;
 
@@ -68,6 +69,49 @@ void myLerpDataCallback(const LerpData& data)
 	lerpResultVector = Vector2D::LERP(aVector,bVector,data.beta);
 }
 
+void myLinearTransformationCallback(const LinearTransformationData& data)
+{
+	// TODO
+	data.m00;
+	data.m01;
+	data.m10;
+	data.m11;
+	data.v0;
+	data.v1;
+}
+
+void myAffineTransformationCallback(const AffineTransformationData& data)
+{
+	// TODO
+	data.data;
+}
+
+void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
+{
+	// TODO
+	data.rotate;
+	data.scaleX;
+	data.scaleY;
+	data.selectedMatrix;
+	data.translateX;
+	data.translateY;
+}
+
+void myMatrixTransformCallback3D(const MatrixTransformData3D& data)
+{
+	// TODO
+	data.rotateX;
+	data.rotateY;
+	data.rotateZ;
+	data.scaleX;
+	data.scaleY;
+	data.scaleZ;
+	data.selectedMatrix;
+	data.translateX;
+	data.translateY;
+	data.translateZ;
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -109,6 +153,23 @@ int main(int argc, char* argv[])
 		(float*)&bVectorLerpPortion,
 		(float*)&lerpResultVector,
 		myLerpDataCallback);
+
+	Vector2D resultVectors;
+	// Affine Transformations
+	renderUI.setAffineTransformationData((float*)&resultVectors,
+		myAffineTransformationCallback);
+
+	Matrix2D lines, matrices, currentTransform;
+	int numLines = 0;
+	numLines;
+	// Matrix Transformations
+	renderUI.set2DMatrixVerticesTransformData((float*)&lines,
+		numLines,
+		(float*)&matrices,
+		(float*)&currentTransform,
+		myMatrixTransformCallback2D);
+
+	
 
 	if( ! renderUI.initialize(argc, argv))
 		return -1;
