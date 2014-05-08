@@ -69,22 +69,31 @@ void myLerpDataCallback(const LerpData& data)
 	lerpResultVector = Vector2D::LERP(aVector,bVector,data.beta);
 }
 
+Vector2D resultVector2, vBasic;
+Matrix2D mBasic;
 void myLinearTransformationCallback(const LinearTransformationData& data)
 {
 	// TODO
-	data.m00;
-	data.m01;
-	data.m10;
-	data.m11;
-	data.v0;
-	data.v1;
+	mBasic.m[0][0] = data.m00; // a  | a  b |
+	mBasic.m[0][1] = data.m01; // b  | c  d |
+	mBasic.m[1][0] = data.m10; // c
+	mBasic.m[1][1] = data.m11; // d
+	vBasic.x = data.v0;
+	vBasic.y = data.v1;
+
+	resultVector2 = mBasic * vBasic;
 }
+
+Vector2D resultVectors;
 
 void myAffineTransformationCallback(const AffineTransformationData& data)
 {
 	// TODO
 	data.data;
 }
+
+Matrix2D lines, matrices, currentTransform;
+int numLines = 0;
 
 void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 {
@@ -154,14 +163,14 @@ int main(int argc, char* argv[])
 		(float*)&lerpResultVector,
 		myLerpDataCallback);
 
-	Vector2D resultVectors;
+	// Basic Matrix Multiply
+	renderUI.setLinearTransformationData((float*)&resultVector2,
+		myLinearTransformationCallback);
+
 	// Affine Transformations
 	renderUI.setAffineTransformationData((float*)&resultVectors,
 		myAffineTransformationCallback);
 
-	Matrix2D lines, matrices, currentTransform;
-	int numLines = 0;
-	numLines;
 	// Matrix Transformations
 	renderUI.set2DMatrixVerticesTransformData((float*)&lines,
 		numLines,
