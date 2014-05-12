@@ -8,10 +8,21 @@ namespace Engine
 	{
 	public:
 		float m[2][2];
+		// __    __
+		// | 0  1 |
+		// | 2  3 |
+		// __    __
+
 		Engine::Matrix2D(void)
 		{
 			m[0][0] = 1; m[0][1] = 0;
 			m[1][0] = 0; m[1][1] = 1;
+		}
+
+		Engine::Matrix2D(const float f0, const float f1, const float f2, const float f3)
+		{
+			m[0][0] = f0; m[0][1] = f1;
+			m[1][0] = f2; m[1][1] = f3;
 		}
 		
 		Engine::Matrix2D(const Vector2D& v1, const Vector2D& v2)

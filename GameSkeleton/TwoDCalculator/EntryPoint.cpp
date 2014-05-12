@@ -1,10 +1,11 @@
 #include "RenderUI.h"
 #include "Engine.h"
-#include "Vector2D.h"
 using std::cout;
 using std::endl;
 using Engine::Vector2D;
+using Engine::Vector3D;
 using Engine::Matrix2D;
+using Engine::Matrix3D;
 
 Vector2D leftVector, rightVector, resultVector;
 
@@ -84,16 +85,47 @@ void myLinearTransformationCallback(const LinearTransformationData& data)
 	resultVector2 = mBasic * vBasic;
 }
 
-Vector2D resultVectors;
+Vector3D resultVectors[5];
+Matrix3D mAffine;
 
 void myAffineTransformationCallback(const AffineTransformationData& data)
 {
 	// TODO
-	data.data;
+	for (int i = 0; i < 9; i++) 
+	{
+		mAffine.m[i] = data.data[i];
+	}
+
+	for (int i = 0; i < 5; i++) 
+	{
+		resultVectors[i] = mAffine * Vector3D(data.data[9 + (i * 3)], data.data[10 + (i * 3)], data.data[11 + (i * 3)]);
+	}
+
 }
 
-Matrix2D lines, matrices, currentTransform;
-int numLines = 0;
+
+
+
+const float span = .3;
+
+Vector2D bottomLeft(-span, -span);
+Vector2D topLeft(-span,span);
+Vector2D topRight(span,span);
+Vector2D bottomRight(span,-span);
+Vector2D roofTop(0, span + .25);
+
+Vector2D linesMatrixTransform[] = {
+	bottomLeft, topLeft,
+	topLeft, topRight,
+	topRight, bottomRight,
+	bottomRight, bottomLeft,
+	topLeft, roofTop,
+	topRight, roofTop
+};
+
+int numLinesMatrixTransform = sizeof(linesMatrixTransform) / (sizeof(*linesMatrixTransform) * 2);
+
+Matrix2D matrices[20], currentTransform;
 
 void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 {
@@ -104,6 +136,8 @@ void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 	data.selectedMatrix;
 	data.translateX;
 	data.translateY;
+
+	currentTransform = matrices[data.selectedMatrix];
 }
 
 void myMatrixTransformCallback3D(const MatrixTransformData3D& data)
@@ -172,8 +206,8 @@ int main(int argc, char* argv[])
 		myAffineTransformationCallback);
 
 	// Matrix Transformations
-	renderUI.set2DMatrixVerticesTransformData((float*)&lines,
-		numLines,
+	renderUI.set2DMatrixVerticesTransformData((float*)&linesMatrixTransform,
+		numLinesMatrixTransform,
 		(float*)&matrices,
 		(float*)&currentTransform,
 		myMatrixTransformCallback2D);
