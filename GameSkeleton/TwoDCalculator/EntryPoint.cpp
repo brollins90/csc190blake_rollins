@@ -75,10 +75,10 @@ Matrix2D mBasic;
 void myLinearTransformationCallback(const LinearTransformationData& data)
 {
 	// TODO
-	mBasic.m[0][0] = data.m00; // a  | a  b |
-	mBasic.m[0][1] = data.m01; // b  | c  d |
-	mBasic.m[1][0] = data.m10; // c
-	mBasic.m[1][1] = data.m11; // d
+	mBasic.m[0] = data.m00; // a  | a  b |
+	mBasic.m[1] = data.m01; // b  | c  d |
+	mBasic.m[2] = data.m10; // c
+	mBasic.m[3] = data.m11; // d
 	vBasic.x = data.v0;
 	vBasic.y = data.v1;
 
@@ -103,9 +103,6 @@ void myAffineTransformationCallback(const AffineTransformationData& data)
 
 }
 
-
-
-
 const float span = .3;
 
 Vector2D bottomLeft(-span, -span);
@@ -125,19 +122,40 @@ Vector2D linesMatrixTransform[] = {
 
 int numLinesMatrixTransform = sizeof(linesMatrixTransform) / (sizeof(*linesMatrixTransform) * 2);
 
-Matrix2D matrices[20], currentTransform;
+Matrix3D matrices[20], currentTransform;
+int numMatrices = 1;
 
 void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 {
-	// TODO
+	numMatrices = (data.selectedMatrix > (numMatrices - 1)) ? data.selectedMatrix + 1 : numMatrices;
+	//currentTransform.m[7] = data.selectedMatrix;
+	//currentTransform.m[8] = numMatrices;
+
+	// Create Identity to start the callback
+	Matrix3D temp1;
+	temp1 = temp1 * temp1.ScaleX(data.scaleX);
+	temp1 = temp1 * temp1.ScaleY(data.scaleY);
+	temp1 = temp1 * temp1.Translation(data.translateX, data.translateY);
+	temp1 = temp1 * temp1.Rotation(data.rotate);
+	matrices[data.selectedMatrix] = temp1;
+
+	currentTransform = temp1;
+/*
+	for (int i = 0; i < numMatrices; i++ )
+	{
+		currentTransform = currentTransform * matrices[i];
+	}*/
+/*
 	data.rotate;
 	data.scaleX;
 	data.scaleY;
 	data.selectedMatrix;
 	data.translateX;
-	data.translateY;
-
+	data.translateY;*/
+/*
 	currentTransform = matrices[data.selectedMatrix];
+	currentTransform = currentTransform.ScaleX(data.scaleX);
+	currentTransform = currentTransform.ScaleX(data.scaleY);*/
 }
 
 void myMatrixTransformCallback3D(const MatrixTransformData3D& data)

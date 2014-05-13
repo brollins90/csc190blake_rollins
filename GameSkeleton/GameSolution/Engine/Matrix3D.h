@@ -44,9 +44,15 @@ namespace Engine
 
 		inline Matrix3D operator* (const Matrix3D& other)
 		{
+		// __        __
+		// | 0  1  2  |
+		// | 3  4  5  |
+		// | 6  7  8  |
+		// __        __
+
 			return Matrix3D(
 				m[0] * other.m[0] + m[1] * other.m[3], m[0] * other.m[1] + m[1] * other.m[4], m[0] * other.m[2] + m[1] * other.m[5] + m[2], 
-				m[3] * other.m[0] + m[4] * other.m[3], m[3] * other.m[1] + m[3] * other.m[5], m[3] * other.m[2] + m[4] * other.m[5] + m[5], 
+				m[3] * other.m[0] + m[4] * other.m[3], m[3] * other.m[1] + m[4] * other.m[4], m[3] * other.m[2] + m[4] * other.m[5] + m[5], 
 				0, 0, 1);
 		}
 
@@ -65,46 +71,50 @@ namespace Engine
 
 		inline Matrix3D Rotation( float angle )
 		{
-			// TODO
-			//
-			//
-			//
-			//
-			//
-			//
-			angle;
+			Matrix3D a;
+			return Matrix3D(a.m[0] * cos(angle), a.m[1] * sin(angle) * -1, a.m[2],
+							a.m[3] * sin(angle), a.m[4] * cos(angle),	   a.m[5],
+							a.m[6],				 a.m[7],				   a.m[8]);
 		}
 
 		inline Matrix3D Scale( float scale )
 		{
-			return Matrix3D(m[0] * scale,	m[1],			m[2],
-							m[3],			m[4] * scale,	m[5],
-							m[6],			m[7],			m[8]);
+			Matrix3D a;
+			return Matrix3D(a.m[0] * scale,	a.m[1],			a.m[2],
+							a.m[3],			a.m[4] * scale,	a.m[5],
+							a.m[6],			a.m[7],			a.m[8]);
 		}
 
 		inline Matrix3D ScaleX( float scale )
 		{
-			return Matrix3D(m[0] * scale,	m[1],			m[2],
-							m[3],			m[4],			m[5],
-							m[6],			m[7],			m[8]);
+			Matrix3D a;
+			return Matrix3D(a.m[0] * scale,	a.m[1],			a.m[2],
+							a.m[3],			a.m[4],			a.m[5],
+							a.m[6],			a.m[7],			a.m[8]);
 		}
 
 		inline Matrix3D ScaleY( float scale )
 		{
-			return Matrix3D(m[0],			m[1],			m[2],
-							m[3],			m[4] * scale,	m[5],
-							m[6],			m[7],			m[8]);
+			Matrix3D a;
+			return Matrix3D(a.m[0],			a.m[1],			a.m[2],
+							a.m[3],			a.m[4] * scale,	a.m[5],
+							a.m[6],			a.m[7],			a.m[8]);
 		}
 
 		inline Matrix3D Translation( float x, float y )
 		{
-			x;
-			y;
+			Matrix3D a;
+			return Matrix3D(a.m[0], a.m[1], a.m[2] * x,
+							a.m[3], a.m[4], a.m[5] * y,
+							a.m[6], a.m[7], a.m[8]);
 		}
 
 		inline Matrix3D Translation( Vector2D& t )
 		{
-			t;
+			Matrix3D a;
+			return Matrix3D(a.m[0], a.m[1], a.m[2] * t.x,
+							a.m[3], a.m[4], a.m[5] * t.y,
+							a.m[6], a.m[7], a.m[8]);
 		}
 	};
 }
