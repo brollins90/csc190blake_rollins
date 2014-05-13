@@ -71,50 +71,44 @@ namespace Engine
 
 		inline Matrix3D Rotation( float angle )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0] * cos(angle), a.m[1] * sin(angle) * -1, a.m[2],
-							a.m[3] * sin(angle), a.m[4] * cos(angle),	   a.m[5],
-							a.m[6],				 a.m[7],				   a.m[8]);
+			return Matrix3D(cos(angle), sin(angle) * -1, 0,
+							sin(angle), cos(angle),	     0,
+							0,			0,               1);
 		}
 
 		inline Matrix3D Scale( float scale )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0] * scale,	a.m[1],			a.m[2],
-							a.m[3],			a.m[4] * scale,	a.m[5],
-							a.m[6],			a.m[7],			a.m[8]);
+			return Matrix3D(scale, 0,	  0,
+							0,	   scale, 0,
+							0,     0,     1);
 		}
 
 		inline Matrix3D ScaleX( float scale )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0] * scale,	a.m[1],			a.m[2],
-							a.m[3],			a.m[4],			a.m[5],
-							a.m[6],			a.m[7],			a.m[8]);
+			return Matrix3D(scale, 0,	  0,
+							0,	   1,     0,
+							0,     0,     1);
 		}
 
 		inline Matrix3D ScaleY( float scale )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0],			a.m[1],			a.m[2],
-							a.m[3],			a.m[4] * scale,	a.m[5],
-							a.m[6],			a.m[7],			a.m[8]);
-		}
+			return Matrix3D(1, 0,	  0,
+							0, scale, 0,
+							0, 0,     1);
+		}		
 
 		inline Matrix3D Translation( float x, float y )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0], a.m[1], a.m[2] * x,
-							a.m[3], a.m[4], a.m[5] * y,
-							a.m[6], a.m[7], a.m[8]);
+			return Matrix3D(1, 0, x,
+							0, 1, y,
+							0, 0, 1);
 		}
 
 		inline Matrix3D Translation( Vector2D& t )
 		{
-			Matrix3D a;
-			return Matrix3D(a.m[0], a.m[1], a.m[2] * t.x,
-							a.m[3], a.m[4], a.m[5] * t.y,
-							a.m[6], a.m[7], a.m[8]);
+			return Matrix3D(1, 0, t.x,
+							0, 1, t.y,
+							0, 0, 1);
 		}
 	};
 }

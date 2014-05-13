@@ -139,12 +139,12 @@ void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 	temp1 = temp1 * temp1.Rotation(data.rotate);
 	matrices[data.selectedMatrix] = temp1;
 
-	currentTransform = temp1;
-/*
+	currentTransform = Matrix3D();
+
 	for (int i = 0; i < numMatrices; i++ )
 	{
 		currentTransform = currentTransform * matrices[i];
-	}*/
+	}
 /*
 	data.rotate;
 	data.scaleX;
