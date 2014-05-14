@@ -5,6 +5,8 @@ GameObject::GameObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, 
 	position = inPosition;
 	velocity = inVelocity;
 	shape = new Shape(numPoints, inShapepoints);
+	angle = 0;
+	scale = 1;
 }
 
 GameObject::~GameObject(void)
@@ -16,7 +18,11 @@ GameObject::~GameObject(void)
 
 void GameObject::draw( Core::Graphics& g )
 {
-	shape->draw(g, position);
+	Matrix3D temp;
+	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
+
+	shape->draw(g, temp);
+//	shape->draw(g, position);
 }
 
 void GameObject::update( float dt )

@@ -16,6 +16,7 @@ public:
 	void setFloat(int index, float f);
 	void setString(int index, std::string string);
 	void setShipMatrix(Engine::Matrix3D);
+	std::string floatToString(float f);
 };
 
 #endif

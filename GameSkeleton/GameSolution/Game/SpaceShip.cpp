@@ -15,6 +15,12 @@ void SpaceShip::setWallMode(WallMode newMode)
 void SpaceShip::draw (Core::Graphics& g)
 {
 	GameObject::draw(g);
+
+	Matrix3D temp;
+	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
+
+	myDrawThing->setShipMatrix(temp);
+
 }
 void SpaceShip::update (float dt)
 {
@@ -55,8 +61,7 @@ void SpaceShip::update (float dt)
 			{
 				Vector2D bounceVector = wallnormal * Vector2D::DotProduct(velocity, wallnormal);
 				velocity = velocity + (bounceVector * -2);
-
-
+				position = prevPos;
 			}
 		}
 

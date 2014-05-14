@@ -65,7 +65,23 @@ void DrawThing::setFloat(int index, float f)
 	strings[index] = ss.str();
 }
 
-void setShipMatrix(Engine::Matrix3D) 
+void DrawThing::setShipMatrix(Engine::Matrix3D m) 
 {
-	
+	strings[5] = floatToString(m.m[0]);
+	strings[6] = floatToString(m.m[1]);
+	strings[7] = floatToString(m.m[2]);
+	strings[8] = floatToString(m.m[3]);
+	strings[9] = floatToString(m.m[4]);
+	strings[10] = floatToString(m.m[5]);
+	strings[11] = floatToString(m.m[6]);
+	strings[12] = floatToString(m.m[7]);
+	strings[13] = floatToString(m.m[8]);
+}
+
+std::string DrawThing::floatToString(float f)
+{
+	std::stringstream ss;
+	ss << f;
+	return ss.str();
+
 }

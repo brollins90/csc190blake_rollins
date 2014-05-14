@@ -26,6 +26,16 @@ void Shape::draw( Core::Graphics& g, Vector2D& pos)
 	}
 }
 
+void Shape::draw( Core::Graphics& g, Matrix3D& m)
+{
+	for (int i = 0; i < NUM_POINTS; i++) 
+	{
+		const Vector2D& p1 = m * shapePoints[i];
+		const Vector2D& p2 = m * shapePoints[(i + 1) % NUM_POINTS];
+		g.DrawLine(p1.x, p1.y, p2.x, p2.y);
+	}
+}
+
 int Shape::getNumPoints()
 {
 	return NUM_POINTS;
