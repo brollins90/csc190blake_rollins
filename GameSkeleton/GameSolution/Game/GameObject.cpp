@@ -29,3 +29,8 @@ void GameObject::update( float dt )
 {
 	dt;
 };
+
+void GameObject::rotate(float angleInc)
+{
+	angle += angleInc;
+}

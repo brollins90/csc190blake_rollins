@@ -6,6 +6,8 @@ extern DrawThing* myDrawThing;
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
 	wMode = WRAP;
+	acceleration = Vector2D(100, 100);
+	rotationSpeed = 0.05F;
 }
 
 void SpaceShip::setWallMode(WallMode newMode)
@@ -30,19 +32,28 @@ void SpaceShip::update (float dt)
 
 	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
-		velocity.x += dt * 100;
+		//velocity.x += dt * 100;
+		GameObject::rotate( rotationSpeed);
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
-		velocity.x -= dt * 100;
+		//velocity.x -= dt * 100;
+		GameObject::rotate( -rotationSpeed);
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_UP))
-	{
-		velocity.y -= dt * 100;
+	{/*
+		Matrix3D rotationMatrix = Matrix3D() * rotationMatrix.Rotation(angle);
+		Vector2D accelerationRotated = rotationMatrix * (acceleration);
+		velocity = velocity - (dt * accelerationRotated);*/
+		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
+//		velocity.x -= dt * acceleration.x * sin(angle);
+//		velocity.y -= dt * acceleration.y * cos(angle);
+		//velocity.y -= dt * acceleration.x;
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
-		velocity.y += dt * 100;
+		velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));
+//		velocity.y += dt * acceleration.y;
 	}
 	position = position + velocity * dt;
 		

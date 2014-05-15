@@ -20,6 +20,7 @@ public:
 	~GameObject(void);
 	void draw( Core::Graphics& g );
 	void update( float dt);
+	void rotate(float angleInc);
 };
 
 #endif
