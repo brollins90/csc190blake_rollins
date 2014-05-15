@@ -18,7 +18,8 @@ DrawThing::DrawThing(void)
 	strings[11] = '0'; // Ship m 6
 	strings[12] = '0'; // Ship m 7
 	strings[13] = '0'; // Ship m 8
-	strings[14] = '0'; // 
+	strings[14] = '0'; // mouse x
+	strings[15] = '0'; // mouse y
 }
 
 DrawThing::~DrawThing(void)
@@ -51,6 +52,9 @@ void DrawThing::draw( Core::Graphics& g )
 	ss << "  " << strings[11] << "   " << strings[12] << "   " << strings[13] << " )";
 	g.DrawString(10, 110, ss.str().c_str());
 	ss.str(std::string());
+	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
+	g.DrawString(10, 125, ss.str().c_str());
+	ss.str(std::string());
 
 }
 void DrawThing::setString(int index, std::string string)
@@ -62,6 +66,13 @@ void DrawThing::setFloat(int index, float f)
 {
 	std::stringstream ss;
 	ss << f;
+	strings[index] = ss.str();
+}
+
+void DrawThing::setInt(int index, int i)
+{
+	std::stringstream ss;
+	ss << i;
 	strings[index] = ss.str();
 }
 
@@ -78,10 +89,24 @@ void DrawThing::setShipMatrix(Engine::Matrix3D m)
 	strings[13] = floatToString(m.m[8]);
 }
 
+void DrawThing::setMousePos(int x, int y)
+{
+	strings[14] = intToString(x);
+	strings[15] = intToString(y);
+}
+
 std::string DrawThing::floatToString(float f)
 {
 	std::stringstream ss;
 	ss << f;
+	return ss.str();
+
+}
+
+std::string DrawThing::intToString(int i)
+{
+	std::stringstream ss;
+	ss << i;
 	return ss.str();
 
 }

@@ -14,12 +14,15 @@ class SpaceShip : GameObject
 public:
 	WallMode wMode;
 	Vector2D acceleration;
+	int mousePosX, mousePosY;
+	GameObject* turret1;
 	float rotationSpeed;
-	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints);// : GameObject(inPosition, inVelocity, numPoints, inShapePoints);
+	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret);// : GameObject(inPosition, inVelocity, numPoints, inShapePoints);
 	void setWallMode(WallMode newMode);
 	void draw (Core::Graphics& g);
 	void update (float dt);
 	bool isOutOfBounds(Vector2D& pos);
+	void addTurret(GameObject* t);
 };
 
 #endif

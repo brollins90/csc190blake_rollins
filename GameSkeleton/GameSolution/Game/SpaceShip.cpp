@@ -3,11 +3,12 @@
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 
-SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
 	wMode = WRAP;
 	acceleration = Vector2D(100, 100);
 	rotationSpeed = 0.05F;
+	turret1 = inTurret;
 }
 
 void SpaceShip::setWallMode(WallMode newMode)
@@ -17,6 +18,7 @@ void SpaceShip::setWallMode(WallMode newMode)
 void SpaceShip::draw (Core::Graphics& g)
 {
 	GameObject::draw(g);
+	turret1->draw(g);
 
 	Matrix3D temp;
 	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
@@ -27,35 +29,34 @@ void SpaceShip::draw (Core::Graphics& g)
 void SpaceShip::update (float dt)
 {
 	Vector2D prevPos(position.x,position.y);
+	Core::Input::GetMousePos(mousePosX, mousePosY);
 
 	GameObject::update(dt);
+	turret1->update(dt);
 
 	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT))
 	{
-		//velocity.x += dt * 100;
 		GameObject::rotate( rotationSpeed);
+		turret1->rotate( rotationSpeed);
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_LEFT))
 	{
-		//velocity.x -= dt * 100;
 		GameObject::rotate( -rotationSpeed);
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_UP))
-	{/*
-		Matrix3D rotationMatrix = Matrix3D() * rotationMatrix.Rotation(angle);
-		Vector2D accelerationRotated = rotationMatrix * (acceleration);
-		velocity = velocity - (dt * accelerationRotated);*/
+	{
 		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
-//		velocity.x -= dt * acceleration.x * sin(angle);
-//		velocity.y -= dt * acceleration.y * cos(angle);
-		//velocity.y -= dt * acceleration.x;
 	}
 	if (Core::Input::IsPressed(Core::Input::KEY_DOWN))
 	{
 		velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));
-//		velocity.y += dt * acceleration.y;
 	}
 	position = position + velocity * dt;
+	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
+	{
+	}
+
+	turret1->setPosition(position);
 		
 	if (wMode == WALLS)
 	{
@@ -120,6 +121,7 @@ void SpaceShip::update (float dt)
 	myDrawThing->setFloat(3,velocity.x);
 	myDrawThing->setFloat(4,velocity.y);
 
+	myDrawThing->setMousePos(mousePosX, mousePosY);
 }
 
 bool SpaceShip::isOutOfBounds(Vector2D& pos)
@@ -139,4 +141,10 @@ bool SpaceShip::isOutOfBounds(Vector2D& pos)
 		}
 	}
 	return false;
+}
+
+
+void SpaceShip::addTurret(GameObject* t)
+{
+	turret1 = t;
 }

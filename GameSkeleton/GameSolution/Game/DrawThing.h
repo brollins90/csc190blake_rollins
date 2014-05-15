@@ -14,9 +14,12 @@ public:
 	~DrawThing(void);
 	void draw( Core::Graphics& g );
 	void setFloat(int index, float f);
+	void setInt(int index, int i);
 	void setString(int index, std::string string);
 	void setShipMatrix(Engine::Matrix3D);
 	std::string floatToString(float f);
+	std::string intToString(int i);
+	void setMousePos(int x, int y);
 };
 
 #endif

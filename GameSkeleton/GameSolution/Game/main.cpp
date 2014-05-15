@@ -25,6 +25,13 @@ Vector2D wallPoints[] =
 	Vector2D(512.0F,0.0F), //(SCREEN_WIDTH / 2), 0)
 };
 
+Vector2D turretPoints[] =
+{
+	Vector2D(+00.00F, -15.00F),
+	Vector2D(+05.00F, +00.00F),
+	Vector2D(-05.00F, +00.00)
+};
+
 Vector2D shipPoints[] =
 {
 	Vector2D(+00.00f, -28.50f),
@@ -73,7 +80,8 @@ WallMode gameMode = WRAP;
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 extern Shape* walls = new Shape(5, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
-SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints);
+GameObject turret1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
+SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1);
 Asteroid myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)
@@ -81,6 +89,7 @@ bool update(float dt)
 	wallsObj.update(dt);
 	myShip.update(dt);
 	myAsteroid.update(dt);
+	myShip.addTurret(&turret1);
 
 	if (Input::IsPressed( Input::KEY_ESCAPE ))
 	{

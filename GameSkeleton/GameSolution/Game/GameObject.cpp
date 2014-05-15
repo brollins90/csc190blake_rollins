@@ -34,3 +34,8 @@ void GameObject::rotate(float angleInc)
 {
 	angle += angleInc;
 }
+
+void GameObject::setPosition(const Vector2D& pos)
+{
+	position = pos;
+}

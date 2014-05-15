@@ -21,6 +21,7 @@ public:
 	void draw( Core::Graphics& g );
 	void update( float dt);
 	void rotate(float angleInc);
+	void setPosition(const Vector2D& pos);
 };
 
 #endif
