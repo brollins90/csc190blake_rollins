@@ -9,7 +9,6 @@ Asteroid::Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vect
 	pathShape = new Shape(numPathPoints, inPathPoints);
 }
 
-
 void Asteroid::draw (Core::Graphics& g)
 {
 	Matrix3D temp;

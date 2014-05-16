@@ -8,14 +8,11 @@
 #include "GameObject.h"
 #include "DrawThing.h"
 
-
 class Asteroid : GameObject
 {
 private:
-	//int NUM_PATH_POINTS;
 	int pointInPath;
 	float curPercentage;
-	//Vector2D* pathPoints;
 	Shape* pathShape;
 public:
 	Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints);

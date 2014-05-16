@@ -1,4 +1,3 @@
-
 #include "DrawThing.h"
 
 DrawThing::DrawThing(void)
@@ -22,6 +21,8 @@ DrawThing::DrawThing(void)
 	strings[15] = '0'; // mouse y
 	strings[16] = '0'; // 
 	strings[17] = '0'; // 
+	strings[18] = '0'; // 
+	strings[19] = '0'; //
 }
 
 DrawThing::~DrawThing(void)
@@ -29,7 +30,7 @@ DrawThing::~DrawThing(void)
 	delete strings;
 }
 
-void DrawThing::draw( Core::Graphics& g )
+void DrawThing::draw(Core::Graphics& g)
 {
 	g.DrawString(10, 5, "Press 1, 2, or 3 to change the wall type");
 	std::stringstream ss;
@@ -60,11 +61,27 @@ void DrawThing::draw( Core::Graphics& g )
 	ss << "t rotate: (" << strings[16] << "," << strings[17] << ")";
 	g.DrawString(10, 140, ss.str().c_str());
 	ss.str(std::string());
-
 }
-void DrawThing::setString(int index, std::string string)
+
+std::string DrawThing::floatToString(float f)
 {
-	strings[index] = string;
+	std::stringstream ss;
+	ss << f;
+	return ss.str();
+}
+
+std::string DrawThing::intToString(int i)
+{
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
+}
+
+void DrawThing::setDouble(int index, double d)
+{
+	std::stringstream ss;
+	ss << d;
+	strings[index] = ss.str();
 }
 
 void DrawThing::setFloat(int index, float f)
@@ -81,11 +98,10 @@ void DrawThing::setInt(int index, int i)
 	strings[index] = ss.str();
 }
 
-void DrawThing::setDouble(int index, double d)
+void DrawThing::setMousePos(int x, int y)
 {
-	std::stringstream ss;
-	ss << d;
-	strings[index] = ss.str();
+	strings[14] = intToString(x);
+	strings[15] = intToString(y);
 }
 
 void DrawThing::setShipMatrix(Engine::Matrix3D m) 
@@ -101,24 +117,7 @@ void DrawThing::setShipMatrix(Engine::Matrix3D m)
 	strings[13] = floatToString(m.m[8]);
 }
 
-void DrawThing::setMousePos(int x, int y)
+void DrawThing::setString(int index, std::string string)
 {
-	strings[14] = intToString(x);
-	strings[15] = intToString(y);
-}
-
-std::string DrawThing::floatToString(float f)
-{
-	std::stringstream ss;
-	ss << f;
-	return ss.str();
-
-}
-
-std::string DrawThing::intToString(int i)
-{
-	std::stringstream ss;
-	ss << i;
-	return ss.str();
-
+	strings[index] = string;
 }

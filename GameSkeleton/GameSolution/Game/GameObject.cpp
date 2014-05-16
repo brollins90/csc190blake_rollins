@@ -16,13 +16,14 @@ GameObject::~GameObject(void)
 	delete shape;
 }
 
+void GameObject::draw( Core::Graphics& g)
+{
+	shape->draw(g, position);
+}
+
 void GameObject::draw( Core::Graphics& g, Matrix3D& temp )
 {
-	//Matrix3D temp;
-	//temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
-
 	shape->draw(g, temp);
-	//shape->draw(g, position);
 }
 //
 //void GameObject::draw(Core::Graphics& g, Matrix3D m) 
