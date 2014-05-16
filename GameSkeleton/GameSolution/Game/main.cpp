@@ -115,7 +115,8 @@ bool update(float dt)
 
 void draw( Core::Graphics& g )
 {
-	wallsObj.draw(g);
+	Matrix3D t = Matrix3D();
+	wallsObj.draw(g, t);
 	myShip.draw(g);
 	myAsteroid.draw(g);
 	myDrawThing->draw(g);

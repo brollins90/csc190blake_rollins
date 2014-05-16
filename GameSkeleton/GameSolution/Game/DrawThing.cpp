@@ -20,6 +20,8 @@ DrawThing::DrawThing(void)
 	strings[13] = '0'; // Ship m 8
 	strings[14] = '0'; // mouse x
 	strings[15] = '0'; // mouse y
+	strings[16] = '0'; // 
+	strings[17] = '0'; // 
 }
 
 DrawThing::~DrawThing(void)
@@ -55,6 +57,9 @@ void DrawThing::draw( Core::Graphics& g )
 	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
 	g.DrawString(10, 125, ss.str().c_str());
 	ss.str(std::string());
+	ss << "t rotate: (" << strings[16] << "," << strings[17] << ")";
+	g.DrawString(10, 140, ss.str().c_str());
+	ss.str(std::string());
 
 }
 void DrawThing::setString(int index, std::string string)
@@ -73,6 +78,13 @@ void DrawThing::setInt(int index, int i)
 {
 	std::stringstream ss;
 	ss << i;
+	strings[index] = ss.str();
+}
+
+void DrawThing::setDouble(int index, double d)
+{
+	std::stringstream ss;
+	ss << d;
 	strings[index] = ss.str();
 }
 

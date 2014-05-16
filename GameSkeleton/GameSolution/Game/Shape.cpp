@@ -36,6 +36,11 @@ void Shape::draw( Core::Graphics& g, Matrix3D& m)
 	}
 }
 
+void Shape::addMatrixTranslation(Matrix3D& t)
+{
+	translation = Matrix3D(t);
+}
+
 int Shape::getNumPoints()
 {
 	return NUM_POINTS;

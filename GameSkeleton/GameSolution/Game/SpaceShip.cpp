@@ -17,13 +17,32 @@ void SpaceShip::setWallMode(WallMode newMode)
 }
 void SpaceShip::draw (Core::Graphics& g)
 {
-	GameObject::draw(g);
-	turret1->draw(g);
 
 	Matrix3D temp;
 	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
+	
+	GameObject::draw(g, temp);
 
-	myDrawThing->setShipMatrix(temp);
+	Core::Input::GetMousePos(mousePosX, mousePosY);
+
+	
+		Vector2D mousePos((float)mousePosX, (float)mousePosY);
+		Vector2D mouseFromShip = position - mousePos;
+		Vector2D mouseFromShipNormal = mouseFromShip.Normalize();
+
+
+		//Matrix3D temp2(mouseFromShip.PerpCW(), mouseFromShip);
+
+		//temp2 = temp2 * temp2.Translation(position);
+
+		Matrix3D temp3;
+	temp3 = /*temp2 **/ temp3.Translation(position.x, position.y) * Matrix3D(mouseFromShipNormal.PerpCW(), mouseFromShipNormal) * temp3.Scale(scale);
+	
+
+	//Matrix3D t = Matrix3D();
+	turret1->draw(g, temp3);
+
+	myDrawThing->setShipMatrix(temp3);
 
 }
 void SpaceShip::update (float dt)
@@ -34,29 +53,41 @@ void SpaceShip::update (float dt)
 	GameObject::update(dt);
 	turret1->update(dt);
 
-	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT))
+	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT) || Core::Input::IsPressed('D'))
 	{
 		GameObject::rotate( rotationSpeed);
-		turret1->rotate( rotationSpeed);
+		//turret1->rotate( rotationSpeed);
 	}
-	if (Core::Input::IsPressed(Core::Input::KEY_LEFT))
+	if (Core::Input::IsPressed(Core::Input::KEY_LEFT) || Core::Input::IsPressed('A'))
 	{
 		GameObject::rotate( -rotationSpeed);
 	}
-	if (Core::Input::IsPressed(Core::Input::KEY_UP))
+	if (Core::Input::IsPressed(Core::Input::KEY_UP) || Core::Input::IsPressed('W'))
 	{
 		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
 	}
-	if (Core::Input::IsPressed(Core::Input::KEY_DOWN))
+	if (Core::Input::IsPressed(Core::Input::KEY_DOWN) || Core::Input::IsPressed('S'))
 	{
 		velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));
 	}
 	position = position + velocity * dt;
-	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT))
+	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT) || Core::Input::IsPressed(' '))
 	{
+		Vector2D mousePos((float)mousePosX, (float)mousePosY);
+
+		Vector2D mouseFromShip = mousePos - position.Normalize();
+		Matrix3D temp(mouseFromShip, mouseFromShip.PerpCCW());
+
+		temp = temp.Translation(position);
+
+		//double turretAngle = atan2(mousePosX, mousePosY); //acos( position.DotProduct(position.Normalize(), mousePos.Normalize()));
+		//myDrawThing->setDouble(16, turretAngle);
+		//turret1->angle = 0;
+//		turret1->draw(temp);
 	}
 
 	turret1->setPosition(position);
+	//myDrawThing->setDouble(16, angle);
 		
 	if (wMode == WALLS)
 	{

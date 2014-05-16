@@ -12,7 +12,10 @@ Asteroid::Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vect
 
 void Asteroid::draw (Core::Graphics& g)
 {
-	GameObject::draw(g);
+	Matrix3D temp;
+	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
+	
+	GameObject::draw(g, temp);
 }
 
 void Asteroid::update (float dt)
