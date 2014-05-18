@@ -1,15 +1,15 @@
-#include "Asteroid.h"
+#include "LerpingObject.h"
 
 extern DrawThing* myDrawThing;
 
-Asteroid::Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+LerpingObject::LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
 	pointInPath = 0;
 	curPercentage = 0.0f;
 	pathShape = new Shape(numPathPoints, inPathPoints);
 }
 
-void Asteroid::draw (Core::Graphics& g)
+void LerpingObject::draw (Core::Graphics& g)
 {
 	Matrix3D temp;
 	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
@@ -17,7 +17,7 @@ void Asteroid::draw (Core::Graphics& g)
 	GameObject::draw(g, temp);
 }
 
-void Asteroid::update (float dt)
+void LerpingObject::update (float dt)
 {
 	GameObject::update(dt);
 	

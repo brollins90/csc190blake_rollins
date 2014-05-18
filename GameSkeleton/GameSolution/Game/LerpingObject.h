@@ -8,14 +8,14 @@
 #include "GameObject.h"
 #include "DrawThing.h"
 
-class Asteroid : GameObject
+class LerpingObject : GameObject
 {
 private:
 	int pointInPath;
 	float curPercentage;
 	Shape* pathShape;
 public:
-	Asteroid(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints);
+	LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints);
 	void draw (Core::Graphics& g);
 	void update (float dt);
 };

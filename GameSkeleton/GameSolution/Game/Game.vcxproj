@@ -86,7 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Asteroid.cpp" />
+    <ClCompile Include="LerpingObject.cpp" />
     <ClCompile Include="DrawThing.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -94,7 +94,7 @@
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="LerpingObject.h" />
     <ClInclude Include="DrawThing.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Shape.h" />

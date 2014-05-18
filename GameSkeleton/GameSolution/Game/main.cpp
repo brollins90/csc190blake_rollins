@@ -6,7 +6,7 @@
 #include "GameObject.h"
 #include "WallMode.h"
 #include "SpaceShip.h"
-#include "Asteroid.h"
+#include "LerpingObject.h"
 
 using Engine::Vector2D;
 using Core::Input;
@@ -82,7 +82,7 @@ extern Shape* walls = new Shape(5, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
 GameObject turret1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
 SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1);
-Asteroid myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
+LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)
 {

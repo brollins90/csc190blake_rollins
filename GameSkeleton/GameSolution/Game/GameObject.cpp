@@ -21,15 +21,10 @@ void GameObject::draw( Core::Graphics& g)
 	shape->draw(g, position);
 }
 
-void GameObject::draw( Core::Graphics& g, Matrix3D& temp )
+void GameObject::draw( Core::Graphics& g, Matrix3D& m )
 {
-	shape->draw(g, temp);
+	shape->draw(g, m);
 }
-//
-//void GameObject::draw(Core::Graphics& g, Matrix3D m) 
-//{
-//	
-//}
 
 void GameObject::update( float dt )
 {

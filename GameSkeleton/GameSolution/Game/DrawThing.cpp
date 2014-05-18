@@ -58,7 +58,7 @@ void DrawThing::draw(Core::Graphics& g)
 	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
 	g.DrawString(10, 125, ss.str().c_str());
 	ss.str(std::string());
-	ss << "t rotate: (" << strings[16] << "," << strings[17] << ")";
+	ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << ")";
 	g.DrawString(10, 140, ss.str().c_str());
 	ss.str(std::string());
 }
