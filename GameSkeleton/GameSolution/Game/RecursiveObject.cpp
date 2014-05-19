@@ -27,26 +27,18 @@ void RecursiveObject::draw(Core::Graphics& g, Matrix3D m)
 
 	if (hasChild) 
 	{
-//		m = m.Translation(position);
 		m = m * m.Rotation(subObject->angle) * m.Translation(100, 100);
-
-		//Matrix3D temp;
-//		temp = temp * temp.Rotation(subObject->angle) * temp.Translation(subObject->position) * temp.Scale(subObject->scale);
-//		temp = temp * temp.Rotation(subObject->angle);
 		subObject->draw(g, m);
 	}
 }
 
 void RecursiveObject::update (float dt)
 {
-//		position = position + 2;
 	if (hasChild) 
 	{
 		subObject->update(dt);
 		subObject->position = Vector2D(position.x, position.y);
 		subObject->angle = subObject->angle - (.1F);
-		//subObject->position = subObject->position + 2;
-
 	}
 	GameObject::update(dt);
 }

@@ -10,7 +10,6 @@ namespace Engine
 	public:
 		float x, y;
 		Engine::Vector2D(float x = 0, float y = 0) : x(x), y(y) {}
-//		Engine::Vector2D(int x = 0, int y = 0) : x(x), y(y) {}
 
 		std::ostream& operator<<(std::ostream& stream)
 		{
