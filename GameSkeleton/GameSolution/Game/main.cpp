@@ -81,7 +81,8 @@ GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 extern Shape* walls = new Shape(5, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
 GameObject turret1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
-SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1);
+GameObject laser1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
+SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1,&laser1);
 LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
 bool update(float dt)

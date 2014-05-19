@@ -3,12 +3,19 @@
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 
-SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+const int laserSpeed = 10;
+
+SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
 	wMode = WRAP;
 	acceleration = Vector2D(100, 100);
 	rotationSpeed = 0.05F;
 	turret1 = inTurret;
+	laser1 = inLaser;
+	laserStart = Vector2D();
+	laserEnd = Vector2D();
+	laserPercentage = 0;
+	laserFired = false;
 }
 
 void SpaceShip::setWallMode(WallMode newMode)
@@ -17,34 +24,40 @@ void SpaceShip::setWallMode(WallMode newMode)
 }
 void SpaceShip::draw (Core::Graphics& g)
 {
-
-	Matrix3D temp;
-	temp = temp * temp.Translation(position.x, position.y) * temp.Rotation(angle) * temp.Scale(scale);
+	// Draw the SpaceShip
+	Matrix3D spaceShipTranslation;
+	spaceShipTranslation = spaceShipTranslation * spaceShipTranslation.Translation(position.x, position.y) * spaceShipTranslation.Rotation(angle) * spaceShipTranslation.Scale(scale);
 	
-	GameObject::draw(g, temp);
+	GameObject::draw(g, spaceShipTranslation);
+	myDrawThing->setShipMatrix(spaceShipTranslation);
 
+	// Figure out the Turret
 	Core::Input::GetMousePos(mousePosX, mousePosY);
+	Vector2D mousePos((float)mousePosX, (float)mousePosY);
+	Vector2D mouseFromShip = position - mousePos;
+	Vector2D mouseFromShipNormal = mouseFromShip.Normalize();
+
+	// Draw the Turret
+	Matrix3D turretRotate = Matrix3D(mouseFromShipNormal.PerpCW(), mouseFromShipNormal);
+	Matrix3D turretTranslation;
+	turretTranslation = turretTranslation.Translation(position.x, position.y) * turretRotate * turretTranslation.Scale(scale);
+	
+	turret1->draw(g, turretTranslation);
+
+	// Draw the laser
+	if (laserPercentage > 0) 
+	{
+		Matrix3D laserTranslation;
+		laserTranslation = laserTranslation * laserTranslation.Translation(laser1->position.x, laser1->position.y) * turretRotate;// laserTranslation.Rotation(laser1->angle) * laserTranslation.Scale(laser1->scale);
+		laser1->draw(g, laserTranslation);
+	}
 
 	
-		Vector2D mousePos((float)mousePosX, (float)mousePosY);
-		Vector2D mouseFromShip = position - mousePos;
-		Vector2D mouseFromShipNormal = mouseFromShip.Normalize();
-
-
-		//Matrix3D temp2(mouseFromShip.PerpCW(), mouseFromShip);
-
-		//temp2 = temp2 * temp2.Translation(position);
-
-		Matrix3D temp3;
-	temp3 = /*temp2 **/ temp3.Translation(position.x, position.y) * Matrix3D(mouseFromShipNormal.PerpCW(), mouseFromShipNormal) * temp3.Scale(scale);
-	
-
-	//Matrix3D t = Matrix3D();
-	turret1->draw(g, temp3);
-
-	myDrawThing->setShipMatrix(temp);
+	myDrawThing->setFloat(16, laser1->position.x);
+	myDrawThing->setFloat(17, laser1->position.y);
 
 }
+
 void SpaceShip::update (float dt)
 {
 	Vector2D prevPos(position.x,position.y);
@@ -55,37 +68,53 @@ void SpaceShip::update (float dt)
 
 	// Right
 	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT) || Core::Input::IsPressed('D'))
-	{
-		GameObject::rotate( rotationSpeed);
-	}
+	{ GameObject::rotate( rotationSpeed); }
 
 	// Left
 	if (Core::Input::IsPressed(Core::Input::KEY_LEFT) || Core::Input::IsPressed('A'))
-	{
-		GameObject::rotate( -rotationSpeed);
-	}
+	{ GameObject::rotate( -rotationSpeed); }
 
 	// Up
 	if (Core::Input::IsPressed(Core::Input::KEY_UP) || Core::Input::IsPressed('W'))
-	{
-		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
-	}
+	{ velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle))); }
 
 	// Down
 	if (Core::Input::IsPressed(Core::Input::KEY_DOWN) || Core::Input::IsPressed('S'))
-	{
-		velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));
-	}
+	{ velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));	}
+
 	position = position + velocity * dt;
 	
 	// Left Click
 	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT) || Core::Input::IsPressed(' '))
-	{
+	{ 
+		if (laserPercentage == 0)
+		{
+			laserStart = Vector2D(position.x, position.y);
+			laserEnd = Vector2D((float)mousePosX, (float)mousePosY);
+			Vector2D laserPath = laserEnd - laserStart;
+			float laserPathLength = laserPath.Length();
+			float laserTimeUnit = (laserSpeed / laserPathLength);
+			laserPercentage += laserTimeUnit;
+		}	
 	}
 
 	turret1->setPosition(position);
-	//myDrawThing->setDouble(16, angle);
+
+	if (laserPercentage > 0) 
+	{
+		Vector2D laserPath = laserEnd - laserStart;
+		float laserPathLength = laserPath.Length();
+		float laserTimeUnit = (laserSpeed / laserPathLength);
+		laserPercentage += laserTimeUnit;
+		laser1->position = Vector2D::LERP(laserStart, laserEnd, laserPercentage);
 		
+		if (isOutOfBounds(laser1->position) )
+		{
+			laserPercentage = 0;
+		}	
+	}
+
+
 	if (wMode == WALLS)
 	{
 		for (int i =0 ; i < walls->getNumPoints(); i++)
@@ -104,46 +133,23 @@ void SpaceShip::update (float dt)
 				position = prevPos;
 			}
 		}
-
 	}
+
 	if (wMode == BOUNCE || wMode == WALLS)
 	{
-		if (position.x < 0)
-		{
-			velocity.x *= -1;
-		}
-		if (position.x > 1024)
-		{
-			velocity.x *= -1;
-		}
-		if (position.y < 0)
-		{
-			velocity.y *= -1;
-		}
-		if (position.y > 768)
-		{
-			velocity.y *= -1;
-		}
+		if (position.x < 0) { velocity.x *= -1; }
+		if (position.x > 1024) { velocity.x *= -1; }
+		if (position.y < 0) { velocity.y *= -1; }
+		if (position.y > 768) { velocity.y *= -1; }
 	}
 	if (wMode == WRAP)
 	{
-		if (position.x < 0)
-		{
-			position.x = 1024;
-		}
-		if (position.x > 1024) 
-		{
-			position.x = 0;
-		}
-		if (position.y < 0)
-		{
-			position.y = 768;
-		}
-		if (position.y > 768) 
-		{
-			position.y = 0;
-		}
+		if (position.x < 0) { position.x = 1024; }
+		if (position.x > 1024) { position.x = 0; }
+		if (position.y < 0) { position.y = 768; }
+		if (position.y > 768) { position.y = 0; }
 	}
+
 	myDrawThing->setFloat(1,position.x);
 	myDrawThing->setFloat(2,position.y);
 	myDrawThing->setFloat(3,velocity.x);
