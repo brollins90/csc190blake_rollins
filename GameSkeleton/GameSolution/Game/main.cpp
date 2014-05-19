@@ -7,6 +7,7 @@
 #include "WallMode.h"
 #include "SpaceShip.h"
 #include "LerpingObject.h"
+#include "RecursiveObject.h"
 
 using Engine::Vector2D;
 using Core::Input;
@@ -85,12 +86,37 @@ GameObject laser1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
 SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1,&laser1);
 LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
 
+Vector2D square[] =
+{
+	Vector2D(-50.0F, -50.0F),
+	Vector2D(+00.0F, -75.0F),
+	Vector2D(+50.0F, -50.0F),
+	Vector2D(+50.0F, +50.0F),
+	Vector2D(-50.0F, +50.0F)
+};
+
+RecursiveObject r1(Vector2D(200,200), Vector2D(5,5), 5, square, NULL, false);
+RecursiveObject r2(Vector2D(300,300), Vector2D(5,5), 5, square, &r1, true);
+RecursiveObject r3(Vector2D(400,400), Vector2D(5,5), 5, square, &r2, true);
+
+
+
+
+
 bool update(float dt)
 {
 	wallsObj.update(dt);
 	myShip.update(dt);
 	myAsteroid.update(dt);
 	myShip.addTurret(&turret1);
+	r3.update(dt);
+	
+	myDrawThing->setFloat(16, r3.position.x);
+	myDrawThing->setFloat(17, r3.position.y);
+	myDrawThing->setFloat(18, r2.position.x);
+	myDrawThing->setFloat(19, r2.position.y);
+	myDrawThing->setFloat(20, r1.position.x);
+	myDrawThing->setFloat(21, r1.position.y);
 
 	if (Input::IsPressed( Input::KEY_ESCAPE ))
 	{
@@ -121,10 +147,12 @@ void draw( Core::Graphics& g )
 	myShip.draw(g);
 	myAsteroid.draw(g);
 	myDrawThing->draw(g);
+	r3.draw(g, Matrix3D().Translation(r3.position));
 }
 
 void main()
 {
+	laser1.scale = .25F;
 	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn( update );
 	Core::RegisterDrawFn( draw );

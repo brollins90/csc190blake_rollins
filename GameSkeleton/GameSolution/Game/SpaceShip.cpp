@@ -53,8 +53,6 @@ void SpaceShip::draw (Core::Graphics& g)
 	}
 
 	
-	myDrawThing->setFloat(16, laser1->position.x);
-	myDrawThing->setFloat(17, laser1->position.y);
 
 }
 

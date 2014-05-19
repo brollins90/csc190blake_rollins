@@ -23,6 +23,7 @@ void GameObject::draw( Core::Graphics& g)
 
 void GameObject::draw( Core::Graphics& g, Matrix3D& m )
 {
+	m = m * m.Scale(scale);
 	shape->draw(g, m);
 }
 
