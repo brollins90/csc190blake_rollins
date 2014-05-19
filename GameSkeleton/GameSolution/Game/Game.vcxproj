@@ -90,7 +90,6 @@
     <ClCompile Include="DrawThing.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RecursiveObject.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
@@ -98,7 +97,6 @@
     <ClInclude Include="LerpingObject.h" />
     <ClInclude Include="DrawThing.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="RecursiveObject.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="WallMode.h" />

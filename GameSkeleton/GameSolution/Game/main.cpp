@@ -7,7 +7,7 @@
 #include "WallMode.h"
 #include "SpaceShip.h"
 #include "LerpingObject.h"
-#include "RecursiveObject.h"
+//#include "RecursiveObject.h"
 
 using Engine::Vector2D;
 using Core::Input;
@@ -26,13 +26,34 @@ Vector2D wallPoints[] =
 	Vector2D(512.0F,0.0F), //(SCREEN_WIDTH / 2), 0)
 };
 
+int numTurretPoints = 16;
 Vector2D turretPoints[] =
 {
-	Vector2D(+00.00F, -15.00F),
-	Vector2D(+05.00F, +00.00F),
-	Vector2D(-05.00F, +00.00)
+	Vector2D(-08.0F, +10.0F),
+	Vector2D(-08.0F, -08.0F),
+	Vector2D(-07.0F, -08.0F),
+	Vector2D(-07.0F, -14.0F),
+	Vector2D(-05.0F, -14.0F),
+	Vector2D(-05.0F, -08.0F),
+	Vector2D(-03.0F, -08.0F),
+	Vector2D(-03.0F, -06.0F),
+	Vector2D(+03.0F, -06.0F),
+	Vector2D(+03.0F, -08.0F),
+	Vector2D(+05.0F, -08.0F),
+	Vector2D(+05.0F, -14.0F),
+	Vector2D(+07.0F, -14.0F),
+	Vector2D(+07.0F, -08.0F),
+	Vector2D(+08.0F, -08.0F),
+	Vector2D(+08.0F, +10.0F),
+
+
+
+	//Vector2D(+00.00F, -15.00F),
+	//Vector2D(+05.00F, +00.00F),
+	//Vector2D(-05.00F, +00.00)
 };
 
+int numShipPoints = 15;
 Vector2D shipPoints[] =
 {
 	Vector2D(+00.00f, -28.50f),
@@ -52,6 +73,7 @@ Vector2D shipPoints[] =
 	Vector2D(-06.00f, +05.25f)
 };
 
+int numAsteroidPoints = 11;
 Vector2D asteroidPoints[] =
 {
 	Vector2D(-33.0f, +00.0f),
@@ -75,16 +97,25 @@ Vector2D asteroidPathPoints[] =
 	Vector2D(+050.0f, +100.0f)
 };
 
+int numAsteroidPathPoints2 = 4;
+Vector2D asteroidPathPoints2[] =
+{
+	Vector2D(+824.0f, +100.0f),
+	Vector2D(+700.0f, +500.0f),
+	Vector2D(+600.0f, +200.0f),
+	Vector2D(+050.0f, +100.0f)
+};
+
 
 
 WallMode gameMode = WRAP;
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 extern Shape* walls = new Shape(5, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
-GameObject turret1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
+GameObject turret1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
 GameObject laser1(Vector2D(0,0),Vector2D(0,0),3, turretPoints);
 SpaceShip myShip(Vector2D((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2)),Vector2D(0,0),15, shipPoints,&turret1,&laser1);
-LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), 11, asteroidPoints, 4, asteroidPathPoints);
+LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, 4, asteroidPathPoints, false, NULL);
 
 Vector2D square[] =
 {
@@ -95,9 +126,9 @@ Vector2D square[] =
 	Vector2D(-50.0F, +50.0F)
 };
 
-RecursiveObject r1(Vector2D(200,200), Vector2D(5,5), 5, square, NULL, false);
-RecursiveObject r2(Vector2D(300,300), Vector2D(5,5), 5, square, &r1, true);
-RecursiveObject r3(Vector2D(400,400), Vector2D(5,5), 5, square, &r2, true);
+LerpingObject r1(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);
+LerpingObject r2(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, &r1);
+LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
 
 
 
@@ -142,11 +173,13 @@ bool update(float dt)
 
 void draw( Core::Graphics& g )
 {
+	g.SetColor(RGB(255,255,255));
 	Matrix3D t = Matrix3D();
 	wallsObj.draw(g, t);
 	myShip.draw(g);
-	myAsteroid.draw(g);
+	myAsteroid.draw(g, Matrix3D().Translation(myAsteroid.position));
 	myDrawThing->draw(g);
+	g.SetColor(RGB(128,128,128));
 	r3.draw(g, Matrix3D().Translation(r3.position));
 }
 

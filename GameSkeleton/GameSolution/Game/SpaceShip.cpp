@@ -7,7 +7,7 @@ const int laserSpeed = 10;
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
-	wMode = WRAP;
+	wMode = WALLS;
 	acceleration = Vector2D(100, 100);
 	rotationSpeed = 0.05F;
 	turret1 = inTurret;

@@ -42,31 +42,33 @@ void DrawThing::draw(Core::Graphics& g)
 	std::stringstream ss;
 	ss << "Current wall type is : " << strings[0];
 	g.DrawString(10, 20, ss.str().c_str());
+	g.DrawString(10, 35, "Move the ship with the arrow or WASD keys");
+	g.DrawString(10, 50, "Fire a missle with the left mouse button or spacebar");
 	ss.str(std::string());
 	ss << "Ship position: (" << strings[1] << "," << strings[2] << ")";
-	g.DrawString(10, 35, ss.str().c_str());
-	ss.str(std::string());
-	ss << "Ship velocity: (" << strings[3] << "," << strings[4] << ")";
-	g.DrawString(10, 50, ss.str().c_str());
-	ss.str(std::string());
-	ss << "Ship matrix: ";
 	g.DrawString(10, 65, ss.str().c_str());
 	ss.str(std::string());
-	ss << "( " << strings[5] << "   " << strings[6] << "   " << strings[7];
+	ss << "Ship velocity: (" << strings[3] << "," << strings[4] << ")";
 	g.DrawString(10, 80, ss.str().c_str());
 	ss.str(std::string());
-	ss << "  " << strings[8] << "   " << strings[9] << "   " << strings[10];
+	ss << "Ship matrix: ";
 	g.DrawString(10, 95, ss.str().c_str());
 	ss.str(std::string());
-	ss << "  " << strings[11] << "   " << strings[12] << "   " << strings[13] << " )";
+	ss << "( " << strings[5] << "   " << strings[6] << "   " << strings[7];
 	g.DrawString(10, 110, ss.str().c_str());
 	ss.str(std::string());
-	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
+	ss << "  " << strings[8] << "   " << strings[9] << "   " << strings[10];
 	g.DrawString(10, 125, ss.str().c_str());
 	ss.str(std::string());
-	ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << "," << strings[20] << "," << strings[21] << "," << strings[22] << ")";
+	ss << "  " << strings[11] << "   " << strings[12] << "   " << strings[13] << " )";
 	g.DrawString(10, 140, ss.str().c_str());
 	ss.str(std::string());
+	//ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
+	//g.DrawString(10, 155, ss.str().c_str());
+	//ss.str(std::string());
+	//ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << "," << strings[20] << "," << strings[21] << "," << strings[22] << ")";
+	//g.DrawString(10, 170, ss.str().c_str());
+	//ss.str(std::string());
 }
 
 std::string DrawThing::floatToString(float f)
