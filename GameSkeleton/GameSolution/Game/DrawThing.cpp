@@ -45,24 +45,48 @@ void DrawThing::draw(Core::Graphics& g)
 	g.DrawString(10, 35, "Move the ship with the arrow or WASD keys");
 	g.DrawString(10, 50, "Fire a missle with the left mouse button or spacebar");
 	ss.str(std::string());
-	ss << "Ship position: (" << strings[1] << "," << strings[2] << ")";
+	ss << "Ship position: (" << strings[1] << "\t," << strings[2] << ")";
 	g.DrawString(10, 65, ss.str().c_str());
 	ss.str(std::string());
-	ss << "Ship velocity: (" << strings[3] << "," << strings[4] << ")";
+	ss << "Ship velocity: (" << strings[3] << "\t," << strings[4] << ")";
 	g.DrawString(10, 80, ss.str().c_str());
 	ss.str(std::string());
 	ss << "Ship matrix: ";
 	g.DrawString(10, 95, ss.str().c_str());
+	
 	ss.str(std::string());
-	ss << "( " << strings[5] << "   " << strings[6] << "   " << strings[7];
+	ss << "( " ;
 	g.DrawString(10, 110, ss.str().c_str());
 	ss.str(std::string());
-	ss << "  " << strings[8] << "   " << strings[9] << "   " << strings[10];
-	g.DrawString(10, 125, ss.str().c_str());
+	ss << strings[5];
+	g.DrawString(35, 110, ss.str().c_str());
 	ss.str(std::string());
-	ss << "  " << strings[11] << "   " << strings[12] << "   " << strings[13] << " )";
-	g.DrawString(10, 140, ss.str().c_str());
+	ss << strings[6];
+	g.DrawString(85, 110, ss.str().c_str());
 	ss.str(std::string());
+	ss << strings[7];
+	g.DrawString(135, 110, ss.str().c_str());
+	
+	ss.str(std::string());
+	ss << strings[8];
+	g.DrawString(35, 125, ss.str().c_str());
+	ss.str(std::string());
+	ss << strings[9];
+	g.DrawString(85, 125, ss.str().c_str());
+	ss.str(std::string());
+	ss << strings[10];
+	g.DrawString(135, 125, ss.str().c_str());
+	
+	ss.str(std::string());
+	ss << strings[11];
+	g.DrawString(35, 140, ss.str().c_str());
+	ss.str(std::string());
+	ss << strings[12];
+	g.DrawString(85, 140, ss.str().c_str());
+	ss.str(std::string());
+	ss << strings[13];
+	g.DrawString(135, 140, ss.str().c_str());
+
 	//ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
 	//g.DrawString(10, 155, ss.str().c_str());
 	//ss.str(std::string());
@@ -74,36 +98,32 @@ void DrawThing::draw(Core::Graphics& g)
 std::string DrawThing::floatToString(float f)
 {
 	std::stringstream ss;
-	ss << f;
+	ss << floor(f * 1000) / 1000;
 	return ss.str();
 }
 
 std::string DrawThing::intToString(int i)
 {
 	std::stringstream ss;
-	ss << i;
+	ss << floor(i * 1000) / 1000;
 	return ss.str();
 }
 
 void DrawThing::setDouble(int index, double d)
 {
 	std::stringstream ss;
-	ss << d;
+	ss << floor(d * 1000) / 1000;
 	strings[index] = ss.str();
 }
 
 void DrawThing::setFloat(int index, float f)
 {
-	std::stringstream ss;
-	ss << f;
-	strings[index] = ss.str();
+	strings[index] = floatToString(f);
 }
 
 void DrawThing::setInt(int index, int i)
 {
-	std::stringstream ss;
-	ss << i;
-	strings[index] = ss.str();
+	strings[index] = intToString(i);
 }
 
 void DrawThing::setMousePos(int x, int y)
