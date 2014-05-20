@@ -14,6 +14,7 @@ LerpingObject::LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPo
 	{
 		subObject = inSubObject;
 		scaleChild(.75F);
+		
 	}
 }
 

@@ -1,5 +1,6 @@
 #include "Shape.h"
 
+
 Shape::Shape(int numberOfPoints, Vector2D* inputPoints)
 {
 	NUM_POINTS = numberOfPoints;
