@@ -9,6 +9,9 @@
 #include "WallMode.h"
 #include "SpaceShip.h"
 #include "LerpingObject.h"
+#include "ParticleEffect.h"
+#include "FountainEffect.h"
+#include "Randomer.h"
 
 using Core::Input;
 
@@ -120,6 +123,7 @@ Vector2D asteroidPathPoints2[] =
 
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
+extern Randomer* myRandomer = new Randomer;
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 GameObject turret1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
 GameObject laser1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
@@ -130,6 +134,7 @@ LerpingObject r1(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPo
 LerpingObject r2(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, &r1);
 LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
 
+ParticleEffect* effect1 = new FountainEffect(Vector2D(300,300));
 
 GameManager::GameManager(void)
 {
@@ -152,6 +157,7 @@ void GameManager::draw( Core::Graphics& g)
 	myDrawThing->draw(g);
 	g.SetColor(RGB(128,128,128));
 	r3.draw(g, Matrix3D().Translation(r3.position));
+	effect1->draw(g);
 }
 
 bool GameManager::update(float dt)
@@ -161,6 +167,7 @@ bool GameManager::update(float dt)
 	myAsteroid.update(dt);
 	myShip.addTurret(&turret1);
 	r3.update(dt);
+	effect1->update(dt);
 	
 	myDrawThing->setFloat(16, r3.position.x);
 	myDrawThing->setFloat(17, r3.position.y);
