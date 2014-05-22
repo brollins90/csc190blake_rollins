@@ -10,6 +10,7 @@
 #include "SpaceShip.h"
 #include "LerpingObject.h"
 #include "ParticleEffect.h"
+#include "ExplosionEffect.h"
 #include "FountainEffect.h"
 #include "Randomer.h"
 
@@ -134,7 +135,8 @@ LerpingObject r1(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPo
 LerpingObject r2(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, &r1);
 LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
 
-ParticleEffect* effect1 = new FountainEffect(Vector2D(300,300));
+ParticleEffect* effect1 = new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 100);
+ParticleEffect* effect2 = new FountainEffect(Vector2D(500,500), 100, RGB(255,128,0), 100);
 
 GameManager::GameManager(void)
 {
@@ -158,6 +160,7 @@ void GameManager::draw( Core::Graphics& g)
 	g.SetColor(RGB(128,128,128));
 	r3.draw(g, Matrix3D().Translation(r3.position));
 	effect1->draw(g);
+	effect2->draw(g);
 }
 
 bool GameManager::update(float dt)
@@ -168,6 +171,7 @@ bool GameManager::update(float dt)
 	myShip.addTurret(&turret1);
 	r3.update(dt);
 	effect1->update(dt);
+	effect2->update(dt);
 	
 	myDrawThing->setFloat(16, r3.position.x);
 	myDrawThing->setFloat(17, r3.position.y);

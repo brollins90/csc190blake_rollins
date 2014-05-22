@@ -38,10 +38,13 @@
     <ClCompile Include="ParticleEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FountainEffect.cpp">
+    <ClCompile Include="Randomer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Randomer.cpp">
+    <ClCompile Include="ExplosionEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FountainEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -76,10 +79,13 @@
     <ClInclude Include="ParticleEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FountainEffect.h">
+    <ClInclude Include="Randomer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Randomer.h">
+    <ClInclude Include="ExplosionEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FountainEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

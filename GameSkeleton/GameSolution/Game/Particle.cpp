@@ -10,6 +10,7 @@ Particle::Particle()
 Particle::Particle(Vector2D inPosition, Vector2D inVelocity, RGB inColor)
 {
 	position = inPosition;
+	positionOrg = Vector2D(inPosition.x,inPosition.y);
 	veloctiy = inVelocity;
 	color = inColor;
 }

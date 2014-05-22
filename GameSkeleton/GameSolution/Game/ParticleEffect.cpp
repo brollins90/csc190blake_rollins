@@ -1,18 +1,16 @@
 #include "ParticleEffect.h"
 
-ParticleEffect::ParticleEffect(Vector2D origin)
+ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
 {
-	position = origin;
+	inOrigin;
+	inNumParticles;
+	inBaseColor;
+	inLifetime;
 }
 
-//ParticleEffect::ParticleEffect(Vector2D origin, int num, RGB color)
-//{
-//	position = origin;
-//}
-
 ParticleEffect::~ParticleEffect()
-{
-
+{	
+	delete(particles);
 }
 
 void ParticleEffect::draw(Core::Graphics& g)

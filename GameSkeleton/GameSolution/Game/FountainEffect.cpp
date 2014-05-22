@@ -1,55 +1,77 @@
 #include "FountainEffect.h"
 
-extern Randomer* myRandomer;
-
-Vector2D shapePoints[] =
+Vector2D particleShapePoints2[] =
 {
+	Vector2D(-2,-2),
+	Vector2D(+2,-2),
+	Vector2D(+2,+2),
+	Vector2D(-2,+2)
+	/*
 	Vector2D(-5,-5),
 	Vector2D(+5,-5),
 	Vector2D(+5,+5),
-	Vector2D(-5,+5)
+	Vector2D(-5,+5)*/
 };
 
-FountainEffect::FountainEffect(Vector2D inPosition) : ParticleEffect(inPosition)
+FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
-	numParticles = 100;
+	inBaseColor;
+	inLifetime;
+	origin = inOrigin;
+	numParticles = inNumParticles;
 	particles = new Particle[numParticles];
 	for (int i = 0; i < numParticles; i++)
 	{
-		particles[i].position = position;
-		particles[i].veloctiy = myRandomer->randomUnitVector() * myRandomer->randomInRange(5,50);
-		particles[i].color = RGB(255,255,255);
-		particles[i].lifetime = 100;
+		particles[i].position = origin;
+
+
+		float angle = myRandomer->randomInRange(-.45F,.45F);
+
+		particles[i].veloctiy = /*(myRandomer->randomUnitVector() **/ myRandomer->randomInRange(3,10)/*)*/ * Vector2D(-sin(angle),cos(angle));
+		particles[i].color = RGB(242,131,12); //RGB(myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255));
+		particles[i].lifetime = myRandomer->randomInRange(1,100); 
+
+
 	}
 }
 
 FountainEffect::~FountainEffect()
 {
-	delete(particles);
+
 }
 
 void FountainEffect::draw(Core::Graphics& g)
 {
-	g;
+	ParticleEffect::draw(g);
 	for (int i = 0; i < numParticles; i++)
 	{
 		for (int j = 0; j < 4; j++) 
 		{
+			//if (particles[i].lifetime > 0) 
+			//{
 			g.SetColor(particles[i].color);
-			const Vector2D& p1 = particles[i].position + shapePoints[j];
-			const Vector2D& p2 = particles[i].position + shapePoints[(j + 1) % 4];
+			const Vector2D& p1 = particles[i].position + particleShapePoints2[j];
+			const Vector2D& p2 = particles[i].position + particleShapePoints2[(j + 1) % 4];
 			g.DrawLine(p1.x, p1.y, p2.x, p2.y);
+			//}
 		} 
 	}
 }
 
 bool FountainEffect::update(float dt)
 {
+	ParticleEffect::update(dt);
 	for (int i = 0; i < numParticles; i++)
 	{
 		particles[i].position = particles[i].position + (particles[i].veloctiy * dt);
 		//??
-		//particles[i].lifetime -= dt;
+		particles[i].lifetime -= dt * 10;
+
+		if (particles[i].lifetime <= 0) 
+		{
+			particles[i].position = particles[i].positionOrg;
+			particles[i].lifetime = 100;
+		}
 	}
 	// decrease life
 	return true;
