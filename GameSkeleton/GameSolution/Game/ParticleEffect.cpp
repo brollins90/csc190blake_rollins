@@ -1,6 +1,6 @@
 #include "ParticleEffect.h"
 
-ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
+ParticleEffect::ParticleEffect(Vector2D* inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
 {
 	inOrigin;
 	inNumParticles;

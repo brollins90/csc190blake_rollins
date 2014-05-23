@@ -38,6 +38,7 @@ DrawThing::~DrawThing(void)
 
 void DrawThing::draw(Core::Graphics& g)
 {
+	g.SetColor(RGB(255,255,0)); // YELLOW
 	g.DrawString(10, 5, "Press 1, 2, or 3 to change the wall type");
 	std::stringstream ss;
 	ss << "Current wall type is : " << strings[0];

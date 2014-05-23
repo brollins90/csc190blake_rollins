@@ -13,23 +13,24 @@ Vector2D particleShapePoints2[] =
 	Vector2D(-5,+5)*/
 };
 
-FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
+FountainEffect::FountainEffect(Vector2D* inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
 	inBaseColor;
 	inLifetime;
-	origin = inOrigin;
+	origin = new Vector2D(inOrigin->x,inOrigin->y);
+	//orgPosition = Vector2D(inOrigin->x,inOrigin->y);
 	numParticles = inNumParticles;
 	particles = new Particle[numParticles];
 	for (int i = 0; i < numParticles; i++)
 	{
-		particles[i].position = origin;
+		particles[i].position = Vector2D(origin->x,origin->y);
 
 
 		float angle = myRandomer->randomInRange(-.45F,.45F);
 
-		particles[i].veloctiy = /*(myRandomer->randomUnitVector() **/ myRandomer->randomInRange(3,10)/*)*/ * Vector2D(-sin(angle),cos(angle));
+		particles[i].veloctiy = /*(myRandomer->randomUnitVector() **/ myRandomer->randomInRange(3,20)/*)*/ * Vector2D(-sin(angle),cos(angle));
 		particles[i].color = RGB(242,131,12); //RGB(myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255));
-		particles[i].lifetime = myRandomer->randomInRange(1,100); 
+		particles[i].lifetime = myRandomer->randomInRange(1,30); 
 
 
 	}
@@ -37,7 +38,7 @@ FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBase
 
 FountainEffect::~FountainEffect()
 {
-
+	delete(origin);
 }
 
 void FountainEffect::draw(Core::Graphics& g)
@@ -69,8 +70,9 @@ bool FountainEffect::update(float dt)
 
 		if (particles[i].lifetime <= 0) 
 		{
-			particles[i].position = particles[i].positionOrg;
-			particles[i].lifetime = 100;
+			particles[i].position.x = origin->x;
+			particles[i].position.y = origin->y;
+			particles[i].lifetime = myRandomer->randomInRange(1,100);
 		}
 	}
 	// decrease life

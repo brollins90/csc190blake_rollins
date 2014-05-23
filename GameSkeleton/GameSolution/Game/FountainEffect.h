@@ -7,7 +7,9 @@
 class FountainEffect : public ParticleEffect
 {
 public:
-	FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifeTime);
+	Vector2D orgPosition;
+
+	FountainEffect(Vector2D* inOrigin, int inNumParticles, RGB inBaseColor, int inLifeTime);
 	~FountainEffect(void);
 	void draw(Core::Graphics& g);
 	bool update(float dt);

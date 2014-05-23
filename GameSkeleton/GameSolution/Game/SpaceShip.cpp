@@ -1,9 +1,16 @@
 #include "SpaceShip.h"
 
+#include "ParticleEffect.h"
+#include "FountainEffect.h"
+
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 
 const int laserSpeed = 10;
+
+Vector2D* orgPos;
+ParticleEffect* effect2;
+
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
@@ -16,6 +23,11 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 	laserEnd = Vector2D();
 	laserPercentage = 0;
 	laserFired = false;
+	orgPos = &inPosition;
+	Vector2D* fountainOrigin = &inPosition;
+	effect2 = new FountainEffect(fountainOrigin, 75, RGB(255,128,0), 100);
+
+
 }
 
 void SpaceShip::setWallMode(WallMode newMode)
@@ -24,12 +36,15 @@ void SpaceShip::setWallMode(WallMode newMode)
 }
 void SpaceShip::draw (Core::Graphics& g)
 {
+	
 	// Draw the SpaceShip
+	g.SetColor(RGB(255,255,255)); // WHITE
 	Matrix3D spaceShipTranslation;
 	spaceShipTranslation = spaceShipTranslation * spaceShipTranslation.Translation(position.x, position.y) * spaceShipTranslation.Rotation(angle) * spaceShipTranslation.Scale(scale);
-	
+
 	GameObject::draw(g, spaceShipTranslation);
 	myDrawThing->setShipMatrix(spaceShipTranslation);
+
 
 	// Figure out the Turret
 	Core::Input::GetMousePos(mousePosX, mousePosY);
@@ -42,6 +57,7 @@ void SpaceShip::draw (Core::Graphics& g)
 	Matrix3D turretTranslation;
 	turretTranslation = turretTranslation.Translation(position.x, position.y) * turretRotate * turretTranslation.Scale(scale);
 	
+	g.SetColor(RGB(255,255,255)); // WHITE
 	turret1->draw(g, turretTranslation);
 
 	// Draw the laser
@@ -49,15 +65,18 @@ void SpaceShip::draw (Core::Graphics& g)
 	{
 		Matrix3D laserTranslation;
 		laserTranslation = laserTranslation * laserTranslation.Translation(laser1->position.x, laser1->position.y) * turretRotate;// laserTranslation.Rotation(laser1->angle) * laserTranslation.Scale(laser1->scale);
+		
+		g.SetColor(RGB(255,0,0)); // RED
 		laser1->draw(g, laserTranslation);
 	}
 
-	
+	effect2->draw(g);
 
 }
 
 void SpaceShip::update (float dt)
 {
+	effect2->update(dt);
 	Vector2D prevPos(position.x,position.y);
 	Core::Input::GetMousePos(mousePosX, mousePosY);
 
@@ -81,6 +100,10 @@ void SpaceShip::update (float dt)
 	{ velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));	}
 
 	position = position + velocity * dt;
+	effect2->origin = &position;
+	
+	orgPos->x = position.x;
+	orgPos->y = position.y;
 	
 	// Left Click
 	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT) || Core::Input::IsPressed(' '))
