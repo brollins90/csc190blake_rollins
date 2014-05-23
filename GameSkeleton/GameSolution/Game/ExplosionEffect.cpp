@@ -8,17 +8,17 @@ Vector2D particleShapePoints[] =
 	Vector2D(-5,+5)
 };
 
-ExplosionEffect::ExplosionEffect(Vector2D* inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
+ExplosionEffect::ExplosionEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
 	inBaseColor;
 	inLifetime;
-	origin = new Vector2D(inOrigin->x,inOrigin->y);
+	origin = inOrigin;
 	numParticles = inNumParticles;
 	particles = new Particle[numParticles];
 	float halfLifetime = inLifetime * .5F;
 	for (int i = 0; i < numParticles; i++)
 	{
-		particles[i].position = Vector2D(origin->x,origin->y);
+		particles[i].position = Vector2D(origin.x,origin.y);
 		particles[i].veloctiy = myRandomer->randomUnitVector() * myRandomer->randomInRange(1,75);
 		particles[i].color = RGB(myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255));
 		
@@ -28,7 +28,7 @@ ExplosionEffect::ExplosionEffect(Vector2D* inOrigin, int inNumParticles, RGB inB
 
 ExplosionEffect::~ExplosionEffect()
 {
-	delete(origin);
+//	delete(origin);
 }
 
 void ExplosionEffect::draw(Core::Graphics& g)

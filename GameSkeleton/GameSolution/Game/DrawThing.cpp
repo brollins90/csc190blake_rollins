@@ -94,6 +94,9 @@ void DrawThing::draw(Core::Graphics& g)
 	//ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << "," << strings[20] << "," << strings[21] << "," << strings[22] << ")";
 	//g.DrawString(10, 170, ss.str().c_str());
 	//ss.str(std::string());
+	ss << "temp: (" << strings[22] << "-" << strings[23] << ")";
+	g.DrawString(10, 170, ss.str().c_str());
+	ss.str(std::string());
 }
 
 std::string DrawThing::floatToString(float f)

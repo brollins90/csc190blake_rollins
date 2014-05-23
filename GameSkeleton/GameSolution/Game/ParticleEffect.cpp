@@ -1,6 +1,6 @@
 #include "ParticleEffect.h"
 
-ParticleEffect::ParticleEffect(Vector2D* inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
+ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
 {
 	inOrigin;
 	inNumParticles;
@@ -22,4 +22,8 @@ bool ParticleEffect::update(float dt)
 {
 	dt;
 	return true;
+}
+void ParticleEffect::setOrigin(Vector2D newOrigin)
+{
+	origin = newOrigin;
 }

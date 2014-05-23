@@ -123,7 +123,7 @@ Vector2D asteroidPathPoints2[] =
 };
 
 
-ParticleEffect* effect1 = new ExplosionEffect(new Vector2D(300,300), 1000, RGB(255,128,0), 20);
+ParticleEffect* effect1 = new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 20);
 //Vector2D* fountainOrigin = new Vector2D(500,500);
 //ParticleEffect* effect2 = new FountainEffect(fountainOrigin, 75, RGB(255,128,0), 100);
 

@@ -9,8 +9,9 @@ extern DrawThing* myDrawThing;
 const int laserSpeed = 10;
 
 Vector2D* orgPos;
-ParticleEffect* effect2;
-
+FountainEffect* effect2;
+bool isMoving;
+int flameTimer;
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
@@ -24,10 +25,11 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 	laserPercentage = 0;
 	laserFired = false;
 	orgPos = &inPosition;
-	Vector2D* fountainOrigin = &inPosition;
-	effect2 = new FountainEffect(fountainOrigin, 75, RGB(255,128,0), 100);
-
-
+	//Vector2D* fountainOrigin = &inPosition;
+	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 10);
+	
+	isMoving = false;
+	flameTimer = 0;
 }
 
 void SpaceShip::setWallMode(WallMode newMode)
@@ -76,6 +78,7 @@ void SpaceShip::draw (Core::Graphics& g)
 
 void SpaceShip::update (float dt)
 {
+	flameTimer--;
 	effect2->update(dt);
 	Vector2D prevPos(position.x,position.y);
 	Core::Input::GetMousePos(mousePosX, mousePosY);
@@ -93,14 +96,26 @@ void SpaceShip::update (float dt)
 
 	// Up
 	if (Core::Input::IsPressed(Core::Input::KEY_UP) || Core::Input::IsPressed('W'))
-	{ velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle))); }
+	{ 
+		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
+		flameTimer = 30;
+
+	}
 
 	// Down
 	if (Core::Input::IsPressed(Core::Input::KEY_DOWN) || Core::Input::IsPressed('S'))
 	{ velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));	}
 
+//	effect2->resetPosition = false;
+
 	position = position + velocity * dt;
-	effect2->origin = &position;
+	effect2->setShipAngle(angle);
+	effect2->origin = position;
+	effect2->resetPosition = (flameTimer > 0);
+
+	
+	myDrawThing->setFloat(22,angle);
+
 	
 	orgPos->x = position.x;
 	orgPos->y = position.y;
