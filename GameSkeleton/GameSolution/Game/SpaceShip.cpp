@@ -5,37 +5,33 @@
 
 extern Shape* walls;
 extern DrawThing* myDrawThing;
+extern WallMode gameMode;
 
 const int laserSpeed = 10;
 
-Vector2D* orgPos;
 FountainEffect* effect2;
-bool isMoving;
 int flameTimer;
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
 {
-	wMode = WALLS;
 	acceleration = Vector2D(100, 100);
-	rotationSpeed = 0.05F;
+	rotationSpeed = 0.02F;
 	turret1 = inTurret;
 	laser1 = inLaser;
 	laserStart = Vector2D();
 	laserEnd = Vector2D();
 	laserPercentage = 0;
 	laserFired = false;
-	orgPos = &inPosition;
-	//Vector2D* fountainOrigin = &inPosition;
-	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 10);
+	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 4);
 	
-	isMoving = false;
 	flameTimer = 0;
 }
 
-void SpaceShip::setWallMode(WallMode newMode)
+SpaceShip::~SpaceShip()
 {
-	wMode = newMode;
+	
 }
+
 void SpaceShip::draw (Core::Graphics& g)
 {
 	
@@ -66,7 +62,7 @@ void SpaceShip::draw (Core::Graphics& g)
 	if (laserPercentage > 0) 
 	{
 		Matrix3D laserTranslation;
-		laserTranslation = laserTranslation * laserTranslation.Translation(laser1->position.x, laser1->position.y) * turretRotate;// laserTranslation.Rotation(laser1->angle) * laserTranslation.Scale(laser1->scale);
+		laserTranslation = laserTranslation * laserTranslation.Translation(laser1->position.x, laser1->position.y) * turretRotate;
 		
 		g.SetColor(RGB(255,0,0)); // RED
 		laser1->draw(g, laserTranslation);
@@ -116,11 +112,6 @@ void SpaceShip::update (float dt)
 	effect2->origin = position;
 	effect2->resetAfterLife = (flameTimer > 0);
 	
-//	myDrawThing->setFloat(22,angle);
-
-	
-	orgPos->x = position.x;
-	orgPos->y = position.y;
 	
 	// Left Click
 	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT) || Core::Input::IsPressed(' '))
@@ -153,7 +144,7 @@ void SpaceShip::update (float dt)
 	}
 
 
-	if (wMode == WALLS)
+	if (gameMode == WALLS)
 	{
 		for (int i =0 ; i < walls->getNumPoints(); i++)
 		{
@@ -173,14 +164,14 @@ void SpaceShip::update (float dt)
 		}
 	}
 
-	if (wMode == BOUNCE || wMode == WALLS)
+	if (gameMode == BOUNCE || gameMode == WALLS)
 	{
 		if (position.x < 0) { velocity.x *= -1; }
 		if (position.x > 1024) { velocity.x *= -1; }
 		if (position.y < 0) { velocity.y *= -1; }
 		if (position.y > 768) { velocity.y *= -1; }
 	}
-	if (wMode == WRAP)
+	if (gameMode == WRAP)
 	{
 		if (position.x < 0) { position.x = 1024; }
 		if (position.x > 1024) { position.x = 0; }

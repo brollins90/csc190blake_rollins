@@ -10,6 +10,7 @@ class Randomer
 public:
 	Randomer(void);
 	~Randomer(void);
+
 	float randomFloat();
 	float randomInRange(float min, float max);
 	Vector2D randomUnitVector();

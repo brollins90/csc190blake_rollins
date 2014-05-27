@@ -17,6 +17,7 @@ private:
 public:
 	Shape(int numberOfPoints, Vector2D* inputPoints);
 	~Shape(void);
+
 	void draw( Core::Graphics& g, Vector2D& pos);
 	void draw( Core::Graphics& g, Matrix3D& m);
 	void addMatrixTranslation(Matrix3D&);

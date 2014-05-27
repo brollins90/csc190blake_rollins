@@ -8,22 +8,23 @@
 #include "GameObject.h"
 #include "DrawThing.h"
 
-
 class SpaceShip : GameObject
 {
 public:
-	WallMode wMode;
-	Vector2D acceleration;
-	int mousePosX, mousePosY;
-	GameObject* turret1, *laser1;
-	float rotationSpeed;
 	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser);// : GameObject(inPosition, inVelocity, numPoints, inShapePoints);
-	void setWallMode(WallMode newMode);
+	~SpaceShip(void);
+
 	void draw (Core::Graphics& g);
 	void update (float dt);
-	bool isOutOfBounds(Vector2D& pos);
+
 	void addTurret(GameObject* t);
+	bool isOutOfBounds(Vector2D& pos);
 	
+	Vector2D acceleration;
+	int mousePosX, mousePosY;
+	GameObject* turret1;
+	GameObject* laser1;
+	float rotationSpeed;	
 	Vector2D laserStart;
 	Vector2D laserEnd;
 	float laserPercentage;

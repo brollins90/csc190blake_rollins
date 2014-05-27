@@ -19,7 +19,7 @@ using Core::Input;
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
 
-WallMode gameMode = WRAP;
+extern WallMode gameMode = WALLS;
 
 int numWallPoints = 6;
 Vector2D wallPoints[] =
@@ -80,13 +80,7 @@ Vector2D turretPoints[] =
 	Vector2D(+07.0F, -14.0F),
 	Vector2D(+07.0F, -08.0F),
 	Vector2D(+08.0F, -08.0F),
-	Vector2D(+08.0F, +10.0F),
-
-
-
-	//Vector2D(+00.00F, -15.00F),
-	//Vector2D(+05.00F, +00.00F),
-	//Vector2D(-05.00F, +00.00)
+	Vector2D(+08.0F, +10.0F)
 };
 
 int numAsteroidPoints = 11;
@@ -124,8 +118,6 @@ Vector2D asteroidPathPoints2[] =
 
 
 ParticleEffect* effect1 = new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 20);
-//Vector2D* fountainOrigin = new Vector2D(500,500);
-//ParticleEffect* effect2 = new FountainEffect(fountainOrigin, 75, RGB(255,128,0), 100);
 
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
@@ -143,26 +135,33 @@ LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPo
 GameManager::GameManager(void)
 {
 	laser1.scale = .25F;
-
 }
 
 GameManager::~GameManager(void)
 {
-
 }
 
 void GameManager::draw( Core::Graphics& g)
 {
-	Matrix3D t = Matrix3D();
-	wallsObj.draw(g, t);
-	g.SetColor(RGB(255,255,255));
+	if (gameMode == WALLS)
+	{
+		g.SetColor(RGB(255,255,255)); // WHITE
+		Matrix3D t;
+		wallsObj.draw(g, t);
+	}
+
+	g.SetColor(RGB(255,255,255)); // WHITE
 	myShip.draw(g);
+
+	g.SetColor(RGB(255,255,255)); // WHITE
 	myAsteroid.draw(g, Matrix3D().Translation(myAsteroid.position));
-	myDrawThing->draw(g);
+	
 	g.SetColor(RGB(128,128,128));
 	r3.draw(g, Matrix3D().Translation(r3.position));
 	effect1->draw(g);
-	//effect2->draw(g);
+	
+	// Draw the debug stuff
+	myDrawThing->draw(g);	
 }
 
 bool GameManager::update(float dt)
@@ -173,28 +172,20 @@ bool GameManager::update(float dt)
 	myShip.addTurret(&turret1);
 	r3.update(dt);
 	effect1->update(dt);
-	//effect2->update(dt);
 	
-	myDrawThing->setFloat(16, r3.position.x);
-	myDrawThing->setFloat(17, r3.position.y);
-	myDrawThing->setFloat(18, r2.position.x);
-	myDrawThing->setFloat(19, r2.position.y);
-	myDrawThing->setFloat(20, r1.position.x);
-	myDrawThing->setFloat(21, r1.position.y);
-
 	if ( Input::IsPressed( '1' ) )
 	{
-		myShip.setWallMode(WRAP);
+		gameMode = WRAP;
 		myDrawThing->setString(0, "WRAP");
 	}
 	if ( Input::IsPressed( '2' ) )
 	{
-		myShip.setWallMode(BOUNCE);
+		gameMode = BOUNCE;
 		myDrawThing->setString(0, "BOUNCE");
 	}
 	if ( Input::IsPressed( '3' ) )
 	{
-		myShip.setWallMode(WALLS);
+		gameMode = WALLS;
 		myDrawThing->setString(0, "WALLS");
 	}
 	return true;
