@@ -112,9 +112,9 @@ void SpaceShip::update (float dt)
 	}
 	
 	position = position + velocity * dt;
-	effect2->setShipAngle(angle);
+	effect2->setFountainAngle(angle);
 	effect2->origin = position;
-	effect2->resetPosition = (flameTimer > 0);
+	effect2->resetAfterLife = (flameTimer > 0);
 	
 //	myDrawThing->setFloat(22,angle);
 

@@ -12,6 +12,7 @@ private:
 public:
 	DrawThing(void);
 	~DrawThing(void);
+
 	void draw(Core::Graphics& g);
 	std::string floatToString(float f);
 	std::string intToString(int i);

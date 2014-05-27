@@ -15,10 +15,10 @@ Vector2D particleShapePoints2[] =
 
 FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
-	inBaseColor;
-	inLifetime;
+//	inBaseColor;
+//	inLifetime;
 	origin = inOrigin;
-	shipAngle = 0;
+	fountainAngle = 0;
 
 	numParticles = inNumParticles;
 
@@ -31,8 +31,8 @@ FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBase
 		float angle = myRandomer->randomInRange(-.45F,.45F);
 
 		particles[i].veloctiy = /*(myRandomer->randomUnitVector() **/ myRandomer->randomInRange(3,20)/*)*/ * Vector2D(-sin(angle),cos(angle));
-		particles[i].color = RGB(242,131,12); //RGB(myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255));
-		particles[i].lifetime = myRandomer->randomInRange(1,4); 
+		particles[i].color = inBaseColor;//RGB(242,131,12); //RGB(myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255),myRandomer->randomInRange(0,255));
+		particles[i].lifetime = myRandomer->randomInRange(1,(float)lifetime); 
 
 
 	}
@@ -56,7 +56,7 @@ void FountainEffect::draw(Core::Graphics& g)
 			{
 				Matrix3D m;
 				m = m * m.Translation(particles[i].position);
-				m = m * m.Rotation(shipAngle) * m.Translation(0, 28.5);
+				m = m * m.Rotation(fountainAngle) * m.Translation(0, 28.5);
 				//m = m * m.Translation(origin);
 				g.SetColor(particles[i].color);
 				const Vector2D& p1 = m * /*particles[i].position  +*/ particleShapePoints2[j];
@@ -71,7 +71,7 @@ bool FountainEffect::update(float dt)
 {
 	ParticleEffect::update(dt);
 
-	float angle = shipAngle + myRandomer->randomInRange(-.75F,.75F);
+	float angle = fountainAngle + myRandomer->randomInRange(-.75F,.75F);
 	
 	myDrawThing->setFloat(23,angle);
 
@@ -84,19 +84,19 @@ bool FountainEffect::update(float dt)
 		//??
 		particles[i].lifetime -= dt * 10;
 
-		if (particles[i].lifetime <= 0 && resetPosition) 
+		if (particles[i].lifetime <= 0 && resetAfterLife) 
 		{
 			particles[i].position.x = origin.x;
 			particles[i].position.y = origin.y;
 			particles[i].veloctiy = /*m * (myRandomer->randomUnitVector() **/ (myRandomer->randomInRange(3,20)/*)*/ * Vector2D(-sin(angle),cos(angle)));
-			particles[i].lifetime = myRandomer->randomInRange(1,4);
+			particles[i].lifetime = myRandomer->randomInRange(1,(float)lifetime); 
 		}
 	}
 	// decrease life
 	return true;
 }
 
-void FountainEffect::setShipAngle(float inAngle)
+void FountainEffect::setFountainAngle(float inAngle)
 {
-	shipAngle = inAngle;
+	fountainAngle = inAngle;
 }

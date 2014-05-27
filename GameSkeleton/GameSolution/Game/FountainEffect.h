@@ -9,15 +9,15 @@ using Engine::Matrix3D;
 class FountainEffect : public ParticleEffect
 {
 public:
-	Vector2D orgPosition;
-
 	FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifeTime);
 	~FountainEffect(void);
+	
+	bool resetAfterLife;
+	float fountainAngle;
+
 	void draw(Core::Graphics& g);
 	bool update(float dt);
-	bool resetPosition;
-float shipAngle;
-	void setShipAngle(float inAngle);
+	void setFountainAngle(float inAngle);
 };
 
 #endif

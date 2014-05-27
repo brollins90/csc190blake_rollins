@@ -13,6 +13,7 @@ public:
 	Particle(void);
 	Particle(Vector2D inPosition, Vector2D inVelocity, RGB inColor);
 	~Particle(void);
+
 	Vector2D position;
 	Vector2D positionOrg;
 	Vector2D veloctiy;

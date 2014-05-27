@@ -8,8 +8,7 @@ class EffectManager
 {
 public:
 	EffectManager(void);
-	~EffectManager(void);
-	
+	~EffectManager(void);	
 };
 
 #endif

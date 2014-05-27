@@ -8,6 +8,7 @@ class GameManager
 public:
 	GameManager(void);
 	~GameManager( void );
+
 	void draw( Core::Graphics& g );
 	bool update(float dt);
 };

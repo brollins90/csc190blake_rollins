@@ -10,8 +10,7 @@ Vector2D particleShapePoints[] =
 
 ExplosionEffect::ExplosionEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
-	inBaseColor;
-	inLifetime;
+//	inBaseColor;
 	origin = inOrigin;
 	numParticles = inNumParticles;
 	particles = new Particle[numParticles];

@@ -5,7 +5,7 @@ ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBase
 	inOrigin;
 	inNumParticles;
 	inBaseColor;
-	inLifetime;
+	lifetime = inLifetime;
 }
 
 ParticleEffect::~ParticleEffect()
