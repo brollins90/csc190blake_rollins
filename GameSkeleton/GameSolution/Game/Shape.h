@@ -3,7 +3,6 @@
 
 #include "Engine.h"
 #include "Core.h"
-#include "Shapes.h"
 
 using Engine::Vector2D;
 using Engine::Matrix3D;

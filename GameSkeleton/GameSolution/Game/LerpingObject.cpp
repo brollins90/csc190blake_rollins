@@ -26,9 +26,6 @@ LerpingObject::~LerpingObject()
 
 void LerpingObject::draw (Core::Graphics& g, Matrix3D m)
 {
-	/*Matrix3D lerpingMatrix;
-	lerpingMatrix = lerpingMatrix * lerpingMatrix.Translation(position.x, position.y) * lerpingMatrix.Rotation(angle) * lerpingMatrix.Scale(scale);
-	*/
 	GameObject::draw(g, m);
 	
 	if (hasChild) 

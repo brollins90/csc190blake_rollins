@@ -51,17 +51,16 @@ void ExplosionEffect::draw(Core::Graphics& g)
 bool ExplosionEffect::update(float dt)
 {
 	ParticleEffect::update(dt);
+	bool stillAlive = false;
 	for (int i = 0; i < numParticles; i++)
 	{
 		particles[i].position = particles[i].position + (particles[i].veloctiy * dt);
-		//??
+		
 		particles[i].lifetime -= dt * 3;
 
-		//if (particles[i].lifetime <= 0) 
-		//{
-		//	particles[i].color = RGB(0,0,0);
-		//}
+		if (particles[i].lifetime > 0) {
+			stillAlive = true;
+		}
 	}
-	// decrease life
-	return true;
+	return stillAlive;
 }

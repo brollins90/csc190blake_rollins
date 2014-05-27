@@ -13,6 +13,7 @@
 #include "ExplosionEffect.h"
 #include "FountainEffect.h"
 #include "Randomer.h"
+#include "EffectManager.h"
 
 using Core::Input;
 
@@ -117,11 +118,12 @@ Vector2D asteroidPathPoints2[] =
 };
 
 
-ParticleEffect* effect1 = new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 20);
 
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
 extern Randomer* myRandomer = new Randomer;
+extern EffectManager* myEffectManager = new EffectManager;
+
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 GameObject turret1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
 GameObject laser1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
@@ -135,6 +137,9 @@ LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPo
 GameManager::GameManager(void)
 {
 	laser1.scale = .25F;
+	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
+	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
+	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
 }
 
 GameManager::~GameManager(void)
@@ -158,7 +163,7 @@ void GameManager::draw( Core::Graphics& g)
 	
 	g.SetColor(RGB(128,128,128));
 	r3.draw(g, Matrix3D().Translation(r3.position));
-	effect1->draw(g);
+	myEffectManager->draw(g);
 	
 	// Draw the debug stuff
 	myDrawThing->draw(g);	
@@ -171,7 +176,7 @@ bool GameManager::update(float dt)
 	myAsteroid.update(dt);
 	myShip.addTurret(&turret1);
 	r3.update(dt);
-	effect1->update(dt);
+	myEffectManager->update(dt);
 	
 	if ( Input::IsPressed( '1' ) )
 	{

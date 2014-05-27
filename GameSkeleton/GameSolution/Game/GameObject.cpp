@@ -11,8 +11,8 @@ GameObject::GameObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, 
 
 GameObject::~GameObject(void)
 {
-	delete &position;
-	delete &velocity;
+	//delete &position;
+	//delete &velocity;
 	delete shape;
 }
 

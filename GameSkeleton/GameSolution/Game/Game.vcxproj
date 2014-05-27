@@ -112,7 +112,6 @@
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="Randomer.h" />
     <ClInclude Include="Shape.h" />
-    <ClInclude Include="Shapes.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="WallMode.h" />
   </ItemGroup>
