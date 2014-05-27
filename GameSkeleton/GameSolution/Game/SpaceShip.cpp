@@ -88,33 +88,35 @@ void SpaceShip::update (float dt)
 
 	// Right
 	if (Core::Input::IsPressed(Core::Input::KEY_RIGHT) || Core::Input::IsPressed('D'))
-	{ GameObject::rotate( rotationSpeed); }
+	{
+		GameObject::rotate( rotationSpeed);
+	}
 
 	// Left
 	if (Core::Input::IsPressed(Core::Input::KEY_LEFT) || Core::Input::IsPressed('A'))
-	{ GameObject::rotate( -rotationSpeed); }
+	{
+		GameObject::rotate( -rotationSpeed);
+	}
 
 	// Up
 	if (Core::Input::IsPressed(Core::Input::KEY_UP) || Core::Input::IsPressed('W'))
 	{ 
 		velocity = velocity - (dt * acceleration * Vector2D(-sin(angle),cos(angle)));
-		flameTimer = 30;
-
+		flameTimer = 3;
 	}
 
 	// Down
 	if (Core::Input::IsPressed(Core::Input::KEY_DOWN) || Core::Input::IsPressed('S'))
-	{ velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));	}
-
-//	effect2->resetPosition = false;
-
+	{
+		velocity = velocity - (dt * acceleration * Vector2D(sin(angle),-cos(angle)));
+	}
+	
 	position = position + velocity * dt;
 	effect2->setShipAngle(angle);
 	effect2->origin = position;
 	effect2->resetPosition = (flameTimer > 0);
-
 	
-	myDrawThing->setFloat(22,angle);
+//	myDrawThing->setFloat(22,angle);
 
 	
 	orgPos->x = position.x;

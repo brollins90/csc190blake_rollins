@@ -10,11 +10,6 @@ Vector2D particleShapePoints2[] =
 	Vector2D(+2,-2),
 	Vector2D(+2,+2),
 	Vector2D(-2,+2)
-	/*
-	Vector2D(-5,-5),
-	Vector2D(+5,-5),
-	Vector2D(+5,+5),
-	Vector2D(-5,+5)*/
 };
 
 
@@ -23,11 +18,10 @@ FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBase
 	inBaseColor;
 	inLifetime;
 	origin = inOrigin;
-	//orgPosition = Vector2D(inOrigin->x,inOrigin->y);
-	resetPosition = false;
 	shipAngle = 0;
 
 	numParticles = inNumParticles;
+
 	particles = new Particle[numParticles];
 	for (int i = 0; i < numParticles; i++)
 	{
@@ -60,14 +54,14 @@ void FountainEffect::draw(Core::Graphics& g)
 		{
 			if (particles[i].lifetime > 0) 
 			{
-		Matrix3D m;
-		m = m * m.Translation(particles[i].position);
-		m = m * m.Rotation(shipAngle) * m.Translation(0, 28.5);
-		//m = m * m.Translation(origin);
-			g.SetColor(particles[i].color);
-			const Vector2D& p1 = m * /*particles[i].position  +*/ particleShapePoints2[j];
-			const Vector2D& p2 = m * /*particles[i].position  +*/ particleShapePoints2[(j + 1) % 4];
-			g.DrawLine(p1.x, p1.y, p2.x, p2.y);
+				Matrix3D m;
+				m = m * m.Translation(particles[i].position);
+				m = m * m.Rotation(shipAngle) * m.Translation(0, 28.5);
+				//m = m * m.Translation(origin);
+				g.SetColor(particles[i].color);
+				const Vector2D& p1 = m * /*particles[i].position  +*/ particleShapePoints2[j];
+				const Vector2D& p2 = m * /*particles[i].position  +*/ particleShapePoints2[(j + 1) % 4];
+				g.DrawLine(p1.x, p1.y, p2.x, p2.y);
 			}
 		} 
 	}
