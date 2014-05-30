@@ -24,8 +24,23 @@ LerpingObject::~LerpingObject()
 	delete subObject;
 }
 
+void LerpingObject::draw (Core::Graphics& g)
+{
+//	Matrix3D m;
+	//m= m * Matrix3D().Translation(position);
+	LerpingObject::draw(g, Matrix3D().Translation(position));
+	/*
+	if (hasChild) 
+	{
+		m = m * m.Rotation(subObject->angle) * m.Translation(100, 100);
+		subObject->draw(g, m);
+	}*/
+
+}
+
 void LerpingObject::draw (Core::Graphics& g, Matrix3D m)
 {
+//	m = m * Matrix3D().Translation(position);
 	GameObject::draw(g, m);
 	
 	if (hasChild) 
@@ -33,10 +48,13 @@ void LerpingObject::draw (Core::Graphics& g, Matrix3D m)
 		m = m * m.Rotation(subObject->angle) * m.Translation(100, 100);
 		subObject->draw(g, m);
 	}
+	
+	myDrawThing->setFloat(22, position.x);
+	myDrawThing->setFloat(23, position.y);
 
 }
 
-void LerpingObject::update (float dt)
+bool LerpingObject::update (float dt)
 {
 	GameObject::update(dt);
 	
@@ -62,6 +80,7 @@ void LerpingObject::update (float dt)
 		subObject->position = Vector2D(position.x, position.y);
 		subObject->angle = subObject->angle - (.1F);
 	}
+	return true;
 }
 
 void LerpingObject::scaleChild(float scaleValue)

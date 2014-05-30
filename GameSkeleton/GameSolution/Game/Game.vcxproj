@@ -87,9 +87,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExplosionEffect.cpp" />
+    <ClCompile Include="FileThing.cpp" />
     <ClCompile Include="FountainEffect.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="LerpingObject.cpp" />
     <ClCompile Include="DrawThing.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -102,9 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="ExplosionEffect.h" />
+    <ClInclude Include="FileThing.h" />
     <ClInclude Include="FountainEffect.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="LerpingObject.h" />
     <ClInclude Include="DrawThing.h" />
     <ClInclude Include="GameObject.h" />

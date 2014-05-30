@@ -16,7 +16,7 @@ public:
 	float fountainAngle;
 
 	void draw(Core::Graphics& g);
-	bool update(float dt);
+virtual	bool update(float dt);
 	void setFountainAngle(float inAngle);
 };
 

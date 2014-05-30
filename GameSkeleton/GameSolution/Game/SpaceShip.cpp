@@ -72,7 +72,7 @@ void SpaceShip::draw (Core::Graphics& g)
 
 }
 
-void SpaceShip::update (float dt)
+bool SpaceShip::update (float dt)
 {
 	flameTimer--;
 	effect2->update(dt);
@@ -185,6 +185,7 @@ void SpaceShip::update (float dt)
 	myDrawThing->setFloat(4,velocity.y);
 
 	myDrawThing->setMousePos(mousePosX, mousePosY);
+	return true;
 }
 
 bool SpaceShip::isOutOfBounds(Vector2D& pos)

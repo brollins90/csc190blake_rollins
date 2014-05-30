@@ -14,6 +14,7 @@
 #include "FountainEffect.h"
 #include "Randomer.h"
 #include "EffectManager.h"
+#include "GameObjectManager.h"
 
 using Core::Input;
 
@@ -123,6 +124,7 @@ extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern DrawThing* myDrawThing = new DrawThing;
 extern Randomer* myRandomer = new Randomer;
 extern EffectManager* myEffectManager = new EffectManager;
+extern GameObjectManager* goManager = new GameObjectManager;
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
 GameObject turret1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
@@ -130,16 +132,20 @@ GameObject laser1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
 SpaceShip myShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints,&turret1,&laser1);
 LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, 4, asteroidPathPoints, false, NULL);
 
-LerpingObject r1(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);
-LerpingObject r2(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, &r1);
-LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
 
 GameManager::GameManager(void)
 {
+	LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);
+	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, r1);
+//	LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
+
 	laser1.scale = .25F;
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
+	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
+
+	goManager->addObject(r3);
 }
 
 GameManager::~GameManager(void)
@@ -159,10 +165,10 @@ void GameManager::draw( Core::Graphics& g)
 	myShip.draw(g);
 
 	g.SetColor(RGB(255,255,255)); // WHITE
-	myAsteroid.draw(g, Matrix3D().Translation(myAsteroid.position));
+	myAsteroid.draw(g);//, Matrix3D().Translation(myAsteroid.position));
 	
 	g.SetColor(RGB(128,128,128));
-	r3.draw(g, Matrix3D().Translation(r3.position));
+	goManager->draw(g);//, Matrix3D());//.Translation(r3.position));
 	myEffectManager->draw(g);
 	
 	// Draw the debug stuff
@@ -175,7 +181,7 @@ bool GameManager::update(float dt)
 	myShip.update(dt);
 	myAsteroid.update(dt);
 	myShip.addTurret(&turret1);
-	r3.update(dt);
+	goManager->update(dt);
 	myEffectManager->update(dt);
 	
 	if ( Input::IsPressed( '1' ) )

@@ -11,7 +11,7 @@ public:
 	~ExplosionEffect(void);
 
 	void draw(Core::Graphics& g);
-	bool update(float dt);
+virtual	bool update(float dt);
 };
 
 #endif

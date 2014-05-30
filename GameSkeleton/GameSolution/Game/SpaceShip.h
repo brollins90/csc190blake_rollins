@@ -15,7 +15,7 @@ public:
 	~SpaceShip(void);
 
 	void draw (Core::Graphics& g);
-	void update (float dt);
+	virtual bool update (float dt);
 
 	void addTurret(GameObject* t);
 	bool isOutOfBounds(Vector2D& pos);

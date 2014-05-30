@@ -90,12 +90,14 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Profiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Matrix2D.h" />
     <ClInclude Include="Matrix3D.h" />
+    <ClInclude Include="Profiler.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>

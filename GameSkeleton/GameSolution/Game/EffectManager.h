@@ -18,7 +18,7 @@ public:
 	void addEffect(ParticleEffect* newEffect);
 
 	void draw(Core::Graphics& g);
-	bool update(float dt);
+virtual	bool update(float dt);
 };
 
 #endif

@@ -19,11 +19,11 @@ public:
 	float angle;
 	float scale;
 
-	void draw( Core::Graphics& g );
-	void draw( Core::Graphics& g, Matrix3D& temp );
+virtual void draw( Core::Graphics& g );
+virtual	void draw( Core::Graphics& g, Matrix3D& temp );
 	void rotate( float angleInc );
 	void setPosition( const Vector2D& pos );
-	void update( float dt );
+virtual	bool update( float dt );
 };
 
 #endif

@@ -27,9 +27,10 @@ void GameObject::draw( Core::Graphics& g, Matrix3D& m )
 	shape->draw(g, m);
 }
 
-void GameObject::update( float dt )
+bool GameObject::update( float dt )
 {
 	dt;
+	return true;
 };
 
 void GameObject::rotate(float angleInc)
