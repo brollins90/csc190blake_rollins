@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "DrawThing.h"
 
-class SpaceShip : GameObject
+class SpaceShip : public GameObject
 {
 public:
 	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser);// : GameObject(inPosition, inVelocity, numPoints, inShapePoints);

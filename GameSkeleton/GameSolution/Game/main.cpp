@@ -5,12 +5,12 @@
 
 extern const int SCREEN_WIDTH = 1024;
 extern const int SCREEN_HEIGHT = 768;
-GameManager gm;
+extern GameManager* myGameManager = new GameManager;
 
 
 bool update(float dt)
 {
-	gm.update(dt);
+	myGameManager->update(dt);
 
 	if (Core::Input::IsPressed( Core::Input::KEY_ESCAPE ))
 	{
@@ -21,7 +21,7 @@ bool update(float dt)
 
 void draw( Core::Graphics& g )
 {
-	gm.draw(g);
+	myGameManager->draw(g);
 }
 
 void main()

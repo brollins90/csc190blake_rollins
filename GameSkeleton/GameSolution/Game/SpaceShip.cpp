@@ -2,10 +2,14 @@
 
 #include "ParticleEffect.h"
 #include "FountainEffect.h"
+#include "GameObjectManager.h"
+#include "LerpingObject.h"
+#include "Projectile.h"
 
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 extern WallMode gameMode;
+extern GameObjectManager* goManager;
 
 const int laserSpeed = 10;
 
@@ -116,6 +120,30 @@ bool SpaceShip::update (float dt)
 	// Left Click
 	if (Core::Input::IsPressed(Core::Input::BUTTON_LEFT) || Core::Input::IsPressed(' '))
 	{ 
+		Vector2D temp[] = {
+			Vector2D(0,0),
+			Vector2D(2,2)
+		};/*
+		Vector2D temp2[] = {
+			Vector2D(position.x, position.y),
+			Vector2D((float)mousePosX, (float)mousePosY)
+		};*/
+		//goManager->addObject(new LerpingObject(
+		//	Vector2D(position.x, position.y), // start
+		//	Vector2D(5,5), // velocity
+		//	2,
+		//	temp,
+		//	2,
+		//	temp2,
+		//	false,
+		//	NULL));
+		goManager->addObject(new Projectile(Vector2D(position.x, position.y),
+			Vector2D(5,5),
+			2,temp,Vector2D((float)mousePosX, (float)mousePosY)));
+
+
+/*
+
 		if (laserPercentage == 0)
 		{
 			laserStart = Vector2D(position.x, position.y);
@@ -124,7 +152,7 @@ bool SpaceShip::update (float dt)
 			float laserPathLength = laserPath.Length();
 			float laserTimeUnit = (laserSpeed / laserPathLength);
 			laserPercentage += laserTimeUnit;
-		}	
+		}	*/
 	}
 
 	turret1->setPosition(position);

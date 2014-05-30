@@ -34,6 +34,15 @@ Vector2D wallPoints[] =
 	Vector2D(512.0F,0.0F), //(SCREEN_WIDTH / 2), 0)
 };
 
+int numScreenEdgePoints = 4;
+Vector2D screenEdgePoints[] =
+{
+	Vector2D(0.0F,0.0F),
+	Vector2D((float)SCREEN_WIDTH,0.0F),
+	Vector2D((float)SCREEN_WIDTH,(float)SCREEN_HEIGHT),
+	Vector2D(0.0F, (float)SCREEN_HEIGHT)
+};
+
 int numSquarePoints = 5;
 Vector2D square[] =
 {
@@ -121,30 +130,31 @@ Vector2D asteroidPathPoints2[] =
 
 
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
+extern Shape* screenEdge = new Shape(numScreenEdgePoints, screenEdgePoints);
 extern DrawThing* myDrawThing = new DrawThing;
 extern Randomer* myRandomer = new Randomer;
 extern EffectManager* myEffectManager = new EffectManager;
 extern GameObjectManager* goManager = new GameObjectManager;
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints);
-GameObject turret1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
 GameObject laser1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints);
-SpaceShip myShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints,&turret1,&laser1);
-LerpingObject myAsteroid(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, 4, asteroidPathPoints, false, NULL);
 
 
 GameManager::GameManager(void)
 {
-	LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);
-	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, r1);
-//	LerpingObject r3(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, &r2);
 
 	laser1.scale = .25F;
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
-	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
 
+
+	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints,new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints),&laser1));
+	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, 4, asteroidPathPoints, false, NULL));
+
+	LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);
+	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, true, r1);
+	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
 	goManager->addObject(r3);
 }
 
@@ -161,14 +171,8 @@ void GameManager::draw( Core::Graphics& g)
 		wallsObj.draw(g, t);
 	}
 
-	g.SetColor(RGB(255,255,255)); // WHITE
-	myShip.draw(g);
-
-	g.SetColor(RGB(255,255,255)); // WHITE
-	myAsteroid.draw(g);//, Matrix3D().Translation(myAsteroid.position));
-	
 	g.SetColor(RGB(128,128,128));
-	goManager->draw(g);//, Matrix3D());//.Translation(r3.position));
+	goManager->draw(g);
 	myEffectManager->draw(g);
 	
 	// Draw the debug stuff
@@ -178,9 +182,7 @@ void GameManager::draw( Core::Graphics& g)
 bool GameManager::update(float dt)
 {
 	wallsObj.update(dt);
-	myShip.update(dt);
-	myAsteroid.update(dt);
-	myShip.addTurret(&turret1);
+
 	goManager->update(dt);
 	myEffectManager->update(dt);
 	
@@ -200,4 +202,32 @@ bool GameManager::update(float dt)
 		myDrawThing->setString(0, "WALLS");
 	}
 	return true;
+}
+
+bool GameManager::isOutOfBounds(Vector2D& pos)
+{	
+	Shape* boundsShape;
+	if (gameMode == WALLS)
+	{
+		boundsShape = walls;
+
+	} else {
+		boundsShape = screenEdge;
+	}
+	
+	for (int i =0 ; i < boundsShape->getNumPoints(); i++)
+	{
+		Vector2D& wallPointLeft = boundsShape->get(i);
+		Vector2D& wallPointRight = boundsShape->get((i + 1) % boundsShape->getNumPoints());
+		Vector2D wallPointLeftToShip = pos - wallPointLeft;
+		Vector2D wallVector = wallPointRight - wallPointLeft;
+		Vector2D wallnormal = wallVector.PerpCCW().Normalize();
+		float f1 = Vector2D::DotProduct(wallnormal,wallPointLeftToShip);
+
+		if (f1 < 0) 
+		{
+			return true;
+		}
+	}
+	return false;
 }
