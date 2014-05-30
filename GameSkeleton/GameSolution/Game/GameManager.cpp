@@ -149,7 +149,7 @@ GameManager::GameManager(void)
 	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
 
 
-	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints,new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints),&laser1));
+	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints,new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints)));
 	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, 4, asteroidPathPoints, false, NULL));
 
 	LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(5,5), numAsteroidPoints, asteroidPoints, 0, NULL, false, NULL);

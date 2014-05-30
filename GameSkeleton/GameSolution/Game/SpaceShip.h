@@ -11,24 +11,24 @@
 class SpaceShip : public GameObject
 {
 public:
-	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret, GameObject* inLaser);// : GameObject(inPosition, inVelocity, numPoints, inShapePoints);
+	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret);
 	~SpaceShip(void);
 
 	void draw (Core::Graphics& g);
 	virtual bool update (float dt);
 
-	void addTurret(GameObject* t);
-	bool isOutOfBounds(Vector2D& pos);
+//	void addTurret(GameObject* t);
+//	bool isOutOfBounds(Vector2D& pos);
 	
 	Vector2D acceleration;
 	int mousePosX, mousePosY;
 	GameObject* turret1;
-	GameObject* laser1;
+//	GameObject* laser1;
 	float rotationSpeed;	
-	Vector2D laserStart;
-	Vector2D laserEnd;
-	float laserPercentage;
-	bool laserFired;
+	//Vector2D laserStart;
+	//Vector2D laserEnd;
+	//float laserPercentage;
+	//bool laserFired;
 };
 
 #endif
