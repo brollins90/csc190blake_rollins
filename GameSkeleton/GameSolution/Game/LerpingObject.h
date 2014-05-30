@@ -18,7 +18,7 @@ private:
 	bool hasChild;
 	LerpingObject* subObject;
 public:
-	LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int numPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject);
+	LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, int numPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject);
 	~LerpingObject(void);
 	
 	void draw (Core::Graphics& g);

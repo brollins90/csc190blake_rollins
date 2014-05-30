@@ -13,25 +13,17 @@ extern WallMode gameMode;
 extern GameObjectManager* goManager;
 extern GameManager* myGameManager;
 
-//const int laserSpeed = 10;
-
 int reloadDelay;
 FountainEffect* effect2;
 int flameTimer;
 
-SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, GameObject* inTurret) : GameObject(inPosition, inVelocity, numPoints, inShapePoints, inColor)
 {
 	acceleration = Vector2D(100, 100);
 	rotationSpeed = 0.02F;
 	turret1 = inTurret;
-	/*laser1 = inLaser;
-	laserStart = Vector2D();
-	laserEnd = Vector2D();
-	laserPercentage = 0;
-	laserFired = false;*/
 	reloadDelay = 0;
 	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 4);
-	
 	flameTimer = 0;
 }
 
@@ -44,7 +36,7 @@ void SpaceShip::draw (Core::Graphics& g)
 {
 	
 	// Draw the SpaceShip
-	g.SetColor(RGB(255,255,255)); // WHITE
+	g.SetColor(objColor);
 	Matrix3D spaceShipTranslation;
 	spaceShipTranslation = spaceShipTranslation * spaceShipTranslation.Translation(position.x, position.y) * spaceShipTranslation.Rotation(angle) * spaceShipTranslation.Scale(scale);
 
@@ -131,9 +123,13 @@ bool SpaceShip::update (float dt)
 				Vector2D(0,0),
 				Vector2D(2,2)
 			};
-			goManager->addObject(new Projectile(Vector2D(position.x, position.y),
-				Vector2D(5,5),
-				2,laserShapePoints,Vector2D((float)mousePosX, (float)mousePosY)));
+			goManager->addObject(
+				new Projectile(Vector2D(position.x, position.y), // start
+				Vector2D(5,5), // velocity
+				2,
+				laserShapePoints,
+				RGB(255,0,0),
+				Vector2D((float)mousePosX, (float)mousePosY))); // end point)); // color
 		}
 	}
 

@@ -5,7 +5,7 @@
 extern DrawThing* myDrawThing;
 extern GameManager* myGameManager;
 
-Projectile::Projectile(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Vector2D inEndPoint) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+Projectile::Projectile(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, Vector2D inEndPoint) : GameObject(inPosition, inVelocity, numPoints, inShapePoints, inColor)
 {
 	startPoint = inPosition;
 	endPoint = inEndPoint;
@@ -19,11 +19,13 @@ Projectile::~Projectile(void)
 
 void Projectile::draw (Core::Graphics& g)
 {
+	g.SetColor(objColor);
 	Projectile::draw(g, Matrix3D().Translation(position));
 }
 
 void Projectile::draw (Core::Graphics& g, Matrix3D m)
 {
+	g.SetColor(objColor);
 	GameObject::draw(g, m);
 }
 

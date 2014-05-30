@@ -3,7 +3,7 @@
 
 extern DrawThing* myDrawThing;
 
-Enemy::Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int inNumPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject) : LerpingObject(inPosition, inVelocity, numPoints, inShapePoints, inNumPathPoints, inPathPoints, inHasChild, inSubObject)
+Enemy::Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, int inNumPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject) : LerpingObject(inPosition, inVelocity, numPoints, inShapePoints, inColor, inNumPathPoints, inPathPoints, inHasChild, inSubObject)
 {
 
 }

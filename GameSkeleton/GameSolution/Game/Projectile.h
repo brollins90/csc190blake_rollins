@@ -11,7 +11,7 @@
 class Projectile : public GameObject
 {	
 public:
-	Projectile(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Vector2D inEndPoint);
+	Projectile(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, Vector2D inEndPoint);
 	~Projectile(void);
 	
 	void draw (Core::Graphics& g);

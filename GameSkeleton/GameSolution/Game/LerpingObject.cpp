@@ -2,7 +2,7 @@
 
 extern DrawThing* myDrawThing;
 
-LerpingObject::LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, int inNumPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject) : GameObject(inPosition, inVelocity, numPoints, inShapePoints)
+LerpingObject::LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, int inNumPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject) : GameObject(inPosition, inVelocity, numPoints, inShapePoints, inColor)
 {
 	pointInPath = 0;
 	curPercentage = 0.0f;
@@ -26,21 +26,13 @@ LerpingObject::~LerpingObject()
 
 void LerpingObject::draw (Core::Graphics& g)
 {
-//	Matrix3D m;
-	//m= m * Matrix3D().Translation(position);
+	g.SetColor(objColor);
 	LerpingObject::draw(g, Matrix3D().Translation(position));
-	/*
-	if (hasChild) 
-	{
-		m = m * m.Rotation(subObject->angle) * m.Translation(100, 100);
-		subObject->draw(g, m);
-	}*/
-
 }
 
 void LerpingObject::draw (Core::Graphics& g, Matrix3D m)
 {
-//	m = m * Matrix3D().Translation(position);
+	g.SetColor(objColor);
 	GameObject::draw(g, m);
 	
 	if (hasChild) 

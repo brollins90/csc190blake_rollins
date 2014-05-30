@@ -11,7 +11,7 @@
 class SpaceShip : public GameObject
 {
 public:
-	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, GameObject* inTurret);
+	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, GameObject* inTurret);
 	~SpaceShip(void);
 
 	void draw (Core::Graphics& g);
