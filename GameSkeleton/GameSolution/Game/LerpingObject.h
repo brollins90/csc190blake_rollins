@@ -1,5 +1,5 @@
-#ifndef ASTEROID_H
-#define ASTEROID_H
+#ifndef LERPING_OBJECT_H
+#define LERPING_OBJECT_H
 
 #include "Engine.h"
 #include "Core.h"
@@ -11,20 +11,21 @@
 class LerpingObject : public GameObject
 {
 private:
-	int pointInPath;
 	float curPercentage;
+	int pointInPath;
 	int numPathPoints;
 	Shape* pathShape;
-	bool hasChild;
 	LerpingObject* subObject;
+	bool hasChild;
 public:
 	LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, int numPathPoints, Vector2D* inPathPoints, bool inHasChild, LerpingObject* inSubObject);
 	~LerpingObject(void);
 	
 	void draw (Core::Graphics& g);
 	void draw (Core::Graphics& g, Matrix3D m);
-	void scaleChild(float scaleValue);
 	virtual bool update (float dt);
+
+	void scaleChild(float scaleValue);
 };
 
 #endif

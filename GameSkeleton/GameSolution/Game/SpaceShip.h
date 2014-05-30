@@ -14,21 +14,14 @@ public:
 	SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, GameObject* inTurret);
 	~SpaceShip(void);
 
+	Vector2D acceleration;
+	float rotationSpeed;	
+	int mousePosX;
+	int mousePosY;
+	GameObject* turret1;
+
 	void draw (Core::Graphics& g);
 	virtual bool update (float dt);
-
-//	void addTurret(GameObject* t);
-//	bool isOutOfBounds(Vector2D& pos);
-	
-	Vector2D acceleration;
-	int mousePosX, mousePosY;
-	GameObject* turret1;
-//	GameObject* laser1;
-	float rotationSpeed;	
-	//Vector2D laserStart;
-	//Vector2D laserEnd;
-	//float laserPercentage;
-	//bool laserFired;
 };
 
 #endif

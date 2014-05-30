@@ -28,7 +28,11 @@ DrawThing::DrawThing(void)
 	strings[22] = '0'; // 
 	strings[23] = '0'; // 
 	strings[24] = '0'; // 
-	strings[25] = '0'; //
+	strings[25] = '0'; // 
+	strings[26] = '0'; // 
+	strings[27] = '0'; // 
+	strings[28] = '0'; // 
+	strings[29] = '0'; //
 }
 
 DrawThing::~DrawThing(void)

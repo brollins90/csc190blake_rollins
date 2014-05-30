@@ -1,5 +1,5 @@
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
 
 #include "Engine.h"
 #include "Core.h"
@@ -23,10 +23,10 @@ public:
 	virtual void draw( Core::Graphics& g );
 	virtual	void draw( Core::Graphics& g, Matrix3D& temp );
 	virtual	bool update( float dt );
+
 	void rotate( float angleInc );
 	void setPosition( const Vector2D& pos );
-	void setColor(Core::RGB newColor);
-	
+	void setColor(Core::RGB newColor);	
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef EFFECTMANAGER_H
-#define EFFECTMANAGER_H
+#ifndef EFFECT_MANAGER_H
+#define EFFECT_MANAGER_H
 
 #include "Core.h"
 #include "Particle.h"
@@ -15,10 +15,11 @@ public:
 
 	ParticleEffect* effectArray[MAX_EFFECTS];
 	int numActiveEffects;
-	void addEffect(ParticleEffect* newEffect);
 
 	void draw(Core::Graphics& g);
-virtual	bool update(float dt);
+	virtual	bool update(float dt);
+	
+	void addEffect(ParticleEffect* newEffect);
 };
 
 #endif

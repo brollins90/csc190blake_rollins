@@ -1,5 +1,5 @@
-#ifndef DRAWTHING_H
-#define DRAWTHING_H
+#ifndef DRAW_THING_H
+#define DRAW_THING_H
 
 #include "Engine.h"
 #include "Core.h"

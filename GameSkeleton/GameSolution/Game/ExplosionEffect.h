@@ -1,5 +1,5 @@
-#ifndef EXPLOSIONEFFECT_H
-#define EXPLOSIONEFFECT_H
+#ifndef EXPLOSION_EFFECT_H
+#define EXPLOSION_EFFECT_H
 
 #include "Core.h"
 #include "ParticleEffect.h"
@@ -11,7 +11,7 @@ public:
 	~ExplosionEffect(void);
 
 	void draw(Core::Graphics& g);
-virtual	bool update(float dt);
+	virtual	bool update(float dt);
 };
 
 #endif

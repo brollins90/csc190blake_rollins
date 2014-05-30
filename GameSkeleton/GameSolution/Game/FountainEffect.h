@@ -1,9 +1,10 @@
-#ifndef FOUNTAINEFFECT_H
-#define FOUNTAINEFFECT_H
+#ifndef FOUNTAIN_EFFECT_H
+#define FOUNTAIN_EFFECT_H
 
 #include "Core.h"
 #include "ParticleEffect.h"
 #include "Matrix3D.h"
+
 using Engine::Matrix3D;
 
 class FountainEffect : public ParticleEffect
@@ -16,7 +17,8 @@ public:
 	float fountainAngle;
 
 	void draw(Core::Graphics& g);
-virtual	bool update(float dt);
+	virtual	bool update(float dt);
+
 	void setFountainAngle(float inAngle);
 };
 

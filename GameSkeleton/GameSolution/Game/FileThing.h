@@ -1,5 +1,5 @@
-#ifndef FILETHING_H
-#define FILETHING_H
+#ifndef FILE_THING_H
+#define FILE_THING_H
 
 #include <fstream>
 

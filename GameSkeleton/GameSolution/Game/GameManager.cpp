@@ -23,109 +23,67 @@ const extern int SCREEN_HEIGHT;
 
 extern WallMode gameMode = WALLS;
 
-int numWallPoints = 6;
 Vector2D wallPoints[] =
-{
-	Vector2D(512.0F,0.0F), //(SCREEN_WIDTH / 2), 0),
-	Vector2D(950.0F,200.0F),
-	Vector2D(1024.0F,384.0F), //(SCREEN_HEIGHT / 2)),
-	Vector2D(512.0F, 768.0F), //(SCREEN_WIDTH / 2), (float)SCREEN_HEIGHT),
-	Vector2D(0.0F, 384.0F), //0, (SCREEN_HEIGHT / 2))
-	Vector2D(512.0F,0.0F), //(SCREEN_WIDTH / 2), 0)
-};
+{	Vector2D(512.0F,0.0F),		Vector2D(950.0F,200.0F),	Vector2D(1024.0F,384.0F),
+	Vector2D(512.0F, 768.0F),	Vector2D(0.0F, 384.0F),		Vector2D(512.0F,0.0F) };
+int numWallPoints = sizeof(wallPoints) / sizeof(wallPoints[0]);
 
-int numScreenEdgePoints = 4;
 Vector2D screenEdgePoints[] =
 {
-	Vector2D(0.0F,0.0F),
-	Vector2D((float)SCREEN_WIDTH,0.0F),
-	Vector2D((float)SCREEN_WIDTH,(float)SCREEN_HEIGHT),
-	Vector2D(0.0F, (float)SCREEN_HEIGHT)
+	Vector2D(0.0F,0.0F),		Vector2D((float)SCREEN_WIDTH,0.0F),
+	Vector2D((float)SCREEN_WIDTH,(float)SCREEN_HEIGHT),		Vector2D(0.0F, (float)SCREEN_HEIGHT)
 };
+int numScreenEdgePoints = sizeof(screenEdgePoints) / sizeof(screenEdgePoints[0]);
 
-int numSquarePoints = 5;
-Vector2D square[] =
+Vector2D squarePoints[] =
 {
-	Vector2D(-50.0F, -50.0F),
-	Vector2D(+00.0F, -75.0F),
-	Vector2D(+50.0F, -50.0F),
-	Vector2D(+50.0F, +50.0F),
-	Vector2D(-50.0F, +50.0F)
-};
+	Vector2D(-50.0F, -50.0F),	Vector2D(+00.0F, -75.0F),	Vector2D(+50.0F, -50.0F),
+	Vector2D(+50.0F, +50.0F),	Vector2D(-50.0F, +50.0F) };
+int numSquarePoints = sizeof(squarePoints) / sizeof(squarePoints[0]);
 
-int numShipPoints = 15;
 Vector2D shipPoints[] =
 {
-	Vector2D(+00.00f, -28.50f),
-	Vector2D(+06.00f, +05.25f),
-	Vector2D(+08.25f, +05.25f),
-	Vector2D(+08.25f, +22.50f),
-	Vector2D(+08.25f, +21.00f),
-	Vector2D(+23.25f, +21.00f),
-	Vector2D(+08.25f, +12.00f),
-	Vector2D(+08.25f, +22.50f),
-	Vector2D(-08.25f, +22.50f),
-	Vector2D(-08.25f, +12.00f),
-	Vector2D(-23.25f, +21.00f),
-	Vector2D(-08.25f, +21.00f),
-	Vector2D(-08.25f, +22.50f),
-	Vector2D(-08.25f, +05.25f),
-	Vector2D(-06.00f, +05.25f)
+	Vector2D(+00.00f, -28.50f),	Vector2D(+06.00f, +05.25f),	Vector2D(+08.25f, +05.25f),
+	Vector2D(+08.25f, +22.50f),	Vector2D(+08.25f, +21.00f),	Vector2D(+23.25f, +21.00f),
+	Vector2D(+08.25f, +12.00f),	Vector2D(+08.25f, +22.50f),	Vector2D(-08.25f, +22.50f),
+	Vector2D(-08.25f, +12.00f),	Vector2D(-23.25f, +21.00f),	Vector2D(-08.25f, +21.00f),
+	Vector2D(-08.25f, +22.50f),	Vector2D(-08.25f, +05.25f),	Vector2D(-06.00f, +05.25f)
 };
+int numShipPoints = sizeof(shipPoints) / sizeof(shipPoints[0]);
 
-int numTurretPoints = 16;
 Vector2D turretPoints[] =
 {
-	Vector2D(-08.0F, +10.0F),
-	Vector2D(-08.0F, -08.0F),
-	Vector2D(-07.0F, -08.0F),
-	Vector2D(-07.0F, -14.0F),
-	Vector2D(-05.0F, -14.0F),
-	Vector2D(-05.0F, -08.0F),
-	Vector2D(-03.0F, -08.0F),
-	Vector2D(-03.0F, -06.0F),
-	Vector2D(+03.0F, -06.0F),
-	Vector2D(+03.0F, -08.0F),
-	Vector2D(+05.0F, -08.0F),
-	Vector2D(+05.0F, -14.0F),
-	Vector2D(+07.0F, -14.0F),
-	Vector2D(+07.0F, -08.0F),
-	Vector2D(+08.0F, -08.0F),
+	Vector2D(-08.0F, +10.0F),	Vector2D(-08.0F, -08.0F),	Vector2D(-07.0F, -08.0F),
+	Vector2D(-07.0F, -14.0F),	Vector2D(-05.0F, -14.0F),	Vector2D(-05.0F, -08.0F),
+	Vector2D(-03.0F, -08.0F),	Vector2D(-03.0F, -06.0F),	Vector2D(+03.0F, -06.0F),
+	Vector2D(+03.0F, -08.0F),	Vector2D(+05.0F, -08.0F),	Vector2D(+05.0F, -14.0F),
+	Vector2D(+07.0F, -14.0F),	Vector2D(+07.0F, -08.0F),	Vector2D(+08.0F, -08.0F),
 	Vector2D(+08.0F, +10.0F)
 };
+int numTurretPoints = sizeof(turretPoints) / sizeof(turretPoints[0]);
 
-int numAsteroidPoints = 11;
 Vector2D asteroidPoints[] =
 {
-	Vector2D(-33.0f, +00.0f),
-	Vector2D(-13.0f, -05.0f),
-	Vector2D(-10.0f, -16.0f),
-	Vector2D(+03.0f, -28.0f),
-	Vector2D(+30.0f, -14.0f),
-	Vector2D(+29.0f, +02.0f),
-	Vector2D(+34.0f, +15.0f),
-	Vector2D(+16.0f, +25.0f),
-	Vector2D(+03.0f, +28.0f),
-	Vector2D(-08.0f, +28.0f),
-	Vector2D(-27.0f, +17.0f)
+	Vector2D(-33.0f, +00.0f),	Vector2D(-13.0f, -05.0f),	Vector2D(-10.0f, -16.0f),
+	Vector2D(+03.0f, -28.0f),	Vector2D(+30.0f, -14.0f),	Vector2D(+29.0f, +02.0f),
+	Vector2D(+34.0f, +15.0f),	Vector2D(+16.0f, +25.0f),	Vector2D(+03.0f, +28.0f),
+	Vector2D(-08.0f, +28.0f),	Vector2D(-27.0f, +17.0f)
 };
+int numAsteroidPoints = sizeof(asteroidPoints) / sizeof(asteroidPoints[0]);
 
 Vector2D asteroidPathPoints[] =
 {
-	Vector2D(+224.0f, +100.0f),
-	Vector2D(+700.0f, +200.0f),
-	Vector2D(+600.0f, +300.0f),
+	Vector2D(+224.0f, +100.0f),	Vector2D(+700.0f, +200.0f),	Vector2D(+600.0f, +300.0f),
 	Vector2D(+050.0f, +100.0f)
 };
+int numAsteroidPathPoints = sizeof(asteroidPathPoints) / sizeof(asteroidPathPoints[0]);
 
-int numAsteroidPathPoints2 = 4;
 Vector2D asteroidPathPoints2[] =
 {
-	Vector2D(+824.0f, +100.0f),
-	Vector2D(+700.0f, +500.0f),
-	Vector2D(+600.0f, +200.0f),
+	Vector2D(+824.0f, +100.0f),	Vector2D(+700.0f, +500.0f),	Vector2D(+600.0f, +200.0f),
 	Vector2D(+050.0f, +100.0f)
 };
+int numAsteroidPathPoints2 = sizeof(asteroidPathPoints2) / sizeof(asteroidPathPoints2[0]);
 
 
 
@@ -137,17 +95,13 @@ extern EffectManager* myEffectManager = new EffectManager;
 extern GameObjectManager* goManager = new GameObjectManager;
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
-//GameObject laser1(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,0,0));
 
 
 GameManager::GameManager(void)
 {
-
-//	laser1.scale = .25F;
-	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
-	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
-	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
-
+//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
+//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
+//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
 
 	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
 	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
@@ -166,12 +120,10 @@ void GameManager::draw( Core::Graphics& g)
 {
 	if (gameMode == WALLS)
 	{
-		g.SetColor(RGB(255,255,255)); // WHITE
 		Matrix3D t;
 		wallsObj.draw(g, t);
 	}
 
-	g.SetColor(RGB(128,128,128));
 	goManager->draw(g);
 	myEffectManager->draw(g);
 	

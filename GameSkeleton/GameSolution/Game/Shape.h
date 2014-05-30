@@ -19,6 +19,7 @@ public:
 
 	void draw( Core::Graphics& g, Vector2D& pos);
 	void draw( Core::Graphics& g, Matrix3D& m);
+
 	void addMatrixTranslation(Matrix3D&);
 	int getNumPoints();
 	Vector2D& get(int index);

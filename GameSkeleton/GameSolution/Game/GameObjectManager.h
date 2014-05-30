@@ -1,10 +1,10 @@
-#ifndef GAMEOBJECTMANAGER_H
-#define GAMEOBJECTMANAGER_H
+#ifndef GAME_OBJECT_MANAGER_H
+#define GAME_OBJECT_MANAGER_H
 
 #include "Core.h"
 #include "GameObject.h"
 
-const int MAX_OBJECTS = 20;
+const int MAX_OBJECTS = 40;
 
 class GameObjectManager
 {
@@ -14,10 +14,11 @@ public:
 
 	GameObject* goArray[MAX_OBJECTS];
 	int numActiveObjects;
-	void addObject(GameObject* newObj);
 
 	void draw(Core::Graphics& g);
 	bool update(float dt);
+	
+	void addObject(GameObject* newObj);
 };
 
 #endif
