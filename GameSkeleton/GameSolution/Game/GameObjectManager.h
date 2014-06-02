@@ -19,6 +19,7 @@ public:
 	bool update(float dt);
 	
 	void addObject(GameObject* newObj);
+	GameObject* get(int index) ;
 };
 
 #endif

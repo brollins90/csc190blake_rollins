@@ -26,11 +26,13 @@ void draw( Core::Graphics& g )
 
 void main()
 {
+	myGameManager->initialize();
 	srand((unsigned int)time(NULL));
 	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);
 	Core::RegisterUpdateFn( update );
 	Core::RegisterDrawFn( draw );
 	Core::GameLoop();
+	myGameManager->shutdown();
 }
 
 

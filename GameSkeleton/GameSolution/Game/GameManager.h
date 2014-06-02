@@ -10,10 +10,13 @@ public:
 	GameManager(void);
 	~GameManager( void );
 
+	bool initialize();
+	bool shutdown();
 	void draw( Core::Graphics& g );
 	bool update(float dt);
 
 	bool isOutOfBounds(Engine::Vector2D& pos);
+	void checkLaserEnemyCollision();
 };
 
 #endif

@@ -92,15 +92,25 @@ void DrawThing::draw(Core::Graphics& g)
 	ss << strings[13];
 	g.DrawString(135, 140, ss.str().c_str());
 
-	//ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
-	//g.DrawString(10, 155, ss.str().c_str());
-	//ss.str(std::string());
+	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
+	g.DrawString(10, 155, ss.str().c_str());
+	ss.str(std::string());
+
+	ss << "FRAMES PER SECOND: " << strings[16];
+	g.DrawString(10, 170, ss.str().c_str());
+	ss.str(std::string());
+
+	ss << "SECONDS PER FRAME: " << strings[17];
+	g.DrawString(10, 185, ss.str().c_str());
+	ss.str(std::string());
+
 	//ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << "," << strings[20] << "," << strings[21] << "," << strings[22] << ")";
 	//g.DrawString(10, 170, ss.str().c_str());
 	//ss.str(std::string());
+/*
 	ss << "temp: (" << strings[22] << "-" << strings[23] << ")";
 	g.DrawString(10, 170, ss.str().c_str());
-	ss.str(std::string());
+	ss.str(std::string());*/
 }
 
 std::string DrawThing::floatToString(float f)
@@ -156,4 +166,14 @@ void DrawThing::setShipMatrix(Engine::Matrix3D m)
 void DrawThing::setString(int index, std::string string)
 {
 	strings[index] = string;
+}
+
+void DrawThing::setFPS(float fps)
+{
+	strings[16] = floatToString(fps);
+}
+
+void DrawThing::setSPF(float spf)
+{
+	strings[17] = floatToString(spf);
 }

@@ -15,8 +15,13 @@
 #include "Randomer.h"
 #include "EffectManager.h"
 #include "GameObjectManager.h"
+#include "Clock.h"
+#include "Enemy.h"
+#include "EnemyManager.h"
+
 
 using Core::Input;
+using Timing::Clock;
 
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
@@ -93,12 +98,27 @@ extern DrawThing* myDrawThing = new DrawThing;
 extern Randomer* myRandomer = new Randomer;
 extern EffectManager* myEffectManager = new EffectManager;
 extern GameObjectManager* goManager = new GameObjectManager;
+extern GameObjectManager* projectileManager = new GameObjectManager;
+extern EnemyManager* enemyManager = new EnemyManager;
+extern Clock* myClock = new Clock;
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
 
 
+float enemySpawnTimer = 5.0F;
+
 GameManager::GameManager(void)
 {
+}
+
+GameManager::~GameManager(void)
+{
+}
+
+bool GameManager::initialize()
+{
+	myClock->initialize();
+	myClock->newFrame();
 //	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
 //	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
 //	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
@@ -110,10 +130,13 @@ GameManager::GameManager(void)
 	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(5,5), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, true, r1);
 	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(5,5), numAsteroidPoints, asteroidPoints, RGB(255,128,0), numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
 	goManager->addObject(r3);
+	return true;
 }
 
-GameManager::~GameManager(void)
+bool GameManager::shutdown()
 {
+	myClock->shutdown();
+	return true;
 }
 
 void GameManager::draw( Core::Graphics& g)
@@ -125,17 +148,41 @@ void GameManager::draw( Core::Graphics& g)
 	}
 
 	goManager->draw(g);
+	projectileManager->draw(g);
+	enemyManager->draw(g);
 	myEffectManager->draw(g);
 	
 	// Draw the debug stuff
 	myDrawThing->draw(g);	
 }
 
+void GameManager::checkLaserEnemyCollision()
+{
+	/*for (int i = 0; i < */
+}
+
 bool GameManager::update(float dt)
 {
+	// Set the Lap on the Clock
+	float deltaTime = myClock->timeElapsedLastFrame();
+	myClock->newFrame();
+	// Display FPS timer
+	myDrawThing->setSPF(deltaTime);
+	myDrawThing->setFPS(1/deltaTime);
+
+	enemySpawnTimer -= deltaTime;
+	if (enemySpawnTimer < 0) {
+		
+		enemyManager->addEnemy();
+		enemySpawnTimer = 5;
+	}
+	checkLaserEnemyCollision();
+
 	wallsObj.update(dt);
 
 	goManager->update(dt);
+	projectileManager->update(dt);
+	enemyManager->update(dt);
 	myEffectManager->update(dt);
 	
 	if ( Input::IsPressed( '1' ) )

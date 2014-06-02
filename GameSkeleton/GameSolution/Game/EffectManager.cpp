@@ -12,15 +12,6 @@ EffectManager::~EffectManager()
 }
 
 
-void EffectManager::addEffect(ParticleEffect* newEffect) 
-{
-	if (numActiveEffects < MAX_EFFECTS) 
-	{
-		effectArray[numActiveEffects++] = newEffect;
-	}
-}
-
-
 void EffectManager::draw(Core::Graphics& g)
 {
 	for (int i = 0; i < numActiveEffects; i++)
@@ -44,8 +35,16 @@ bool EffectManager::update(float dt)
 				}
 				numActiveEffects--;
 			}
-		}
-		
+		}		
 	}
 	return true;
+}
+
+
+void EffectManager::addEffect(ParticleEffect* newEffect) 
+{
+	if (numActiveEffects < MAX_EFFECTS) 
+	{
+		effectArray[numActiveEffects++] = newEffect;
+	}
 }

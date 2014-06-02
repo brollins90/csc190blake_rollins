@@ -86,8 +86,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="ExplosionEffect.cpp" />
     <ClCompile Include="FileThing.cpp" />
     <ClCompile Include="FountainEffect.cpp" />
@@ -105,8 +107,10 @@
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="ExplosionEffect.h" />
     <ClInclude Include="FileThing.h" />
     <ClInclude Include="FountainEffect.h" />

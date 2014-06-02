@@ -12,6 +12,11 @@ GameObjectManager::~GameObjectManager()
 
 }
 
+GameObject* GameObjectManager::get(int index) 
+{
+	return goArray[index];
+}
+
 void GameObjectManager::addObject(GameObject* newObj)
 {
 	if (numActiveObjects < MAX_OBJECTS)

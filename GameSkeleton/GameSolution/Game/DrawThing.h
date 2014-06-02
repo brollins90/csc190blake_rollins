@@ -22,6 +22,8 @@ public:
 	void setMousePos(int mouseX, int mouseY);
 	void setShipMatrix(Engine::Matrix3D m);
 	void setString(int index, std::string string);
+	void setFPS(float fps);
+	void setSPF(float spf);
 };
 
 #endif

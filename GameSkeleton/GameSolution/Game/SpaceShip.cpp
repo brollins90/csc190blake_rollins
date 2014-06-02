@@ -6,12 +6,16 @@
 #include "LerpingObject.h"
 #include "Projectile.h"
 #include "GameManager.h"
+#include "EnemyManager.h"
 
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 extern WallMode gameMode;
-extern GameObjectManager* goManager;
 extern GameManager* myGameManager;
+//extern GameObjectManager* goManager;
+extern GameObjectManager* projectileManager;
+//extern GameObjectManager* enemyManager;
+extern EnemyManager* enemyManager;
 
 int reloadDelay;
 FountainEffect* effect2;
@@ -123,7 +127,7 @@ bool SpaceShip::update (float dt)
 				Vector2D(0,0),
 				Vector2D(2,2)
 			};
-			goManager->addObject(
+			projectileManager->addObject(
 				new Projectile(Vector2D(position.x, position.y), // start
 				Vector2D(5,5), // velocity
 				2,
@@ -184,6 +188,8 @@ bool SpaceShip::update (float dt)
 		if (position.y < 0) { position.y = 768; }
 		if (position.y > 768) { position.y = 0; }
 	}
+
+	enemyManager->setShipLoc(position);
 
 	myDrawThing->setFloat(1,position.x);
 	myDrawThing->setFloat(2,position.y);
