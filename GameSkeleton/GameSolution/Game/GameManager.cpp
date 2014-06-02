@@ -1,24 +1,5 @@
 #include "GameManager.h"
 
-#include "Engine.h"
-#include "Core.h"
-#include <sstream>
-#include "DrawThing.h"
-#include "Shape.h"
-#include "GameObject.h"
-#include "WallMode.h"
-#include "SpaceShip.h"
-#include "LerpingObject.h"
-#include "ParticleEffect.h"
-#include "ExplosionEffect.h"
-#include "FountainEffect.h"
-#include "Randomer.h"
-#include "EffectManager.h"
-#include "GameObjectManager.h"
-#include "Clock.h"
-#include "Enemy.h"
-#include "EnemyManager.h"
-
 
 using Core::Input;
 using Timing::Clock;
@@ -26,7 +7,7 @@ using Timing::Clock;
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
 
-extern WallMode gameMode = WALLS;
+extern WallMode gameMode = BOUNCE;
 
 Vector2D wallPoints[] =
 {	Vector2D(512.0F,0.0F),		Vector2D(950.0F,200.0F),	Vector2D(1024.0F,384.0F),
@@ -92,6 +73,7 @@ int numAsteroidPathPoints2 = sizeof(asteroidPathPoints2) / sizeof(asteroidPathPo
 
 
 
+extern Profiler* myProfiler = new Profiler;
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern Shape* screenEdge = new Shape(numScreenEdgePoints, screenEdgePoints);
 extern DrawThing* myDrawThing = new DrawThing;
@@ -119,9 +101,30 @@ bool GameManager::initialize()
 {
 	myClock->initialize();
 	myClock->newFrame();
-//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(300,300), 1000, RGB(255,128,0), 5));
-//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(500,300), 1000, RGB(255,128,0), 2));
-//	myEffectManager->addEffect(new ExplosionEffect(Vector2D(400,400), 1000, RGB(255,128,0), 10));
+	const char* profileFileName = "profiler.csv";
+	myProfiler->initialize(profileFileName);
+
+	
+	char* categories[] =
+	{
+		"cat1",
+		"cat2",
+		"cat3"
+	};
+	const unsigned int NUM_CATEGORIES = sizeof(categories) / sizeof(*categories);
+	
+	const unsigned int NUM_FRAMES = 5;
+
+	float sampleNumber = 0;
+	for (float frame = 0; frame < NUM_FRAMES; frame++)
+	{
+		myProfiler->newFrame();
+		for (unsigned int cat = 0; cat < NUM_CATEGORIES; cat++)
+		{
+			myProfiler->addEntry(categories[cat], sampleNumber++);
+		}
+	}
+
 
 	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
 	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
@@ -136,6 +139,7 @@ bool GameManager::initialize()
 bool GameManager::shutdown()
 {
 	myClock->shutdown();
+	myProfiler->shutdown();
 	return true;
 }
 

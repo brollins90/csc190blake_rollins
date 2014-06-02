@@ -17,7 +17,14 @@ extern GameObjectManager* projectileManager;
 //extern GameObjectManager* enemyManager;
 extern EnemyManager* enemyManager;
 
+
+Vector2D laserShapePoints[] = {
+	Vector2D(0,0),
+	Vector2D(2,2)
+};
+
 int reloadDelay;
+int shotsFired;
 FountainEffect* effect2;
 int flameTimer;
 
@@ -29,6 +36,7 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 	reloadDelay = 0;
 	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 4);
 	flameTimer = 0;
+	shotsFired = 0;
 }
 
 SpaceShip::~SpaceShip()
@@ -59,19 +67,9 @@ void SpaceShip::draw (Core::Graphics& g)
 	Matrix3D turretTranslation;
 	turretTranslation = turretTranslation.Translation(position.x, position.y) * turretRotate * turretTranslation.Scale(scale);
 	
-	g.SetColor(RGB(255,255,255)); // WHITE
+	//g.SetColor(RGB(255,255,255)); // WHITE
 	turret1->draw(g, turretTranslation);
-
-	//// Draw the laser
-	//if (laserPercentage > 0) 
-	//{
-	//	Matrix3D laserTranslation;
-	//	laserTranslation = laserTranslation * laserTranslation.Translation(laser1->position.x, laser1->position.y) * turretRotate;
-	//	
-	//	g.SetColor(RGB(255,0,0)); // RED
-	//	laser1->draw(g, laserTranslation);
-	//}
-
+	
 	effect2->draw(g);
 
 }
@@ -123,10 +121,6 @@ bool SpaceShip::update (float dt)
 	{ 
 		if (reloadDelay <= 0) {
 			reloadDelay = 10;
-			Vector2D laserShapePoints[] = {
-				Vector2D(0,0),
-				Vector2D(2,2)
-			};
 			projectileManager->addObject(
 				new Projectile(Vector2D(position.x, position.y), // start
 				Vector2D(5,5), // velocity
@@ -134,24 +128,13 @@ bool SpaceShip::update (float dt)
 				laserShapePoints,
 				RGB(255,0,0),
 				Vector2D((float)mousePosX, (float)mousePosY))); // end point)); // color
+			shotsFired++;
 		}
+
 	}
 
 	turret1->setPosition(position);
-/*
-	if (laserPercentage > 0) 
-	{
-		Vector2D laserPath = laserEnd - laserStart;
-		float laserPathLength = laserPath.Length();
-		float laserTimeUnit = (laserSpeed / laserPathLength);
-		laserPercentage += laserTimeUnit;
-		laser1->position = Vector2D::LERP(laserStart, laserEnd, laserPercentage);
-		
-		if (isOutOfBounds(laser1->position) )
-		{
-			laserPercentage = 0;
-		}	
-	}*/
+
 
 
 	if (gameMode == WALLS)
@@ -199,28 +182,3 @@ bool SpaceShip::update (float dt)
 	myDrawThing->setMousePos(mousePosX, mousePosY);
 	return true;
 }
-
-//bool SpaceShip::isOutOfBounds(Vector2D& pos)
-//{	
-//	for (int i =0 ; i < walls->getNumPoints(); i++)
-//	{
-//		Vector2D& wallPointLeft = walls->get(i);
-//		Vector2D& wallPointRight = walls->get((i + 1) % walls->getNumPoints());
-//		Vector2D wallPointLeftToShip = pos - wallPointLeft;
-//		Vector2D wallVector = wallPointRight - wallPointLeft;
-//		Vector2D wallnormal = wallVector.PerpCCW().Normalize();
-//		float f1 = Vector2D::DotProduct(wallnormal,wallPointLeftToShip);
-//
-//		if (f1 < 0) 
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//
-//
-//void SpaceShip::addTurret(GameObject* t)
-//{
-//	turret1 = t;
-//}

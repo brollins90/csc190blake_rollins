@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include <cstdlib>
 #include <ctime>
+#include "Profiler.h"
 
 extern const int SCREEN_WIDTH = 1024;
 extern const int SCREEN_HEIGHT = 768;
@@ -14,7 +15,7 @@ bool update(float dt)
 
 	if (Core::Input::IsPressed( Core::Input::KEY_ESCAPE ))
 	{
-		return true;
+		return myGameManager->shutdown();
 	}
 	return false;
 }
@@ -32,7 +33,6 @@ void main()
 	Core::RegisterUpdateFn( update );
 	Core::RegisterDrawFn( draw );
 	Core::GameLoop();
-	myGameManager->shutdown();
 }
 
 
