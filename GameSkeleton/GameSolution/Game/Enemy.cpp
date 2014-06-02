@@ -1,8 +1,12 @@
 #include "Enemy.h"
 #include "GameManager.h"
 #include "GameObjectManager.h"
+#include "EffectManager.h"
+#include "ExplosionEffect.h"
+
 extern GameManager* myGameManager;
 extern GameObjectManager* projectileManager;
+extern EffectManager* myEffectManager;
 
 extern DrawThing* myDrawThing;
 
@@ -30,6 +34,7 @@ bool Enemy::update(float dt)
 			Vector2D otherPos = projectileManager->get(i)->position;
 			float l2 = (position - otherPos).LengthSquared();
 			if (l2 < 20) {
+				myEffectManager->addEffect(new ExplosionEffect(position, 200, RGB(255,128,0), 5));
 				return false;
 			}
 		}
