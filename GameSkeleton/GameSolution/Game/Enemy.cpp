@@ -35,6 +35,7 @@ bool Enemy::update(float dt)
 			float l2 = (position - otherPos).LengthSquared();
 			if (l2 < 20) {
 				myEffectManager->addEffect(new ExplosionEffect(position, 200, RGB(255,128,0), 5));
+				myGameManager->enemiesDestroyed++;
 				return false;
 			}
 		}

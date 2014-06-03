@@ -49,59 +49,69 @@ void DrawThing::draw(Core::Graphics& g)
 	g.DrawString(10, 20, ss.str().c_str());
 	g.DrawString(10, 35, "Move the ship with the arrow or WASD keys");
 	g.DrawString(10, 50, "Fire a missle with the left mouse button or spacebar");
+
 	ss.str(std::string());
-	ss << "Ship position: (" << strings[1] << "\t," << strings[2] << ")";
+	ss << "FRAMES PER SECOND: " << strings[16];
 	g.DrawString(10, 65, ss.str().c_str());
+
 	ss.str(std::string());
-	ss << "Ship velocity: (" << strings[3] << "\t," << strings[4] << ")";
+	ss << "SECONDS PER FRAME: " << strings[17];
 	g.DrawString(10, 80, ss.str().c_str());
+	
 	ss.str(std::string());
-	ss << "Ship matrix: ";
+	ss << "Shots Fired: " << strings[18];
 	g.DrawString(10, 95, ss.str().c_str());
 	
 	ss.str(std::string());
-	ss << "( " ;
+	ss << "Enemies Destroyed: " << strings[19];
 	g.DrawString(10, 110, ss.str().c_str());
+	
+
+	ss.str(std::string());
+	ss << "Ship position: (" << strings[1] << "\t," << strings[2] << ")";
+	g.DrawString(10, 140, ss.str().c_str());
+	ss.str(std::string());
+	ss << "Ship velocity: (" << strings[3] << "\t," << strings[4] << ")";
+	g.DrawString(10, 155, ss.str().c_str());
+	ss.str(std::string());
+	ss << "Ship matrix: ";
+	g.DrawString(10, 170, ss.str().c_str());
+	
+	ss.str(std::string());
+	ss << "( " ;
+	g.DrawString(10, 185, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[5];
-	g.DrawString(35, 110, ss.str().c_str());
+	g.DrawString(35, 185, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[6];
-	g.DrawString(85, 110, ss.str().c_str());
+	g.DrawString(85, 185, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[7];
-	g.DrawString(135, 110, ss.str().c_str());
+	g.DrawString(135, 185, ss.str().c_str());
 	
 	ss.str(std::string());
 	ss << strings[8];
-	g.DrawString(35, 125, ss.str().c_str());
+	g.DrawString(35, 200, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[9];
-	g.DrawString(85, 125, ss.str().c_str());
+	g.DrawString(85, 200, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[10];
-	g.DrawString(135, 125, ss.str().c_str());
+	g.DrawString(135, 200, ss.str().c_str());
 	
 	ss.str(std::string());
 	ss << strings[11];
-	g.DrawString(35, 140, ss.str().c_str());
+	g.DrawString(35, 215, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[12];
-	g.DrawString(85, 140, ss.str().c_str());
+	g.DrawString(85, 215, ss.str().c_str());
 	ss.str(std::string());
 	ss << strings[13];
-	g.DrawString(135, 140, ss.str().c_str());
+	g.DrawString(135, 215, ss.str().c_str());
 
 	ss << "Mouse position: (" << strings[14] << "," << strings[15] << ")";
-	g.DrawString(10, 155, ss.str().c_str());
-	ss.str(std::string());
-
-	ss << "FRAMES PER SECOND: " << strings[16];
-	g.DrawString(10, 170, ss.str().c_str());
-	ss.str(std::string());
-
-	ss << "SECONDS PER FRAME: " << strings[17];
-	g.DrawString(10, 185, ss.str().c_str());
+	g.DrawString(10, 230, ss.str().c_str());
 	ss.str(std::string());
 
 	//ss << "temp: (" << strings[16] << "," << strings[17] << "," << strings[18] << "," << strings[19] << "," << strings[20] << "," << strings[21] << "," << strings[22] << ")";
@@ -176,4 +186,15 @@ void DrawThing::setFPS(float fps)
 void DrawThing::setSPF(float spf)
 {
 	strings[17] = floatToString(spf);
+}
+
+
+void DrawThing::setShotsFired(int shots)
+{
+	strings[18] = intToString(shots);
+}
+
+void DrawThing::setEnemiesDestroyed(int enemyCount)
+{
+	strings[19] = intToString(enemyCount);
 }

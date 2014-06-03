@@ -24,6 +24,8 @@ public:
 	void setString(int index, std::string string);
 	void setFPS(float fps);
 	void setSPF(float spf);
+	void setShotsFired(int shots);
+	void setEnemiesDestroyed(int enemyCount);
 };
 
 #endif

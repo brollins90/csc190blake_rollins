@@ -36,7 +36,10 @@ void Profiler::shutdown()
 
 void Profiler::addEntry(const char* cat, float time)
 {
-	assert(frameIndex < MAX_FRAME_SAMPLES);
+	if (frameIndex >= MAX_FRAME_SAMPLES) {
+		frameIndex = 0;
+	}
+	//assert(frameIndex < MAX_FRAME_SAMPLES);
 	assert(categoryIndex < MAX_PROFILE_CATEGORIES);
 	ProfileCategory& pc = categories[categoryIndex];
 

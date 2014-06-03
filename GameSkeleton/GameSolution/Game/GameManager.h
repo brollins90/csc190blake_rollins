@@ -26,6 +26,8 @@ class GameManager
 public:
 	GameManager(void);
 	~GameManager( void );
+	
+	int enemiesDestroyed;
 
 	bool initialize();
 	bool shutdown();
@@ -33,7 +35,6 @@ public:
 	bool update(float dt);
 
 	bool isOutOfBounds(Engine::Vector2D& pos);
-	void checkLaserEnemyCollision();
 };
 
 #endif

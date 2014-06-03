@@ -30,25 +30,7 @@ void EnemyManager::addEnemy()
 			Vector2D(500,500) // endpoint	
 			));
 }
-//
-//void EnemyManager::addObject(Enemy* newObj)
-//{
-//	if (numActiveObjects < MAX_OBJECTS)
-//	{
-//		goArray[numActiveObjects++] = newObj;
-//	}
-//}
-//
-//void EnemyManager::draw(Core::Graphics& g)
-//{
-//	for (int i = 0; i < numActiveObjects; i++)
-//	{
-//		//Matrix3D t;
-////		t = Matrix3D().Translation(goArray[i]->position);
-//		goArray[i]->draw(g);
-//	}
-//}
-//
+
 bool EnemyManager::update(float dt)
 {
 	for (int i = numActiveObjects - 1; i >= 0; i--)

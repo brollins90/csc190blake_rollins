@@ -4,7 +4,7 @@
 class Profiler
 {
 	const char* fileName;
-	static const unsigned int MAX_FRAME_SAMPLES = 500;
+	static const unsigned int MAX_FRAME_SAMPLES = 15000;
 	static const unsigned int MAX_PROFILE_CATEGORIES = 20;
 	unsigned int frameIndex;
 	unsigned int categoryIndex;

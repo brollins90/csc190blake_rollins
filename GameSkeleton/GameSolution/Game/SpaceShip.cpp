@@ -180,5 +180,7 @@ bool SpaceShip::update (float dt)
 	myDrawThing->setFloat(4,velocity.y);
 
 	myDrawThing->setMousePos(mousePosX, mousePosY);
+
+	myDrawThing->setShotsFired(shotsFired);
 	return true;
 }

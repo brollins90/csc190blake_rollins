@@ -83,14 +83,16 @@ extern GameObjectManager* goManager = new GameObjectManager;
 extern GameObjectManager* projectileManager = new GameObjectManager;
 extern EnemyManager* enemyManager = new EnemyManager;
 extern Clock* myClock = new Clock;
+extern Clock* profilerClock = new Clock;
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
 
-
 float enemySpawnTimer = 5.0F;
+float previousEnemySpawn = 0;
 
 GameManager::GameManager(void)
 {
+	enemiesDestroyed = 0;
 }
 
 GameManager::~GameManager(void)
@@ -101,30 +103,10 @@ bool GameManager::initialize()
 {
 	myClock->initialize();
 	myClock->newFrame();
+	profilerClock->initialize();
+	profilerClock->newFrame();
 	const char* profileFileName = "profiler.csv";
 	myProfiler->initialize(profileFileName);
-
-	
-	char* categories[] =
-	{
-		"cat1",
-		"cat2",
-		"cat3"
-	};
-	const unsigned int NUM_CATEGORIES = sizeof(categories) / sizeof(*categories);
-	
-	const unsigned int NUM_FRAMES = 5;
-
-	float sampleNumber = 0;
-	for (float frame = 0; frame < NUM_FRAMES; frame++)
-	{
-		myProfiler->newFrame();
-		for (unsigned int cat = 0; cat < NUM_CATEGORIES; cat++)
-		{
-			myProfiler->addEntry(categories[cat], sampleNumber++);
-		}
-	}
-
 
 	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
 	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(4,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
@@ -139,6 +121,7 @@ bool GameManager::initialize()
 bool GameManager::shutdown()
 {
 	myClock->shutdown();
+	profilerClock->shutdown();
 	myProfiler->shutdown();
 	return true;
 }
@@ -152,17 +135,25 @@ void GameManager::draw( Core::Graphics& g)
 	}
 
 	goManager->draw(g);
+	myProfiler->addEntry("Draw Main Objects", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	projectileManager->draw(g);
+	myProfiler->addEntry("Draw Projectiles", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	enemyManager->draw(g);
+	myProfiler->addEntry("Draw Enemies", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	myEffectManager->draw(g);
-	
+	myProfiler->addEntry("Draw Particle Effects", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+		
 	// Draw the debug stuff
 	myDrawThing->draw(g);	
-}
-
-void GameManager::checkLaserEnemyCollision()
-{
-	/*for (int i = 0; i < */
+	myProfiler->addEntry("Draw Debug Info", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
 }
 
 bool GameManager::update(float dt)
@@ -174,20 +165,41 @@ bool GameManager::update(float dt)
 	myDrawThing->setSPF(deltaTime);
 	myDrawThing->setFPS(1/deltaTime);
 
+	// Add enemies
+	myProfiler->newFrame();
 	enemySpawnTimer -= deltaTime;
 	if (enemySpawnTimer < 0) {
 		
 		enemyManager->addEnemy();
 		enemySpawnTimer = 5;
 	}
-	checkLaserEnemyCollision();
+	myProfiler->addEntry("Add Enemies", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
+	//// Check projectile collision
+	//checkLaserEnemyCollision();
+	//myProfiler->addEntry("Projectile Collision", profilerClock->timeElapsedLastFrame());
+	//profilerClock->newFrame();
 
 	wallsObj.update(dt);
+	myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
 
 	goManager->update(dt);
+	myProfiler->addEntry("Update Main Objects", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	projectileManager->update(dt);
+	myProfiler->addEntry("Update Projectiles", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	enemyManager->update(dt);
+	myProfiler->addEntry("Update Enemies", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	myEffectManager->update(dt);
+	myProfiler->addEntry("Update Particle Effects", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
 	
 	if ( Input::IsPressed( '1' ) )
 	{
@@ -204,6 +216,8 @@ bool GameManager::update(float dt)
 		gameMode = WALLS;
 		myDrawThing->setString(0, "WALLS");
 	}
+
+	myDrawThing->setEnemiesDestroyed(enemiesDestroyed);
 	return true;
 }
 
