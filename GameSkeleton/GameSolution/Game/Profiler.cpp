@@ -1,3 +1,4 @@
+#if PROFILER_ON
 #include "Profiler.h"
 #include "assert.h"
 #include <fstream>
@@ -71,3 +72,4 @@ char Profiler::getDelimiter(unsigned int index) const
 {
 	return ((index + 1) < numUsedCategories) ? ',' : '\n';
 }
+#endif
