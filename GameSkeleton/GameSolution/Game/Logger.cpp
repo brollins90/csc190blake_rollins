@@ -7,6 +7,11 @@ vector <Severity> Logger::severityList;
 Logger::Logger(void){}
 Logger::~Logger(void){}
 
+void Logger::initialize(const char* filename)
+{
+	this->fileName = filename;
+}
+
 void Logger::StringReplace(string& str, const string& from, const string& to)
 {
 	size_t pos = 0;
@@ -43,13 +48,13 @@ void Logger::Log( Severity severity, const char* message, const char * logFile, 
 	logList.push_back(logEntry);
 	severityList.push_back(severity);
 }
-void Logger::shutDown()
+void Logger::shutdown()
 {
 	WriteFile();
 }
 void Logger::WriteFile()
 {
-	std::ofstream myFile("log.html", std::ios::trunc);
+	std::ofstream myFile(fileName, std::ios::trunc);
 	
 	myFile << "<!DOCTYPE html>" << std::endl << "<html>" 
 		<< std::endl << "<head>" << std::endl << "<title>Log File</title>" << std::endl << "</head>"

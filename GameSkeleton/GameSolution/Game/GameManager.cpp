@@ -7,7 +7,6 @@ using Timing::Clock;
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
 
-extern WallMode gameMode = BOUNCE;
 
 Vector2D wallPoints[] =
 {	Vector2D(512.0F,0.0F),		Vector2D(950.0F,200.0F),	Vector2D(1024.0F,384.0F),
@@ -73,6 +72,8 @@ int numAsteroidPathPoints2 = sizeof(asteroidPathPoints2) / sizeof(asteroidPathPo
 
 
 
+extern WallMode gameMode = BOUNCE;
+extern Logger* myLogger = new Logger;
 extern Profiler* myProfiler = new Profiler;
 extern Shape* walls = new Shape(numWallPoints, wallPoints);
 extern Shape* screenEdge = new Shape(numScreenEdgePoints, screenEdgePoints);
@@ -105,6 +106,8 @@ bool GameManager::initialize()
 	myClock->newFrame();
 	profilerClock->initialize();
 	profilerClock->newFrame();
+	const char* loggerFileName = "logger.html";
+	myLogger->initialize(loggerFileName);
 	const char* profileFileName = "profiler.csv";
 	myProfiler->initialize(profileFileName);
 
@@ -123,29 +126,35 @@ bool GameManager::shutdown()
 	myClock->shutdown();
 	profilerClock->shutdown();
 	myProfiler->shutdown();
+	myLogger->shutdown();
 	return true;
 }
 
 void GameManager::draw( Core::Graphics& g)
 {
+	// Draw the Walls
 	if (gameMode == WALLS)
 	{
 		Matrix3D t;
 		wallsObj.draw(g, t);
 	}
 
+	// Draw the SpaceShip
 	goManager->draw(g);
 	myProfiler->addEntry("Draw Main Objects", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Draw the Projectiles
 	projectileManager->draw(g);
 	myProfiler->addEntry("Draw Projectiles", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Draw the Enemies
 	enemyManager->draw(g);
 	myProfiler->addEntry("Draw Enemies", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Draw the Particles
 	myEffectManager->draw(g);
 	myProfiler->addEntry("Draw Particle Effects", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
@@ -176,31 +185,31 @@ bool GameManager::update(float dt)
 	myProfiler->addEntry("Add Enemies", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
-	//// Check projectile collision
-	//checkLaserEnemyCollision();
-	//myProfiler->addEntry("Projectile Collision", profilerClock->timeElapsedLastFrame());
-	//profilerClock->newFrame();
-
-	wallsObj.update(dt);
-	myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
+	// Update the Spaceship
 	goManager->update(dt);
 	myProfiler->addEntry("Update Main Objects", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Update the Projectiles
 	projectileManager->update(dt);
 	myProfiler->addEntry("Update Projectiles", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Update the Enemies
 	enemyManager->update(dt);
 	myProfiler->addEntry("Update Enemies", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
 
+	// Update the Particles
 	myEffectManager->update(dt);
 	myProfiler->addEntry("Update Particle Effects", profilerClock->timeElapsedLastFrame());
 	profilerClock->newFrame();
-	
+
+	// Update the Walls
+	wallsObj.update(dt);
+	myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
+	profilerClock->newFrame();
+
 	if ( Input::IsPressed( '1' ) )
 	{
 		gameMode = WRAP;

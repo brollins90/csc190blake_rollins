@@ -4,6 +4,8 @@
 #include "Core.h"
 #include "Engine.h"
 #include <sstream>
+#include "Logger.h"
+#include "Profiler.h"
 #include "DrawThing.h"
 #include "Shape.h"
 #include "GameObject.h"
@@ -19,7 +21,6 @@
 #include "Clock.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
-#include "Profiler.h"
 
 class GameManager
 {

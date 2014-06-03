@@ -5,8 +5,6 @@
 #include "GameManager.h"
 #include <cstdlib>
 #include <ctime>
-#include "Logger.h"
-#include "Profiler.h"
 
 extern const int SCREEN_WIDTH = 1024;
 extern const int SCREEN_HEIGHT = 768;

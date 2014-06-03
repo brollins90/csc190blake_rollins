@@ -1,6 +1,8 @@
 #ifndef PROFILER_H
 #define PROFILER_H
 
+//#pragma warning ( disable : 4100)
+
 class Profiler
 {
 private:
@@ -22,16 +24,18 @@ private:
 
 public:
 #if PROFILER_ON
-	void initialize(const char* filename);
-	void shutdown();
-	void addEntry(const char* category, float time);
-	void newFrame();
+	static void initialize(const char* filename);
+	static void shutdown();
+	static void addEntry(const char* category, float time);
+	static void newFrame();
 #else
-	void initialize(const char* filename) {filename;}
-	void shutdown() {}
-	void addEntry(const char* category, float time) {category; time;}
-	void newFrame() {}
+	static void initialize(const char* filename) {filename;}
+	static void shutdown() {}
+	static void addEntry(const char* category, float time) {category; time;}
+	static void newFrame() {}
 #endif
 };
+
+//#pragma warning ( default : 4100)
 
 #endif
