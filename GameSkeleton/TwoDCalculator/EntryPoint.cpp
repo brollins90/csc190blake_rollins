@@ -128,10 +128,7 @@ int numMatrices = 1;
 void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 {
 	numMatrices = (data.selectedMatrix > (numMatrices - 1)) ? data.selectedMatrix + 1 : numMatrices;
-	//currentTransform.m[7] = data.selectedMatrix;
-	//currentTransform.m[8] = numMatrices;
 
-	// Create Identity to start the callback
 	Matrix3D temp1;
 	temp1 = temp1 * temp1.ScaleX(data.scaleX);
 	temp1 = temp1 * temp1.ScaleY(data.scaleY);
@@ -145,17 +142,6 @@ void myMatrixTransformCallback2D(const MatrixTransformData2D& data)
 	{
 		currentTransform = currentTransform * matrices[i];
 	}
-/*
-	data.rotate;
-	data.scaleX;
-	data.scaleY;
-	data.selectedMatrix;
-	data.translateX;
-	data.translateY;*/
-/*
-	currentTransform = matrices[data.selectedMatrix];
-	currentTransform = currentTransform.ScaleX(data.scaleX);
-	currentTransform = currentTransform.ScaleX(data.scaleY);*/
 }
 
 void myMatrixTransformCallback3D(const MatrixTransformData3D& data)

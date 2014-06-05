@@ -13,13 +13,13 @@ Vector2D particleShapePoints2[] =
 };
 
 
-FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
+FountainEffect::FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifetime) : ParticleEffect(inOrigin, inNumParticles, inBaseColor, inLifetime)
 {
-	origin = inOrigin;
-	numParticles = inNumParticles;
+	//origin = inOrigin;
+	//numParticles = inNumParticles;
 	fountainAngle = 0;
 
-	particles = new Particle[numParticles];
+	//particles = new Particle[numParticles];
 	for (int i = 0; i < numParticles; i++)
 	{
 		particles[i].position = Vector2D(origin.x,origin.y);

@@ -36,7 +36,7 @@ bool Enemy::update(float dt)
 			Vector2D otherPos = projectileManager->get(i)->position;
 			float l2 = (position - otherPos).LengthSquared();
 			if (l2 < COLLISION_DISTANCE) {
-				myEffectManager->addEffect(new ExplosionEffect(position, 20000, RGB(255,128,0), 5));
+				myEffectManager->addEffect(new ExplosionEffect(position, 100, RGB(255,128,0), 3));
 				myGameManager->enemiesDestroyed++;
 				return false;
 			}

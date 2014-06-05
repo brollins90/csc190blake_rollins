@@ -81,6 +81,7 @@ extern EnemyManager* enemyManager = new EnemyManager;
 extern Clock* myClock = new Clock;
 extern Clock* profilerClock = new Clock;
 
+
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
 
 float enemySpawnTimer = 5.0F;
@@ -113,6 +114,8 @@ bool GameManager::initialize()
 	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(2,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, true, r1);
 	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(7,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
 	goManager->addObject(r3);
+
+	myEffectManager->addEffect(new StarBackgroundEffect(Vector2D(0,0), 100, RGB(192,192,192), 1));
 	return true;
 }
 

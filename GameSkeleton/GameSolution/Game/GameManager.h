@@ -21,6 +21,7 @@
 #include "Clock.h"
 #include "Enemy.h"
 #include "EnemyManager.h"
+#include "StarBackgroundEffect.h"
 
 using Core::Input;
 using Engine::Timing::Clock;

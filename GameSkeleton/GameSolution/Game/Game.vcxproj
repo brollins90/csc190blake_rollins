@@ -103,6 +103,7 @@
     <ClCompile Include="Randomer.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
+    <ClCompile Include="StarBackgroundEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrawThing.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="FountainEffect.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="StarBackgroundEffect.h" />
     <ClInclude Include="LerpingObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Particle.h" />

@@ -10,13 +10,14 @@ extern Randomer* myRandomer;
 class ParticleEffect
 {
 public:
-	ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime);
+	ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifetime);
 	~ParticleEffect(void);
 	
 	Vector2D origin;
-	Particle* particles;
-	int lifetime;
 	int numParticles;
+	RGB baseColor;
+	float lifetime;
+	Particle* particles;
 
 	virtual void draw(Core::Graphics& g);
 	virtual bool update(float dt);

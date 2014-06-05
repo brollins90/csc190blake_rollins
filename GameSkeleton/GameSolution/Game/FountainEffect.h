@@ -10,7 +10,7 @@ using Engine::Matrix3D;
 class FountainEffect : public ParticleEffect
 {
 public:
-	FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifeTime);
+	FountainEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifeTime);
 	~FountainEffect(void);
 	
 	bool resetAfterLife;

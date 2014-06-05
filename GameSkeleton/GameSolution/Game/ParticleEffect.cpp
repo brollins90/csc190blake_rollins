@@ -1,11 +1,12 @@
 #include "ParticleEffect.h"
 
-ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, int inLifetime)
+ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifetime)
 {
-	inOrigin;
-	inNumParticles;
-	inBaseColor;
+	origin = inOrigin;
+	numParticles = inNumParticles;
+	baseColor = inBaseColor;
 	lifetime = inLifetime;
+	particles = new Particle[numParticles];
 }
 
 ParticleEffect::~ParticleEffect()
