@@ -22,6 +22,11 @@
 #include "Enemy.h"
 #include "EnemyManager.h"
 
+using Core::Input;
+using Engine::Timing::Clock;
+using Engine::Profiling::Profiler;
+using Engine::Logging::Logger;
+
 class GameManager
 {
 public:

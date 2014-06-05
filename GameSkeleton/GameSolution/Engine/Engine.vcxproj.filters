@@ -18,6 +18,15 @@
     <Filter Include="DebugTools\Profiling">
       <UniqueIdentifier>{3209a909-97d6-4b4c-897e-9cf1a896f5e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DebugTools\Logging">
+      <UniqueIdentifier>{c75370e2-843c-4e8d-babb-fce0e31239e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugTools\Timing">
+      <UniqueIdentifier>{e236727c-6b02-4a97-abdc-5d08d0352bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugTools\Asserting">
+      <UniqueIdentifier>{771c0312-55d3-4b1c-8d2c-4afc221e5a73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -25,6 +34,15 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>DebugTools\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>DebugTools\Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>DebugTools\Profiling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +63,18 @@
     </ClInclude>
     <ClInclude Include="Vector3D.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Asserter.h">
+      <Filter>DebugTools\Asserting</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>DebugTools\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>DebugTools\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>DebugTools\Profiling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

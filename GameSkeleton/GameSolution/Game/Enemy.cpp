@@ -10,6 +10,8 @@ extern EffectManager* myEffectManager;
 
 extern DrawThing* myDrawThing;
 
+int COLLISION_DISTANCE = 20;
+
 Enemy::Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, Vector2D inEndPoint) : Projectile(inPosition, inVelocity, numPoints, inShapePoints, inColor, inEndPoint)
 {
 
@@ -33,8 +35,8 @@ bool Enemy::update(float dt)
 		{
 			Vector2D otherPos = projectileManager->get(i)->position;
 			float l2 = (position - otherPos).LengthSquared();
-			if (l2 < 20) {
-				myEffectManager->addEffect(new ExplosionEffect(position, 200, RGB(255,128,0), 5));
+			if (l2 < COLLISION_DISTANCE) {
+				myEffectManager->addEffect(new ExplosionEffect(position, 20000, RGB(255,128,0), 5));
 				myGameManager->enemiesDestroyed++;
 				return false;
 			}
@@ -47,7 +49,7 @@ bool Enemy::update(float dt)
 		Vector2D pathVector = endPoint - startPoint;
 		float pathLength = pathVector.Length();
 		float oneTimeUnit = (velocity.x / pathLength);
-		curPercentage += oneTimeUnit;
+		curPercentage += oneTimeUnit * dt;
 
 		position = Vector2D::LERP(startPoint, endPoint, curPercentage);
 		return true;

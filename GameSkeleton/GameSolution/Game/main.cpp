@@ -1,5 +1,6 @@
-#define LOG_ON 1
-#define PROFILER_ON 1
+//#define LOG_ON 1
+//#define PROFILER_ON 1
+//#define ASSERTER_ON 1
 
 #include "Core.h"
 #include "GameManager.h"

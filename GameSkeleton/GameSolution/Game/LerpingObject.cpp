@@ -56,7 +56,7 @@ bool LerpingObject::update (float dt)
 		Vector2D pathVector = curPathRight - curPathLeft;
 		float pathLength = pathVector.Length();
 		float oneTimeUnit = (velocity.x / pathLength);
-		curPercentage += oneTimeUnit;
+		curPercentage += oneTimeUnit * dt;
 
 		position = Vector2D::LERP(curPathLeft, curPathRight, curPercentage);
 
@@ -70,7 +70,7 @@ bool LerpingObject::update (float dt)
 	{
 		subObject->update(dt);
 		subObject->position = Vector2D(position.x, position.y);
-		subObject->angle = subObject->angle - (.1F);
+		subObject->angle = subObject->angle - (subObject->velocity.x * dt);
 	}
 	return true;
 }

@@ -23,7 +23,7 @@ void EnemyManager::addEnemy()
 {
 	GameObjectManager::addObject(new Enemy(
 			Vector2D(300,300), // Position
-			Vector2D(1,1), // velocity
+			Vector2D(50,50), // velocity
 			numEnemyPoints, // num shape points
 			enemyPoints, // shape points 
 			RGB(255,25,25), // color

@@ -86,45 +86,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="ExplosionEffect.cpp" />
-    <ClCompile Include="FileThing.cpp" />
     <ClCompile Include="FountainEffect.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="LerpingObject.cpp" />
     <ClCompile Include="DrawThing.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
-    <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Randomer.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpaceShip.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h" />
+    <ClInclude Include="DrawThing.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="ExplosionEffect.h" />
-    <ClInclude Include="FileThing.h" />
     <ClInclude Include="FountainEffect.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="LerpingObject.h" />
-    <ClInclude Include="DrawThing.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Logger.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleEffect.h" />
-    <ClInclude Include="Profiler.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Randomer.h" />
     <ClInclude Include="Shape.h" />

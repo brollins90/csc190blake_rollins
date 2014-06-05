@@ -7,6 +7,10 @@
 #include "Vector3D.h"
 #include "Matrix2D.h"
 #include "Matrix3D.h"
+#include "Clock.h"
+#include "Logger.h"
+#include "Profiler.h"
+#include "Asserter.h"
 
 namespace Engine
 {
@@ -20,6 +24,9 @@ namespace Engine
 	struct ENGINE_SHARED Vector3D;
 	struct ENGINE_SHARED Matrix2D;
 	struct ENGINE_SHARED Matrix3D;
+	class ENGINE_SHARED Timing::Clock;
+	class ENGINE_SHARED Logging::Logger;
+	class ENGINE_SHARED Profiling::Profiler;
 }
 
 #endif // _ENGINE_H_

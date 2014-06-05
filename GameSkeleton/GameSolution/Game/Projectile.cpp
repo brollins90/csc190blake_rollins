@@ -38,9 +38,9 @@ bool Projectile::update(float dt)
 		Vector2D pathVector = endPoint - startPoint;
 		float pathLength = pathVector.Length();
 		float oneTimeUnit = (velocity.x / pathLength);
-		curPercentage += oneTimeUnit;
+		curPercentage += oneTimeUnit * dt;
 
-		position = Vector2D::LERP(startPoint, endPoint, curPercentage);
+		position = Vector2D::LERP(startPoint, endPoint, curPercentage);// * dt);
 		return true;
 	} 
 	return false;
