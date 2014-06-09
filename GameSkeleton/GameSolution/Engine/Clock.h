@@ -10,6 +10,7 @@ namespace Engine
 	{
 		class Clock
 		{
+			LARGE_INTEGER startTime;
 			LARGE_INTEGER timeFrequency;
 			LARGE_INTEGER timeLastFrame;
 			LARGE_INTEGER deltaLastFrame;
@@ -18,7 +19,9 @@ namespace Engine
 			ENGINE_SHARED bool initialize();
 			ENGINE_SHARED bool shutdown();
 			ENGINE_SHARED void newFrame();
+			ENGINE_SHARED void setStartTime();
 			ENGINE_SHARED float timeElapsedLastFrame() const;
+//			ENGINE_SHARED float timeElapsedSinceStart() const;
 		};
 	}
 }

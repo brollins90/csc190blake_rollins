@@ -49,7 +49,6 @@ bool Enemy::update(float dt)
 		// Check if the Enemy has collided with the Spaceship
 		float distance = (position - theShip->position).LengthSquared();
 		if (distance < COLLISION_DISTANCE) {
-			myEffectManager->addEffect(new ExplosionEffect(position, 100, RGB(255,128,0), 3));
 			myGameManager->removeLife();
 			return false;
 		}

@@ -1,4 +1,5 @@
 #include "GameManager.h"
+//#define DEBUG_ON 1
 
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
@@ -111,6 +112,10 @@ GameManager::~GameManager(void)
 void GameManager::removeLife()
 {
 	livesRemaining--;
+	myEffectManager->addEffect(new ExplosionEffect(theShip->position, 100, RGB(255,128,0), 3));
+	theShip->position = Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2));
+	theShip->velocity = Vector2D(0,0);
+	theShip->angle = 0;
 }
 
 bool GameManager::initialize()
@@ -125,9 +130,10 @@ bool GameManager::initialize()
 	myProfiler->initialize(profileFileName);
 
 //	bool forceFail = true;
-	ASSERT(true, "force to fail to test the asserter")
+	ASSERT(false, "force to fail to test the asserter")
 
 	theShip = new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255)));
+	ASSERT((theShip != NULL), "Spaceship is null")
 
 	myEffectManager->addEffect(new StarBackgroundEffect(Vector2D(0,0), 100, RGB(192,192,192), 1));
 	return true;
@@ -231,6 +237,12 @@ void GameManager::draw( Core::Graphics& g)
 		ss.str(std::string());
 		ss << "You destroyed " << enemiesDestroyed << " enemies.";
 		g.DrawString(10, 50, ss.str().c_str());
+		//ss.str(std::string());
+		//ss << "You played for " << totalTime << " xxx.";
+		//g.DrawString(10, 65, ss.str().c_str());
+		ss.str(std::string());
+		ss << "Press Esc to quit.";
+		g.DrawString(10, 80, ss.str().c_str());
 	}
 
 }
@@ -253,6 +265,7 @@ bool GameManager::update(float dt)
 		}
 
 		// Set the Lap on the Clock
+//		totalTime = myClock->timeElapsedSinceStart();
 		float deltaTime = myClock->timeElapsedLastFrame();
 		myClock->newFrame();
 		// Display FPS timer

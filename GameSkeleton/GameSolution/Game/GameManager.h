@@ -29,6 +29,8 @@ using Engine::Profiling::Profiler;
 using Engine::Logging::Logger;
 //using Engine::Randoming::Randomer;
 
+
+
 class GameManager
 {
 public:
@@ -39,6 +41,7 @@ public:
 	int livesRemaining;
 	int shotsFired;
 	int score;
+	float totalTime;
 
 	bool initialize();
 	bool shutdown();

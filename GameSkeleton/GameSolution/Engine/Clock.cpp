@@ -19,6 +19,11 @@ namespace Engine
 			return true;
 		}
 
+		void Clock::setStartTime()
+		{
+			QueryPerformanceCounter(&startTime);
+		}
+
 		void Clock::newFrame()
 		{
 			LARGE_INTEGER thisTime;
@@ -28,11 +33,20 @@ namespace Engine
 			deltaTime = ((float) delta.QuadPart) / timeFrequency.QuadPart;
 			timeLastFrame.QuadPart = thisTime.QuadPart;
 		}
-
+		
 		float Clock::timeElapsedLastFrame() const
 		{
 			return deltaTime;
 		}
+		
+		//float Clock::timeElapsedSinceStart() const
+		//{
+		//	LARGE_INTEGER thisTime;
+		//	QueryPerformanceCounter(&thisTime);
+		//	LARGE_INTEGER delta;
+		//	delta.QuadPart = thisTime.QuadPart - startTime.QuadPart;
+		//	return ((float) delta.QuadPart) / timeFrequency.QuadPart;
+		//}
 
 	}
 }
