@@ -17,8 +17,8 @@ namespace Engine
 	{
 		enum Severity { Info, Warning, Error, Severe };
 
-		#define LOG( severity, message) Logger::Log( severity, message, __FILE__, __LINE__ )
-		#define END_LOG Logger::shutdown();
+		#define LOG( severity, message) Engine::Logging::Logger::Log( severity, message, __FILE__, __LINE__ )
+		#define END_LOG Engine::Logging::Logger::shutdown();
 
 		//#pragma warning ( disable : 4100)
 

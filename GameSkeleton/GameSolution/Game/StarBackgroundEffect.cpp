@@ -54,11 +54,15 @@ bool StarBackgroundEffect::update(float dt)
 	{
 		particles[i].position = particles[i].position + (particles[i].veloctiy * dt);
 		
-		/*particles[i].lifetime -= dt * 3;
-
-		if (particles[i].lifetime > 0) {
-			stillAlive = true;
-		}*/
+		if (particles[i].position.x < 0) 
+		{
+			particles[i].position.x = (float)SCREEN_WIDTH;
+		}
+		
+		if (particles[i].position.y < 0) 
+		{
+			particles[i].position.y = (float)SCREEN_HEIGHT;
+		}
 	}
 	return stillAlive;
 }

@@ -27,7 +27,7 @@ Vector2D laserShapePoints[] = {
 int numLaserShapePoints = sizeof(laserShapePoints) / sizeof(laserShapePoints[0]);
 
 int reloadDelay;
-int shotsFired;
+//int shotsFired;
 FountainEffect* effect2;
 int flameTimer;
 
@@ -39,7 +39,7 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 	reloadDelay = 0;
 	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 4);
 	flameTimer = 0;
-	shotsFired = 0;
+//	shotsFired = 0;
 }
 
 SpaceShip::~SpaceShip()
@@ -131,7 +131,8 @@ bool SpaceShip::update (float dt)
 				laserShapePoints,
 				RGB(255,0,0),
 				Vector2D((float)mousePosX, (float)mousePosY))); // end point)); // color
-			shotsFired++;
+			myGameManager->shotsFired++;
+			myGameManager->score -= 5;
 		}
 
 	}
@@ -184,6 +185,6 @@ bool SpaceShip::update (float dt)
 
 	myDrawThing->setMousePos(mousePosX, mousePosY);
 
-	myDrawThing->setShotsFired(shotsFired);
+	myDrawThing->setShotsFired(myGameManager->shotsFired);
 	return true;
 }

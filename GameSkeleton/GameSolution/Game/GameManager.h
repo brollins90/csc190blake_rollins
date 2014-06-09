@@ -36,6 +36,9 @@ public:
 	~GameManager( void );
 	
 	int enemiesDestroyed;
+	int livesRemaining;
+	int shotsFired;
+	int score;
 
 	bool initialize();
 	bool shutdown();
@@ -43,6 +46,7 @@ public:
 	bool update(float dt);
 
 	bool isOutOfBounds(Engine::Vector2D& pos);
+	void removeLife(void);
 };
 
 #endif

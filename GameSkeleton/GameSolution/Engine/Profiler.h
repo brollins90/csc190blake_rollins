@@ -2,6 +2,7 @@
 #define PROFILER_H
 
 #include "ExportHeader.h"
+#include <fstream>
 
 //#pragma warning ( disable : 4100)
 namespace Engine
@@ -10,6 +11,7 @@ namespace Engine
 	{
 		class Profiler
 		{
+			#define END_PROF Engine::Profiling::Profiler::shutdown();
 		private:
 		#if PROFILER_ON
 			static const char* fileName;

@@ -18,6 +18,8 @@ public:
 	void draw (Core::Graphics& g, Matrix3D m);*/
 	bool update (float dt);
 	void setEndPoint(Vector2D newPoint);
+
+	int pointValue;
 };
 
 #endif

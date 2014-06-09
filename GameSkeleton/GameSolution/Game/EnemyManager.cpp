@@ -26,7 +26,7 @@ void EnemyManager::addEnemy()
 			Vector2D(50,50), // velocity
 			numEnemy1Points, // num shape points
 			enemy1Points, // shape points 
-			RGB(255,25,25), // color
+			RGB(255,128,0), // color
 			Vector2D(500,500) // endpoint	
 			));
 }

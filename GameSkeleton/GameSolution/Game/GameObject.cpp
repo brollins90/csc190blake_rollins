@@ -19,8 +19,11 @@ GameObject::~GameObject(void)
 
 void GameObject::draw( Core::Graphics& g)
 {
-	g.SetColor(objColor);
-	shape->draw(g, position);
+	Matrix3D ident;
+	ident = ident.Translation(position);
+	GameObject::draw(g, ident);
+	//g.SetColor(objColor);
+	//shape->draw(g, position);
 }
 
 void GameObject::draw( Core::Graphics& g, Matrix3D& m )

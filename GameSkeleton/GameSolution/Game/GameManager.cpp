@@ -3,6 +3,11 @@
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
 
+enum GameState
+{
+	SPLASH, PLAYING, OVER
+};
+
 Vector2D wallPoints[] =
 {	Vector2D(512.0F,0.0F),		Vector2D(950.0F,200.0F),	Vector2D(1024.0F,384.0F),
 	Vector2D(512.0F, 768.0F),	Vector2D(0.0F, 384.0F),		Vector2D(512.0F,0.0F) };
@@ -76,6 +81,7 @@ extern DrawThing* myDrawThing = new DrawThing;
 extern Randomer* myRandomer = new Randomer;
 extern EffectManager* myEffectManager = new EffectManager;
 extern GameObjectManager* goManager = new GameObjectManager;
+extern SpaceShip* theShip = NULL;
 extern GameObjectManager* projectileManager = new GameObjectManager;
 extern EnemyManager* enemyManager = new EnemyManager;
 extern Clock* myClock = new Clock;
@@ -83,17 +89,28 @@ extern Clock* profilerClock = new Clock;
 
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
-
-float enemySpawnTimer = 5.0F;
+GameObject lifeObj(Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,0));
+GameState currentGameState = SPLASH;
+float enemySpawnTimerReset = 5.0F;
+float enemySpawnTimer = enemySpawnTimerReset;
 float previousEnemySpawn = 0;
 
 GameManager::GameManager(void)
 {
+	lifeObj.scale = .3f;
 	enemiesDestroyed = 0;
+	livesRemaining = 5;
+	shotsFired = 0;
+	score = 0;
 }
 
 GameManager::~GameManager(void)
 {
+}
+
+void GameManager::removeLife()
+{
+	livesRemaining--;
 }
 
 bool GameManager::initialize()
@@ -110,17 +127,12 @@ bool GameManager::initialize()
 //	bool forceFail = true;
 	ASSERT(true, "force to fail to test the asserter")
 
-	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
-	//goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(1,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
-
-	//LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(10,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, false, NULL);
-	//LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(2,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, true, r1);
-	//LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(7,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
-	//goManager->addObject(r3);
+	theShip = new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255)));
 
 	myEffectManager->addEffect(new StarBackgroundEffect(Vector2D(0,0), 100, RGB(192,192,192), 1));
 	return true;
 }
+
 
 bool GameManager::shutdown()
 {
@@ -133,101 +145,186 @@ bool GameManager::shutdown()
 
 void GameManager::draw( Core::Graphics& g)
 {
-	// Draw the Walls
-	if (gameMode == WALLS)
-	{
-		Matrix3D t;
-		wallsObj.draw(g, t);
+	if (currentGameState == SPLASH) 
+	{					
+		g.SetColor(RGB(255,255,0)); // YELLOW
+		g.DrawString(10, 5, "Read to play?");
+		g.DrawString(10, 20, "Press the letter 'g' to play.");
 	}
 
-	// Draw the SpaceShip
-	goManager->draw(g);
-	myProfiler->addEntry("Draw Main Objects", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
+	else if (currentGameState == PLAYING)
+	{
+		// Draw the Walls
+		if (gameMode == WALLS)
+		{
+			Matrix3D t;
+			wallsObj.draw(g, t);
+		}
 
-	// Draw the Projectiles
-	projectileManager->draw(g);
-	myProfiler->addEntry("Draw Projectiles", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
+		// Draw the SpaceShip
+		theShip->draw(g);
+		myProfiler->addEntry("Draw SpaceShip", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
 
-	// Draw the Enemies
-	enemyManager->draw(g);
-	myProfiler->addEntry("Draw Enemies", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
+		// Draw the Game info
+		g.SetColor(RGB(255,255,0)); // YELLOW
+		std::stringstream ss;
+		ss << "Shots fired: " << shotsFired;
+		g.DrawString(10, 5, ss.str().c_str());
+		ss.str(std::string());
+		ss << "Enemies destroyed: " << enemiesDestroyed;
+		g.DrawString(10, 20, ss.str().c_str());
+		ss.str(std::string());
+		ss << "Score: " << score;
+		g.DrawString((SCREEN_WIDTH - 125), 5, ss.str().c_str());
+		ss.str(std::string());
+		ss << "Next spawn: " << enemySpawnTimer;
+		g.DrawString((SCREEN_WIDTH - 125), 20, ss.str().c_str());
 
-	// Draw the Particles
-	myEffectManager->draw(g);
-	myProfiler->addEntry("Draw Particle Effects", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-		
-	// Draw the debug stuff
-	myDrawThing->draw(g);	
-	myProfiler->addEntry("Draw Debug Info", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
+		for (int i = 0; i < livesRemaining; i++) 
+		{
+			lifeObj.position = lifeObj.position + Vector2D((float)(i * 15), 0.0f);
+			lifeObj.draw(g);
+			lifeObj.position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
+		}
+		lifeObj.position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
+		myProfiler->addEntry("Draw Game Info", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Draw the Game Objects
+		goManager->draw(g);
+		myProfiler->addEntry("Draw Main Objects", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Draw the Projectiles
+		projectileManager->draw(g);
+		myProfiler->addEntry("Draw Projectiles", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Draw the Enemies
+		enemyManager->draw(g);
+		myProfiler->addEntry("Draw Enemies", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Draw the Particles
+		myEffectManager->draw(g);
+		myProfiler->addEntry("Draw Particle Effects", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+#ifdef DEBUG_ON
+		// Draw the debug stuff
+		myDrawThing->draw(g);	
+		myProfiler->addEntry("Draw Debug Info", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+#endif
+	}
+	else if (currentGameState == OVER)
+	{
+		g.SetColor(RGB(255,255,0)); // YELLOW
+		g.DrawString(10, 5, "The Game is over.");
+		std::stringstream ss;
+		ss << "Your score is " << score;
+		g.DrawString(10, 20, ss.str().c_str());
+		ss.str(std::string());
+		ss << "You fired " << shotsFired << " shots.";
+		g.DrawString(10, 35, ss.str().c_str());
+		ss.str(std::string());
+		ss << "You destroyed " << enemiesDestroyed << " enemies.";
+		g.DrawString(10, 50, ss.str().c_str());
+	}
+
 }
 
 bool GameManager::update(float dt)
 {
-	// Set the Lap on the Clock
-	float deltaTime = myClock->timeElapsedLastFrame();
-	myClock->newFrame();
-	// Display FPS timer
-	myDrawThing->setSPF(deltaTime);
-	myDrawThing->setFPS(1/deltaTime);
+	if (currentGameState == SPLASH)
+	{		
+		if (Core::Input::IsPressed( 'G' ))
+		{
+			currentGameState = PLAYING;
+		}
+	}
 
-	// Add enemies
-	myProfiler->newFrame();
-	enemySpawnTimer -= deltaTime;
-	if (enemySpawnTimer < 0) {
+	if (currentGameState == PLAYING)
+	{
+		if (livesRemaining <= 0) 
+		{
+			currentGameState = OVER;
+		}
+
+		// Set the Lap on the Clock
+		float deltaTime = myClock->timeElapsedLastFrame();
+		myClock->newFrame();
+		// Display FPS timer
+		myDrawThing->setSPF(deltaTime);
+		myDrawThing->setFPS(1/deltaTime);
+
+		// Add enemies
+		myProfiler->newFrame();
+		enemySpawnTimer -= deltaTime;
+		if (enemySpawnTimer < 0) {
 		
-		enemyManager->addEnemy();
-		enemySpawnTimer = 5;
+			enemyManager->addEnemy();
+			enemySpawnTimer = enemySpawnTimerReset;
+			enemySpawnTimerReset -= .22f;
+		}
+		myProfiler->addEntry("Add Enemies", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Spaceship
+		theShip->update(dt);
+		myProfiler->addEntry("Update Spaceship", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Game Objects
+		goManager->update(dt);
+		myProfiler->addEntry("Update Main Objects", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Projectiles
+		projectileManager->update(dt);
+		myProfiler->addEntry("Update Projectiles", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Enemies
+		enemyManager->update(dt);
+		myProfiler->addEntry("Update Enemies", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Particles
+		myEffectManager->update(dt);
+		myProfiler->addEntry("Update Particle Effects", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		// Update the Walls
+		wallsObj.update(dt);
+		myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
+		profilerClock->newFrame();
+
+		if ( Input::IsPressed( '1' ) )
+		{
+			gameMode = WRAP;
+			myDrawThing->setString(0, "WRAP");
+		}
+		if ( Input::IsPressed( '2' ) )
+		{
+			gameMode = BOUNCE;
+			myDrawThing->setString(0, "BOUNCE");
+		}
+		if ( Input::IsPressed( '3' ) )
+		{
+			gameMode = WALLS;
+			myDrawThing->setString(0, "WALLS");
+		}
+
+		myDrawThing->setEnemiesDestroyed(enemiesDestroyed);
 	}
-	myProfiler->addEntry("Add Enemies", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
 
-	// Update the Spaceship
-	goManager->update(dt);
-	myProfiler->addEntry("Update Main Objects", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
-	// Update the Projectiles
-	projectileManager->update(dt);
-	myProfiler->addEntry("Update Projectiles", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
-	// Update the Enemies
-	enemyManager->update(dt);
-	myProfiler->addEntry("Update Enemies", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
-	// Update the Particles
-	myEffectManager->update(dt);
-	myProfiler->addEntry("Update Particle Effects", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
-	// Update the Walls
-	wallsObj.update(dt);
-	myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
-	profilerClock->newFrame();
-
-	if ( Input::IsPressed( '1' ) )
+	else if (currentGameState == OVER)
 	{
-		gameMode = WRAP;
-		myDrawThing->setString(0, "WRAP");
-	}
-	if ( Input::IsPressed( '2' ) )
-	{
-		gameMode = BOUNCE;
-		myDrawThing->setString(0, "BOUNCE");
-	}
-	if ( Input::IsPressed( '3' ) )
-	{
-		gameMode = WALLS;
-		myDrawThing->setString(0, "WALLS");
-	}
 
-	myDrawThing->setEnemiesDestroyed(enemiesDestroyed);
+	}
+	
 	return true;
 }
 

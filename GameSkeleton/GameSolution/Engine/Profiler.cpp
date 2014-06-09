@@ -1,7 +1,5 @@
 #if PROFILER_ON
-#include "Profiler.h"
-#include "assert.h"
-#include <fstream>
+#include "Engine.h"
 
 namespace Engine
 {
@@ -51,15 +49,15 @@ namespace Engine
 				frameIndex = 0;
 			}
 			//assert(frameIndex < MAX_FRAME_SAMPLES);
-			assert(categoryIndex < MAX_PROFILE_CATEGORIES);
+			ASSERT((categoryIndex < MAX_PROFILE_CATEGORIES), "category index is greater than max number of categories")
 			ProfileCategory& pc = categories[categoryIndex];
 
 			if (frameIndex == 0) {
 				pc.name = cat;
 				numUsedCategories++;
 			} else {
-				assert(pc.name == cat /*&& cat != null*/);
-				assert(categoryIndex < numUsedCategories);
+				ASSERT(pc.name == cat /*&& cat != null*/, "");
+				ASSERT(categoryIndex < numUsedCategories, "");
 			}
 
 			categoryIndex++;
@@ -71,7 +69,7 @@ namespace Engine
 		void Profiler::newFrame()
 		{
 			if (frameIndex > 0) {
-				assert(categoryIndex == numUsedCategories);
+				ASSERT(categoryIndex == numUsedCategories, "");
 			}
 			frameIndex++;
 			categoryIndex = 0;
