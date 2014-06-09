@@ -18,10 +18,13 @@ extern GameObjectManager* projectileManager;
 extern EnemyManager* enemyManager;
 
 
-Vector2D laserShapePoints[] = {
-	Vector2D(0,0),
-	Vector2D(4,4)
+Vector2D laserShapePoints[] = {	
+	Vector2D(-2,+0),
+	Vector2D(+0,+2),
+	Vector2D(+2,+0),
+	Vector2D(+0,-2)
 };
+int numLaserShapePoints = sizeof(laserShapePoints) / sizeof(laserShapePoints[0]);
 
 int reloadDelay;
 int shotsFired;
@@ -123,8 +126,8 @@ bool SpaceShip::update (float dt)
 			reloadDelay = 10;
 			projectileManager->addObject(
 				new Projectile(Vector2D(position.x, position.y), // start
-				Vector2D(100,100), // velocity
-				2,
+				Vector2D(200,200), // velocity
+				numLaserShapePoints,
 				laserShapePoints,
 				RGB(255,0,0),
 				Vector2D((float)mousePosX, (float)mousePosY))); // end point)); // color

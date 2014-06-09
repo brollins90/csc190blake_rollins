@@ -3,6 +3,11 @@
 
 #include "GameObjectManager.h"
 #include "Enemy.h"
+#include "Randomer.h"
+
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
+extern Randomer* myRandomer;
 
 class EnemyManager : public GameObjectManager
 {
@@ -11,8 +16,6 @@ public:
 	EnemyManager();
 	void setShipLoc(Vector2D newShipLoc);
 	void addEnemy();
-	//void draw(Core::Graphics& g);
-	//void addObject(Enemy* newObj);
 	bool update(float dt);
 };
 

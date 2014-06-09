@@ -107,13 +107,16 @@ bool GameManager::initialize()
 	const char* profileFileName = "profiler.csv";
 	myProfiler->initialize(profileFileName);
 
-	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
-	goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(1,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
+//	bool forceFail = true;
+	ASSERT(true, "force to fail to test the asserter")
 
-	LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(10,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, false, NULL);
-	LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(2,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, true, r1);
-	LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(7,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
-	goManager->addObject(r3);
+	goManager->addObject(new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255))));
+	//goManager->addObject(new LerpingObject(Vector2D(50,50), Vector2D(1,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 4, asteroidPathPoints, false, NULL));
+
+	//LerpingObject* r1 = new LerpingObject(Vector2D(200,200), Vector2D(10,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, false, NULL);
+	//LerpingObject* r2 = new LerpingObject(Vector2D(300,300), Vector2D(2,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), 0, NULL, true, r1);
+	//LerpingObject* r3 = new LerpingObject(Vector2D(400,400), Vector2D(7,0), numAsteroidPoints, asteroidPoints, RGB(255,128,0), numAsteroidPathPoints2, asteroidPathPoints2, true, r2);
+	//goManager->addObject(r3);
 
 	myEffectManager->addEffect(new StarBackgroundEffect(Vector2D(0,0), 100, RGB(192,192,192), 1));
 	return true;

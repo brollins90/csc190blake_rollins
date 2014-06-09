@@ -11,14 +11,15 @@
 #include "Logger.h"
 #include "Profiler.h"
 #include "Asserter.h"
+#include "Randomer.h"
 
 namespace Engine
 {
 	// your stuff goes here...
 	// use ENGINE_SHARED to indicate a function or class that you want to export
-	ENGINE_SHARED void Init();
+	//ENGINE_SHARED void /*Init();
 
-	ENGINE_SHARED bool sampleFunctionThatReturnsTrue();
+	//ENGINE_SHARED bool sample*/FunctionThatReturnsTrue();
 	
 	struct ENGINE_SHARED Vector2D;
 	struct ENGINE_SHARED Vector3D;
@@ -27,6 +28,7 @@ namespace Engine
 	class ENGINE_SHARED Timing::Clock;
 	class ENGINE_SHARED Logging::Logger;
 	class ENGINE_SHARED Profiling::Profiler;
+//	class ENGINE_SHARED Randoming::Randomer;
 }
 
 #endif // _ENGINE_H_
