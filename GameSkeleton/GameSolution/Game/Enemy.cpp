@@ -29,9 +29,11 @@ void Enemy::setEndPoint(Vector2D newPoint)
 
 bool Enemy::update(float dt)
 {
-	GameObject::update(dt);
+//	GameObject::update(dt);
+	ASSERT((myGameManager != NULL), "myGameManager is null")
 	if (!myGameManager->isOutOfBounds(position))
 	{
+		ASSERT((projectileManager != NULL), "projectileManager is null")
 		// Check if a laser (projectile) has killed the Enemy
 		for (int i = 0; i < projectileManager->numActiveObjects; i++)
 		{

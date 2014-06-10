@@ -9,7 +9,7 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
-//	delete [] &goArray;
+	delete [] &goArray;
 }
 
 GameObject* GameObjectManager::get(int index) 

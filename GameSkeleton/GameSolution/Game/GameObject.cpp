@@ -17,7 +17,7 @@ GameObject::~GameObject(void)
 {
 	//delete &position;
 	//delete &velocity;
-////	delete shape;
+	// delete shape;
 }
 
 void GameObject::draw( Core::Graphics& g)

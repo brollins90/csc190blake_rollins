@@ -31,6 +31,9 @@ namespace Engine
 				outStream << getDelimiter(i);	
 			}
 
+			unsigned int temp = 0;
+			temp--;
+			frameIndex = (frameIndex == temp) ? frameIndex + 1 : frameIndex;
 			// Write data
 			for (unsigned int frame = 0; frame < frameIndex; frame++)
 			{

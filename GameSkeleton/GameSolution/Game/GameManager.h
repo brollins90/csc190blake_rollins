@@ -43,6 +43,9 @@ public:
 	int shotsFired;
 	int score;
 	float totalTime;
+	float enemySpawnTimerReset;
+	float enemySpawnTimer;
+	float previousEnemySpawn;
 
 	bool initialize();
 	bool shutdown();

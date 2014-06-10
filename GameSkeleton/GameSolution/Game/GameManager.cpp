@@ -72,21 +72,20 @@ Vector2D asteroidPathPoints2[] =
 int numAsteroidPathPoints2 = sizeof(asteroidPathPoints2) / sizeof(asteroidPathPoints2[0]);
 
 
-
 extern WallMode gameMode = BOUNCE;
-extern Logger* myLogger = new Logger;
-extern Profiler* myProfiler = new Profiler;
-extern Shape* walls = new Shape(numWallPoints, wallPoints);
-extern Shape* screenEdge = new Shape(numScreenEdgePoints, screenEdgePoints);
-extern DrawThing* myDrawThing = new DrawThing;
-extern Randomer* myRandomer = new Randomer;
-extern EffectManager* myEffectManager = new EffectManager;
-extern GameObjectManager* goManager = new GameObjectManager;
+extern Logger* myLogger = NULL;
+extern Profiler* myProfiler = NULL;
+extern Shape* walls = NULL;
+extern Shape* screenEdge = NULL;
+extern DrawThing* myDrawThing = NULL;
+extern Randomer* myRandomer = NULL;
+extern EffectManager* myEffectManager = NULL;
+extern GameObjectManager* goManager = NULL;
 extern SpaceShip* theShip = NULL;
-extern GameObjectManager* projectileManager = new GameObjectManager;
-extern EnemyManager* enemyManager = new EnemyManager;
-extern Clock* myClock = new Clock;
-extern Clock* profilerClock = new Clock;
+extern GameObjectManager* projectileManager = NULL;
+extern EnemyManager* enemyManager = NULL;
+extern Clock* myClock = NULL;
+extern Clock* profilerClock = NULL;
 
 
 GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
@@ -103,23 +102,26 @@ GameManager::GameManager(void)
 	livesRemaining = 5;
 	shotsFired = 0;
 	score = 0;
+	enemySpawnTimerReset = 5.0F;
+	enemySpawnTimer = enemySpawnTimerReset;
+	previousEnemySpawn = 0;
 }
 
 GameManager::~GameManager(void)
 {
-	//delete profilerClock;
-	//delete myLogger;
-	//delete myProfiler;
-	//delete walls;
-	//delete screenEdge;
-	//delete myDrawThing;
-	//delete myRandomer;
-	//delete myEffectManager;
-	//delete goManager;
-	//delete theShip;
-	//delete projectileManager;
-	//delete enemyManager;
-	//delete myClock;
+	delete theShip;
+	delete projectileManager;
+	delete walls;
+	delete screenEdge;
+	delete myDrawThing;
+	delete profilerClock;
+	delete myClock;
+	delete myRandomer;
+	delete myEffectManager;
+	delete goManager;
+	delete enemyManager;
+	delete myLogger;
+	delete myProfiler;
 }
 
 void GameManager::removeLife()
@@ -133,22 +135,57 @@ void GameManager::removeLife()
 
 bool GameManager::initialize()
 {
-	myClock->initialize();
-	myClock->newFrame();
-	profilerClock->initialize();
-	profilerClock->newFrame();
+	myLogger = new Logger;
+	LOG(Engine::Logging::Info, "myLogger created.");
 	const char* loggerFileName = "logger.html";
 	myLogger->initialize(loggerFileName);
+	LOG(Engine::Logging::Info, "myLogger initialized.");
+		
+	myProfiler = new Profiler;
+	LOG(Engine::Logging::Info, "myProfiler created.");
 	const char* profileFileName = "profiler.csv";
 	myProfiler->initialize(profileFileName);
+	LOG(Engine::Logging::Info, "myProfiler initialized.");
 
-//	bool forceFail = true;
-	//ASSERT(false, "force to fail to test the asserter")
+	bool forceFail = false;
+	ASSERT(!forceFail, "Forced to fail to test the asserter")
 
-	theShip = new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255)));
-	ASSERT((theShip != NULL), "Spaceship is null")
-
+	walls = new Shape(numWallPoints, wallPoints);
+	LOG(Engine::Logging::Info, "walls created.");
+	screenEdge = new Shape(numScreenEdgePoints, screenEdgePoints);
+	LOG(Engine::Logging::Info, "screenEdge created.");
+	myDrawThing = new DrawThing;
+	LOG(Engine::Logging::Info, "myDrawThing created.");
+	myRandomer = new Randomer;
+	LOG(Engine::Logging::Info, "myRandomer created.");
+	myEffectManager = new EffectManager;
+	LOG(Engine::Logging::Info, "myEffectManager created.");
 	myEffectManager->addEffect(new StarBackgroundEffect(Vector2D(0,0), 100, RGB(192,192,192), 1));
+	LOG(Engine::Logging::Info, "Added background effect to the myEffectManager.");
+	
+	goManager = new GameObjectManager;
+	LOG(Engine::Logging::Info, "goManager created.");
+	theShip = new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255)));
+	LOG(Engine::Logging::Info, "theShip created.");
+	ASSERT((theShip != NULL), "theShip is null")
+
+	projectileManager = new GameObjectManager;
+	LOG(Engine::Logging::Info, "projectileManager created.");
+	enemyManager = new EnemyManager;
+	LOG(Engine::Logging::Info, "enemyManager created.");
+	myClock = new Clock;
+	LOG(Engine::Logging::Info, "myClock created.");
+	myClock->initialize();
+	LOG(Engine::Logging::Info, "myClock initialized.");
+	myClock->newFrame();
+
+	profilerClock = new Clock;
+	LOG(Engine::Logging::Info, "profilerClock created.");
+	profilerClock->initialize();
+	LOG(Engine::Logging::Info, "profilerClock initialized.");
+	profilerClock->newFrame();
+
+	// Everything is set up.
 	return true;
 }
 

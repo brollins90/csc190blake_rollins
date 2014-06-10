@@ -9,12 +9,13 @@ EffectManager::EffectManager()
 
 EffectManager::~EffectManager()
 {
-//	delete [] &effectArray;
+	delete [] &effectArray;
 }
 
 
 void EffectManager::draw(Core::Graphics& g)
 {
+	ASSERT((effectArray != NULL), "effectArray is null")
 	for (int i = 0; i < numActiveEffects; i++)
 	{
 		effectArray[i]->draw(g);
@@ -23,6 +24,7 @@ void EffectManager::draw(Core::Graphics& g)
 
 bool EffectManager::update(float dt)
 {
+	ASSERT((effectArray != NULL), "effectArray is null")
 	for (int i = numActiveEffects - 1; i >= 0; i--)
 	{
 		if (effectArray[i] != NULL ) 
