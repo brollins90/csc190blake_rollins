@@ -3,6 +3,7 @@
 
 #include "Engine.h"
 #include "Core.h"
+#include "DebugMemory.h"
 
 using Engine::Vector2D;
 using Core::RGB;

@@ -1,8 +1,9 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
-#include "Core.h"
 #include "Engine.h"
+#include "Core.h"
+#include "DebugMemory.h"
 #include <sstream>
 #include "Logger.h"
 #include "Profiler.h"

@@ -3,6 +3,7 @@
 
 #include "Engine.h"
 #include "Core.h"
+#include "DebugMemory.h"
 #include "Shape.h"
 #include "WallMode.h"
 #include "GameObject.h"

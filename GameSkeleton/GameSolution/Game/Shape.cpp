@@ -14,7 +14,7 @@ Shape::Shape(int numberOfPoints, Vector2D* inputPoints)
 
 Shape::~Shape(void)
 {
-	delete shapePoints;
+	delete [] &shapePoints;
 }
 
 void Shape::draw( Core::Graphics& g, Vector2D& pos)

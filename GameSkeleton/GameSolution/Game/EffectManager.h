@@ -2,6 +2,7 @@
 #define EFFECT_MANAGER_H
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "Particle.h"
 #include "ParticleEffect.h"
 

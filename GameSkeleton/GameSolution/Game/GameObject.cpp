@@ -1,5 +1,8 @@
 #include "GameObject.h"
 
+GameObject::GameObject()
+{}
+
 GameObject::GameObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapepoints, Core::RGB inColor)
 {
 	position = inPosition;
@@ -14,7 +17,7 @@ GameObject::~GameObject(void)
 {
 	//delete &position;
 	//delete &velocity;
-	delete shape;
+////	delete shape;
 }
 
 void GameObject::draw( Core::Graphics& g)

@@ -20,8 +20,8 @@ LerpingObject::LerpingObject(Vector2D inPosition, Vector2D inVelocity, int numPo
 
 LerpingObject::~LerpingObject()
 {
-	delete pathShape;
-	delete subObject;
+//	delete pathShape;
+//	delete subObject;
 }
 
 void LerpingObject::draw (Core::Graphics& g)

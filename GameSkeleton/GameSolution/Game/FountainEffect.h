@@ -2,6 +2,7 @@
 #define FOUNTAIN_EFFECT_H
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "ParticleEffect.h"
 #include "Matrix3D.h"
 

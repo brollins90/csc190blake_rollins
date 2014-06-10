@@ -2,6 +2,7 @@
 #define GAME_OBJECT_MANAGER_H
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "GameObject.h"
 
 const int MAX_OBJECTS = 40;

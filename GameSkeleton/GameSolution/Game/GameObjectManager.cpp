@@ -3,13 +3,13 @@
 GameObjectManager::GameObjectManager()
 {
 	numActiveObjects = 0;
-	GameObject* goArray[MAX_OBJECTS] = {};
+	GameObject* goArray = new GameObject[MAX_OBJECTS];
 	static_cast<void>(goArray);
 }
 
 GameObjectManager::~GameObjectManager()
 {
-
+//	delete [] &goArray;
 }
 
 GameObject* GameObjectManager::get(int index) 

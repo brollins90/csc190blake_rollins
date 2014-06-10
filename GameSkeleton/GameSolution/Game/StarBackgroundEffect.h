@@ -2,6 +2,7 @@
 #define STAR_BACKGROUND_EFFECT
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "ParticleEffect.h"
 
 class StarBackgroundEffect : public ParticleEffect

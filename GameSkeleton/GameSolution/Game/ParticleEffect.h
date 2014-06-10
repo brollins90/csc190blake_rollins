@@ -2,6 +2,7 @@
 #define PARTICLE_EFFECT_H
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "Particle.h"
 #include "Randomer.h"
 
@@ -10,6 +11,7 @@ extern Randomer* myRandomer;
 class ParticleEffect
 {
 public:
+	ParticleEffect();
 	ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifetime);
 	~ParticleEffect(void);
 	

@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClInclude Include="Asserter.h" />
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="DebugMemory.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Logger.h" />

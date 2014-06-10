@@ -7,6 +7,11 @@ EnemyManager::EnemyManager()
 	shipLoc = Vector2D(500,500);
 }
 
+EnemyManager::~EnemyManager()
+{
+
+}
+
 Vector2D enemy1Points[] =
 {
 	Vector2D(-5.0F, -5.0F),	Vector2D(+0.0F, -7.5F),	Vector2D(+5.0F, -5.0F),

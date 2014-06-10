@@ -3,12 +3,13 @@
 EffectManager::EffectManager()
 {
 	numActiveEffects = 0;
-	ParticleEffect* effectArray[MAX_EFFECTS] = {};
+	ParticleEffect* effectArray = new ParticleEffect[MAX_EFFECTS];
 	static_cast<void>(effectArray);
 }
 
 EffectManager::~EffectManager()
 {
+//	delete [] &effectArray;
 }
 
 

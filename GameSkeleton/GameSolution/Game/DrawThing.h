@@ -3,6 +3,7 @@
 
 #include "Engine.h"
 #include "Core.h"
+#include "DebugMemory.h"
 #include <sstream>
 
 class DrawThing

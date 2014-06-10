@@ -2,6 +2,7 @@
 #define RANDOMER_H
 
 #include "Engine.h"
+#include "DebugMemory.h"
 using Engine::Vector2D;
 
 

@@ -3,6 +3,7 @@
 
 #include "Engine.h"
 #include "Core.h"
+#include "DebugMemory.h"
 #include "Shape.h"
 
 using Engine::Vector2D;
@@ -10,6 +11,7 @@ using Engine::Vector2D;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject( Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapepoints, Core::RGB inColor);
 	~GameObject( void );
 

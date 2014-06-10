@@ -30,6 +30,7 @@ void draw( Core::Graphics& g )
 
 void main()
 {
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	myGameManager->initialize();
 	srand((unsigned int)time(NULL));
 	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);

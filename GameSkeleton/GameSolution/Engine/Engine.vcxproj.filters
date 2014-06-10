@@ -27,6 +27,9 @@
     <Filter Include="DebugTools\Asserting">
       <UniqueIdentifier>{771c0312-55d3-4b1c-8d2c-4afc221e5a73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DebugTools\Memory">
+      <UniqueIdentifier>{58f8cd87-c350-4d28-9818-e308007c9c6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="Profiler.h">
       <Filter>DebugTools\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMemory.h">
+      <Filter>DebugTools\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

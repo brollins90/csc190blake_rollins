@@ -107,6 +107,19 @@ GameManager::GameManager(void)
 
 GameManager::~GameManager(void)
 {
+	//delete profilerClock;
+	//delete myLogger;
+	//delete myProfiler;
+	//delete walls;
+	//delete screenEdge;
+	//delete myDrawThing;
+	//delete myRandomer;
+	//delete myEffectManager;
+	//delete goManager;
+	//delete theShip;
+	//delete projectileManager;
+	//delete enemyManager;
+	//delete myClock;
 }
 
 void GameManager::removeLife()
@@ -130,7 +143,7 @@ bool GameManager::initialize()
 	myProfiler->initialize(profileFileName);
 
 //	bool forceFail = true;
-	ASSERT(false, "force to fail to test the asserter")
+	//ASSERT(false, "force to fail to test the asserter")
 
 	theShip = new SpaceShip(Vector2D((float)(SCREEN_WIDTH / 2), (float)(SCREEN_HEIGHT / 2)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,255), new GameObject(Vector2D(0,0),Vector2D(0,0),numTurretPoints, turretPoints, RGB(255,255,255)));
 	ASSERT((theShip != NULL), "Spaceship is null")

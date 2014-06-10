@@ -44,7 +44,7 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 
 SpaceShip::~SpaceShip()
 {
-	
+//	delete effect2;
 }
 
 void SpaceShip::draw (Core::Graphics& g)

@@ -2,6 +2,7 @@
 #define EXPLOSION_EFFECT_H
 
 #include "Core.h"
+#include "DebugMemory.h"
 #include "ParticleEffect.h"
 
 class ExplosionEffect : public ParticleEffect
