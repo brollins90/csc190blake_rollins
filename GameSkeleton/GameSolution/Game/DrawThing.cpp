@@ -37,7 +37,7 @@ DrawThing::DrawThing(void)
 
 DrawThing::~DrawThing(void)
 {
-	delete [] &strings;
+	delete [] strings;
 }
 
 void DrawThing::draw(Core::Graphics& g)

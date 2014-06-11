@@ -15,7 +15,6 @@ class EnemyManager : public GameObjectManager
 	Vector2D shipLoc;
 public:
 	EnemyManager();
-	~EnemyManager();
 	void setShipLoc(Vector2D newShipLoc);
 	void addEnemy();
 	bool update(float dt);

@@ -9,12 +9,13 @@ const int MAX_OBJECTS = 40;
 
 class GameObjectManager
 {
+protected:
+	vector<GameObject*> goList;
 public:
+	int numActiveObjects;
+
 	GameObjectManager(void);
 	~GameObjectManager(void);	
-
-	GameObject* goArray[MAX_OBJECTS];
-	int numActiveObjects;
 
 	void draw(Core::Graphics& g);
 	bool update(float dt);

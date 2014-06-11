@@ -88,8 +88,8 @@ extern Clock* myClock = NULL;
 extern Clock* profilerClock = NULL;
 
 
-GameObject wallsObj(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
-GameObject lifeObj(Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,0));
+GameObject* wallsObj = NULL;
+GameObject* lifeObj = NULL;
 GameState currentGameState = SPLASH;
 float enemySpawnTimerReset = 5.0F;
 float enemySpawnTimer = enemySpawnTimerReset;
@@ -97,7 +97,9 @@ float previousEnemySpawn = 0;
 
 GameManager::GameManager(void)
 {
-	lifeObj.scale = .3f;
+	wallsObj = new GameObject(Vector2D(0,0),Vector2D(0,0),5, wallPoints, RGB(255,128,0));
+	lifeObj = new GameObject(Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20)),Vector2D(0,0),numShipPoints, shipPoints, RGB(255,255,0));
+	lifeObj->scale = .3f;
 	enemiesDestroyed = 0;
 	livesRemaining = 5;
 	shotsFired = 0;
@@ -109,19 +111,6 @@ GameManager::GameManager(void)
 
 GameManager::~GameManager(void)
 {
-	delete theShip;
-	delete projectileManager;
-	delete walls;
-	delete screenEdge;
-	delete myDrawThing;
-	delete profilerClock;
-	delete myClock;
-	delete myRandomer;
-	delete myEffectManager;
-	delete goManager;
-	delete enemyManager;
-	delete myLogger;
-	delete myProfiler;
 }
 
 void GameManager::removeLife()
@@ -192,10 +181,28 @@ bool GameManager::initialize()
 
 bool GameManager::shutdown()
 {
+	currentGameState = OVER;
 	myClock->shutdown();
 	profilerClock->shutdown();
 	myProfiler->shutdown();
 	myLogger->shutdown();
+
+	
+	delete walls;
+	delete wallsObj;
+	delete lifeObj;
+	delete theShip;
+	delete projectileManager;
+	delete screenEdge;
+	delete myDrawThing;
+	delete profilerClock;
+	delete myClock;
+	delete myRandomer;
+	delete myEffectManager;
+	delete goManager;
+	delete enemyManager;
+	delete myLogger;
+	delete myProfiler;
 	return true;
 }
 
@@ -214,7 +221,7 @@ void GameManager::draw( Core::Graphics& g)
 		if (gameMode == WALLS)
 		{
 			Matrix3D t;
-			wallsObj.draw(g, t);
+			wallsObj->draw(g, t);
 		}
 
 		// Draw the SpaceShip
@@ -239,11 +246,11 @@ void GameManager::draw( Core::Graphics& g)
 
 		for (int i = 0; i < livesRemaining; i++) 
 		{
-			lifeObj.position = lifeObj.position + Vector2D((float)(i * 15), 0.0f);
-			lifeObj.draw(g);
-			lifeObj.position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
+			lifeObj->position = lifeObj->position + Vector2D((float)(i * 15), 0.0f);
+			lifeObj->draw(g);
+			lifeObj->position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
 		}
-		lifeObj.position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
+		lifeObj->position = Vector2D((float)(SCREEN_WIDTH / 2) - 50, (float)(20));
 		myProfiler->addEntry("Draw Game Info", profilerClock->timeElapsedLastFrame());
 		profilerClock->newFrame();
 
@@ -360,7 +367,7 @@ bool GameManager::update(float dt)
 		profilerClock->newFrame();
 
 		// Update the Walls
-		wallsObj.update(dt);
+		wallsObj->update(dt);
 		myProfiler->addEntry("Update Walls", profilerClock->timeElapsedLastFrame());
 		profilerClock->newFrame();
 

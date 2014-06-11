@@ -18,10 +18,6 @@ Enemy::Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* 
 	pointValue = 100;
 }
 
-Enemy::~Enemy(void) 
-{
-}
-
 void Enemy::setEndPoint(Vector2D newPoint)
 {
 	endPoint = newPoint;

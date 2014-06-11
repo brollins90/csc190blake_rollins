@@ -8,13 +8,13 @@ Shape::Shape(int numberOfPoints, Vector2D* inputPoints)
 		
 	for (int i = 0; i < NUM_POINTS; i++)
 	{
-		shapePoints[i] = inputPoints[i];
+		shapePoints[i] = Vector2D(inputPoints[i]);
 	}
 }
 
 Shape::~Shape(void)
 {
-	delete [] &shapePoints;
+	delete [] shapePoints;
 }
 
 void Shape::draw( Core::Graphics& g, Vector2D& pos)
@@ -35,11 +35,6 @@ void Shape::draw( Core::Graphics& g, Matrix3D& m)
 		const Vector2D& p2 = m * shapePoints[(i + 1) % NUM_POINTS];
 		g.DrawLine(p1.x, p1.y, p2.x, p2.y);
 	}
-}
-
-void Shape::addMatrixTranslation(Matrix3D& t)
-{
-	translation = Matrix3D(t);
 }
 
 int Shape::getNumPoints()

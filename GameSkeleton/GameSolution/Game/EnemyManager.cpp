@@ -7,11 +7,6 @@ EnemyManager::EnemyManager()
 	shipLoc = Vector2D(500,500);
 }
 
-EnemyManager::~EnemyManager()
-{
-
-}
-
 Vector2D enemy1Points[] =
 {
 	Vector2D(-5.0F, -5.0F),	Vector2D(+0.0F, -7.5F),	Vector2D(+5.0F, -5.0F),
@@ -38,23 +33,21 @@ void EnemyManager::addEnemy()
 
 bool EnemyManager::update(float dt)
 {
-	for (int i = numActiveObjects - 1; i >= 0; i--)
+	std::vector<GameObject*>::iterator it;
+	for (it = goList.begin(); it != goList.end();)
 	{
-		if (goArray[i] != NULL ) 
+		GameObject* go = (*it);
+		Enemy* t = (Enemy*)go;
+		t->setEndPoint(shipLoc);
+		if (!t->update(dt)) 
 		{
-			Enemy* t = (Enemy*)goArray[i];
-			t->setEndPoint(shipLoc);
-			if (!goArray[i]->update(dt) )
-			{
-				//delete effectArray[i];
-				for (int j=i; j<numActiveObjects-1; j++)
-				{
-					goArray[j] = goArray[j+1];
-				}
-				numActiveObjects--;
-			}
+			it = goList.erase(it);
+			numActiveObjects--;		
 		}
-		
+		else 
+		{
+			it++;
+		}
 	}
 	return true;
 }

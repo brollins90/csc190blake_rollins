@@ -14,7 +14,7 @@ ParticleEffect::ParticleEffect(Vector2D inOrigin, int inNumParticles, RGB inBase
 
 ParticleEffect::~ParticleEffect()
 {	
-	delete [] &particles;
+	delete [] particles;
 }
 
 void ParticleEffect::draw(Core::Graphics& g)

@@ -38,15 +38,5 @@ namespace Engine
 		{
 			return deltaTime;
 		}
-		
-		//float Clock::timeElapsedSinceStart() const
-		//{
-		//	LARGE_INTEGER thisTime;
-		//	QueryPerformanceCounter(&thisTime);
-		//	LARGE_INTEGER delta;
-		//	delta.QuadPart = thisTime.QuadPart - startTime.QuadPart;
-		//	return ((float) delta.QuadPart) / timeFrequency.QuadPart;
-		//}
-
 	}
 }

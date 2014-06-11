@@ -15,9 +15,7 @@ GameObject::GameObject(Vector2D inPosition, Vector2D inVelocity, int numPoints, 
 
 GameObject::~GameObject(void)
 {
-	//delete &position;
-	//delete &velocity;
-	// delete shape;
+	delete shape;
 }
 
 void GameObject::draw( Core::Graphics& g)
@@ -25,8 +23,6 @@ void GameObject::draw( Core::Graphics& g)
 	Matrix3D ident;
 	ident = ident.Translation(position);
 	GameObject::draw(g, ident);
-	//g.SetColor(objColor);
-	//shape->draw(g, position);
 }
 
 void GameObject::draw( Core::Graphics& g, Matrix3D& m )
@@ -49,10 +45,10 @@ void GameObject::rotate(float angleInc)
 
 void GameObject::setPosition(const Vector2D& pos)
 {
-	position = pos;
+	position = Vector2D(pos);
 }
 
 void GameObject::setColor(Core::RGB newColor)
 {
-	objColor = newColor;
+	objColor = RGB(GetRValue(newColor),GetGValue(newColor),GetBValue(newColor));
 }

@@ -9,7 +9,6 @@ class StarBackgroundEffect : public ParticleEffect
 {
 public:
 	StarBackgroundEffect(Vector2D inOrigin, int inNumParticles, RGB inBaseColor, float inLifetime);
-	~StarBackgroundEffect(void);
 
 	void draw(Core::Graphics& g);
 	virtual bool update(float dt);

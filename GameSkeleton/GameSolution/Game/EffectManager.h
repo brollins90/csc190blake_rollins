@@ -10,12 +10,12 @@ const int MAX_EFFECTS = 10;
 
 class EffectManager
 {
+protected:
+	int numActiveEffects;
+	vector<ParticleEffect*> effectList;
 public:
 	EffectManager(void);
-	~EffectManager(void);	
-
-	ParticleEffect* effectArray[MAX_EFFECTS];
-	int numActiveEffects;
+	~EffectManager(void);		
 
 	void draw(Core::Graphics& g);
 	virtual	bool update(float dt);

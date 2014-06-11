@@ -23,11 +23,6 @@ StarBackgroundEffect::StarBackgroundEffect(Vector2D inOrigin, int inNumParticles
 	}
 }
 
-StarBackgroundEffect::~StarBackgroundEffect()
-{
-
-}
-
 void StarBackgroundEffect::draw(Core::Graphics& g)
 {
 	ParticleEffect::draw(g);

@@ -18,7 +18,13 @@ bool update(float dt)
 
 	if (Core::Input::IsPressed( Core::Input::KEY_ESCAPE ))
 	{
-		return myGameManager->shutdown();
+		if (myGameManager->shutdown())
+		{
+			delete myGameManager;
+			return true;
+		}
+		delete myGameManager;
+		return false;
 	}
 	return false;
 }
@@ -30,7 +36,7 @@ void draw( Core::Graphics& g )
 
 void main()
 {
-	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
 	myGameManager->initialize();
 	srand((unsigned int)time(NULL));
 	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);

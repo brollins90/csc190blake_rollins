@@ -21,7 +21,6 @@ namespace Engine
 			ENGINE_SHARED void newFrame();
 			ENGINE_SHARED void setStartTime();
 			ENGINE_SHARED float timeElapsedLastFrame() const;
-//			ENGINE_SHARED float timeElapsedSinceStart() const;
 		};
 	}
 }

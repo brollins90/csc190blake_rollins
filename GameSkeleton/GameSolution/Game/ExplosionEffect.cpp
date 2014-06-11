@@ -26,11 +26,6 @@ ExplosionEffect::ExplosionEffect(Vector2D inOrigin, int inNumParticles, RGB inBa
 	}
 }
 
-ExplosionEffect::~ExplosionEffect()
-{
-//	delete(origin);
-}
-
 void ExplosionEffect::draw(Core::Graphics& g)
 {
 	ParticleEffect::draw(g);

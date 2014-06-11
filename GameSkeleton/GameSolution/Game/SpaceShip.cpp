@@ -1,22 +1,11 @@
 #include "SpaceShip.h"
 
-#include "ParticleEffect.h"
-#include "FountainEffect.h"
-#include "GameObjectManager.h"
-#include "LerpingObject.h"
-#include "Projectile.h"
-#include "GameManager.h"
-#include "EnemyManager.h"
-
 extern Shape* walls;
 extern DrawThing* myDrawThing;
 extern WallMode gameMode;
 extern GameManager* myGameManager;
-//extern GameObjectManager* goManager;
 extern GameObjectManager* projectileManager;
-//extern GameObjectManager* enemyManager;
 extern EnemyManager* enemyManager;
-
 
 Vector2D laserShapePoints[] = {	
 	Vector2D(-2,+0),
@@ -26,10 +15,6 @@ Vector2D laserShapePoints[] = {
 };
 int numLaserShapePoints = sizeof(laserShapePoints) / sizeof(laserShapePoints[0]);
 
-int reloadDelay;
-//int shotsFired;
-FountainEffect* effect2;
-int flameTimer;
 
 SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, GameObject* inTurret) : GameObject(inPosition, inVelocity, numPoints, inShapePoints, inColor)
 {
@@ -39,12 +24,12 @@ SpaceShip::SpaceShip(Vector2D inPosition, Vector2D inVelocity, int numPoints, Ve
 	reloadDelay = 0;
 	effect2 = new FountainEffect(inPosition, 300, RGB(255,128,0), 4);
 	flameTimer = 0;
-//	shotsFired = 0;
 }
 
 SpaceShip::~SpaceShip()
 {
-//	delete effect2;
+	delete effect2;
+	delete turret1;
 }
 
 void SpaceShip::draw (Core::Graphics& g)

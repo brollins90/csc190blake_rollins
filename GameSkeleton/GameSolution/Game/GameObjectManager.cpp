@@ -1,57 +1,49 @@
 #include "GameObjectManager.h"
 
+using std::vector;
+
 GameObjectManager::GameObjectManager()
 {
 	numActiveObjects = 0;
-	GameObject* goArray = new GameObject[MAX_OBJECTS];
-	static_cast<void>(goArray);
 }
 
 GameObjectManager::~GameObjectManager()
 {
-	delete [] &goArray;
 }
 
 GameObject* GameObjectManager::get(int index) 
 {
-	return goArray[index];
+	return goList.at(index);
 }
 
 void GameObjectManager::addObject(GameObject* newObj)
 {
-	if (numActiveObjects < MAX_OBJECTS)
-	{
-		goArray[numActiveObjects++] = newObj;
-	}
+	goList.push_back(newObj);
+	numActiveObjects++;
 }
 
 void GameObjectManager::draw(Core::Graphics& g)
 {
-	for (int i = 0; i < numActiveObjects; i++)
+	for (GameObject* go : goList)
 	{
-		//Matrix3D t;
-//		t = Matrix3D().Translation(goArray[i]->position);
-		goArray[i]->draw(g);
+		go->draw(g);
 	}
 }
 
 bool GameObjectManager::update(float dt)
 {
-	for (int i = numActiveObjects - 1; i >= 0; i--)
+	std::vector<GameObject*>::iterator it;
+	for (it = goList.begin(); it != goList.end();)
 	{
-		if (goArray[i] != NULL ) 
+		if (!(*it)->update(dt)) 
 		{
-			if (!goArray[i]->update(dt) )
-			{
-				//delete effectArray[i];
-				for (int j=i; j<numActiveObjects-1; j++)
-				{
-					goArray[j] = goArray[j+1];
-				}
-				numActiveObjects--;
-			}
+			it = goList.erase(it);
+			numActiveObjects--;		
 		}
-		
+		else 
+		{
+			it++;
+		}
 	}
 	return true;
 }

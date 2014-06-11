@@ -14,9 +14,7 @@ class Enemy : public Projectile
 {	
 public:
 	Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, Vector2D inEndPoint);
-	~Enemy(void);
-/*
-	void draw (Core::Graphics& g, Matrix3D m);*/
+
 	bool update (float dt);
 	void setEndPoint(Vector2D newPoint);
 
