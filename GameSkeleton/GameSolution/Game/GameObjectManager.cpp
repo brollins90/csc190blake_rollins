@@ -9,6 +9,12 @@ GameObjectManager::GameObjectManager()
 
 GameObjectManager::~GameObjectManager()
 {
+	std::vector<GameObject*>::iterator it;
+	for (it = goList.begin(); it != goList.end();)
+	{
+		delete (*it);
+		it = goList.erase(it);
+	}
 }
 
 GameObject* GameObjectManager::get(int index) 
@@ -37,6 +43,7 @@ bool GameObjectManager::update(float dt)
 	{
 		if (!(*it)->update(dt)) 
 		{
+			delete (*it);
 			it = goList.erase(it);
 			numActiveObjects--;		
 		}

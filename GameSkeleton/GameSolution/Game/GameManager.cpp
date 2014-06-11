@@ -1,6 +1,9 @@
 #include "GameManager.h"
 //#define DEBUG_ON 1
 
+#include "DebugMemory.h"
+#include <sstream>
+
 const extern int SCREEN_WIDTH;
 const extern int SCREEN_HEIGHT;
 
@@ -107,6 +110,7 @@ GameManager::GameManager(void)
 	enemySpawnTimerReset = 5.0F;
 	enemySpawnTimer = enemySpawnTimerReset;
 	previousEnemySpawn = 0;
+	hasRunCleanup = false;
 }
 
 GameManager::~GameManager(void)
@@ -186,24 +190,7 @@ bool GameManager::shutdown()
 	profilerClock->shutdown();
 	myProfiler->shutdown();
 	myLogger->shutdown();
-
-	
-	delete walls;
-	delete wallsObj;
-	delete lifeObj;
-	delete theShip;
-	delete projectileManager;
-	delete screenEdge;
-	delete myDrawThing;
-	delete profilerClock;
-	delete myClock;
-	delete myRandomer;
-	delete myEffectManager;
-	delete goManager;
-	delete enemyManager;
-	delete myLogger;
-	delete myProfiler;
-	return true;
+	return cleanup();
 }
 
 void GameManager::draw( Core::Graphics& g)
@@ -280,6 +267,8 @@ void GameManager::draw( Core::Graphics& g)
 		myProfiler->addEntry("Draw Debug Info", profilerClock->timeElapsedLastFrame());
 		profilerClock->newFrame();
 #endif
+
+		
 	}
 	else if (currentGameState == OVER)
 	{
@@ -301,6 +290,21 @@ void GameManager::draw( Core::Graphics& g)
 		ss << "Press Esc to quit.";
 		g.DrawString(10, 80, ss.str().c_str());
 	}
+
+	
+	g.SetColor(RGB(255,255,0)); // YELLOW
+//#ifdef _DEBUG
+	_CrtMemState localState;
+	_CrtMemCheckpoint(&localState);
+
+	std::stringstream memoryInfo;
+
+	memoryInfo << "Block count: " << localState.lCounts[_CLIENT_BLOCK] << "\n"
+		<< "total bytes/block: " <<localState.lSizes[_CLIENT_BLOCK] << "\n"
+		<< "Most bytes ever: " << localState.lHighWaterCount;
+  
+	g.DrawString(10, SCREEN_HEIGHT - 50, memoryInfo.str().c_str());
+//#endif
 
 }
 
@@ -392,9 +396,36 @@ bool GameManager::update(float dt)
 
 	else if (currentGameState == OVER)
 	{
+		// start cleanup
+		cleanup();
 
 	}
 	
+	return true;
+}
+
+
+bool GameManager::cleanup()
+{	
+	if (!hasRunCleanup)
+	{
+		hasRunCleanup =true;
+		delete walls;
+		delete wallsObj;
+		delete lifeObj;
+		delete theShip;
+		delete projectileManager;
+		delete screenEdge;
+		delete myDrawThing;
+		delete profilerClock;
+		delete myClock;
+		delete myRandomer;
+		delete myEffectManager;
+		delete goManager;
+		delete enemyManager;
+		delete myLogger;
+		delete myProfiler;
+	}
 	return true;
 }
 

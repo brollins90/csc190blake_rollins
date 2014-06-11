@@ -1,18 +1,17 @@
 #include "EnemyManager.h"
 
 
-
-EnemyManager::EnemyManager()
-{
-	shipLoc = Vector2D(500,500);
-}
-
 Vector2D enemy1Points[] =
 {
 	Vector2D(-5.0F, -5.0F),	Vector2D(+0.0F, -7.5F),	Vector2D(+5.0F, -5.0F),
 	Vector2D(+5.0F, +5.0F),	Vector2D(-5.0F, +5.0F) };
 int numEnemy1Points = sizeof(enemy1Points) / sizeof(enemy1Points[0]);
 
+
+EnemyManager::EnemyManager()
+{
+	shipLoc = Vector2D(500,500);
+}
 
 void EnemyManager::setShipLoc(Vector2D newShipLoc)
 {
@@ -41,6 +40,7 @@ bool EnemyManager::update(float dt)
 		t->setEndPoint(shipLoc);
 		if (!t->update(dt)) 
 		{
+			delete (*it);
 			it = goList.erase(it);
 			numActiveObjects--;		
 		}

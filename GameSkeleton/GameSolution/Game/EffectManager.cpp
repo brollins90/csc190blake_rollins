@@ -7,6 +7,12 @@ EffectManager::EffectManager()
 
 EffectManager::~EffectManager()
 {
+	std::vector<ParticleEffect*>::iterator it;
+	for (it = effectList.begin(); it != effectList.end();)
+	{
+		delete (*it);
+		it = effectList.erase(it);
+	}
 }
 
 void EffectManager::addEffect(ParticleEffect* newEffect) 
@@ -32,6 +38,7 @@ bool EffectManager::update(float dt)
 	{
 		if (!(*it)->update(dt)) 
 		{
+			delete (*it);
 			it = effectList.erase(it);
 			numActiveEffects--;		
 		}

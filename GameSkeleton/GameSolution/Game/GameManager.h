@@ -38,15 +38,17 @@ public:
 	GameManager(void);
 	~GameManager( void );
 	
-	int enemiesDestroyed;
-	int livesRemaining;
-	int shotsFired;
-	int score;
 	float totalTime;
 	float enemySpawnTimerReset;
 	float enemySpawnTimer;
 	float previousEnemySpawn;
-
+	int enemiesDestroyed;
+	int livesRemaining;
+	int shotsFired;
+	int score;
+	bool hasRunCleanup;
+	
+	bool cleanup();
 	bool initialize();
 	bool shutdown();
 	void draw( Core::Graphics& g );

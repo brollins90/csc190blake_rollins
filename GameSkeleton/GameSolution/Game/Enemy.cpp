@@ -11,7 +11,7 @@ extern EffectManager* myEffectManager;
 
 extern DrawThing* myDrawThing;
 
-int COLLISION_DISTANCE = 20;
+int COLLISION_DISTANCE = 40;
 
 Enemy::Enemy(Vector2D inPosition, Vector2D inVelocity, int numPoints, Vector2D* inShapePoints, Core::RGB inColor, Vector2D inEndPoint) : Projectile(inPosition, inVelocity, numPoints, inShapePoints, inColor, inEndPoint)
 {
