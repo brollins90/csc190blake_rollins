@@ -292,8 +292,9 @@ void GameManager::draw( Core::Graphics& g)
 	}
 
 	
+#ifdef DEBUG_ON
 	g.SetColor(RGB(255,255,0)); // YELLOW
-//#ifdef _DEBUG
+
 	_CrtMemState localState;
 	_CrtMemCheckpoint(&localState);
 
@@ -304,7 +305,7 @@ void GameManager::draw( Core::Graphics& g)
 		<< "Most bytes ever: " << localState.lHighWaterCount;
   
 	g.DrawString(10, SCREEN_HEIGHT - 50, memoryInfo.str().c_str());
-//#endif
+#endif
 
 }
 

@@ -37,6 +37,13 @@ void draw( Core::Graphics& g )
 void main()
 {
 	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
+
+	//int* memoryLeak = new int[15];
+	//memoryLeak;
+
+	//char* memoryOverwrite = new char[40];
+	//memoryOverwrite[-1] = 0;
+
 	myGameManager->initialize();
 	srand((unsigned int)time(NULL));
 	Core::Init( "Blake Rollins", SCREEN_WIDTH, SCREEN_HEIGHT);
